@@ -63,9 +63,11 @@ class TransactionDetectionService {
           final title = data['title'] as String? ?? '';
 
           if (type == 'SMS') {
-            await processSmsMessage(text, sender: packageName);
+            final timestamp = data['timestamp'] as int?;
+            await processSmsMessage(text, sender: packageName, timestamp: timestamp);
           } else {
-            await processNotification(title, text, packageName: packageName);
+            final timestamp = data['timestamp'] as int?;
+            await processNotification(title, text, packageName: packageName, timestamp: timestamp);
           }
         } else {
           final parts = entry.split('|');

@@ -29,7 +29,7 @@ class AppConstants {
   static const Duration splashExitDuration = Duration(milliseconds: 1000);
   static const Duration splashWaitDuration = Duration(milliseconds: 1000);
   static const Duration widgetWaitDuration = Duration(milliseconds: 500);
-  static const Duration homeArrivalDelay = Duration(milliseconds: 500);
+  static const Duration homeArrivalDelay = Duration(milliseconds: 1500);
 
   // External URLs
   static const String supportTelegramUrl = 'https://t.me/+W7iMso5YsO1lZDM1';

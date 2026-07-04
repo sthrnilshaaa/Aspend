@@ -123,6 +123,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get microPermissionDenied => 'Microphone permission denied';
 
   @override
+  String get microPermissionTitle => 'Microphone Access Required';
+
+  @override
+  String get microPermissionDesc =>
+      'Aspends requires microphone access to let you input transaction details via voice commands. Your voice inputs are parsed completely offline on your device and are never uploaded or shared.';
+
+  @override
+  String get microPermissionGrant => 'Enable Voice';
+
+  @override
   String get appearance => 'Appearance';
 
   @override
@@ -282,21 +292,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get autoDetectionSetupDesc =>
-      'To automatically detect transactions, we need specific permissions. All banking and transaction apps will be monitored securely.';
+      'To automatically detect transactions, Aspends requires Notification Listener and SMS permissions. This allows the app to extract transaction details completely offline. Your financial messages are processed strictly on your device and are never uploaded or shared.';
 
   @override
   String get notificationAccess => '1. Notification Access';
 
   @override
   String get notificationAccessDesc =>
-      'Allows us to read transaction alerts from bank and payment apps.';
+      'Allows reading transaction notification alerts from bank and payment apps to record them automatically.';
 
   @override
   String get smsPermission => '2. SMS Permission';
 
   @override
   String get smsPermissionDesc =>
-      'Enables reading transaction SMS from your bank.';
+      'Allows reading incoming transaction SMS alerts from your banks to record them automatically.';
 
   @override
   String get finishSetup => 'Finish Setup';

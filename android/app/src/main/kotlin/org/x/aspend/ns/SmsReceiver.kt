@@ -44,7 +44,7 @@ class SmsReceiver : BroadcastReceiver() {
                             val sharedPreferences = context.getSharedPreferences("AspendPrefs", Context.MODE_PRIVATE)
                             val pendingList = sharedPreferences.getStringSet("pending_notifications", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
                             
-                            val data = """{"type":"SMS","text":"${body.replace("\"", "\\\"")}","packageName":"$sender"}"""
+                            val data = """{"type":"SMS","text":"${body.replace("\"", "\\\"")}","packageName":"$sender","timestamp":${message.timestampMillis}}"""
                             pendingList.add(data)
                             
                             sharedPreferences.edit().putStringSet("pending_notifications", pendingList).apply()

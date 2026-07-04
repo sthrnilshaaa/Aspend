@@ -632,8 +632,58 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _buildAutoDetectionSection(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.amber.withValues(alpha: isDark ? 0.15 : 0.1),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: Colors.amber.withValues(alpha: isDark ? 0.3 : 0.4),
+              width: 1,
+            ),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.warning_amber_rounded,
+                color: isDark ? Colors.amber[300] : Colors.amber[800],
+                size: 24,
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Caution to use',
+                      style: GoogleFonts.dmSans(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: isDark ? Colors.amber[200] : Colors.amber[900],
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'This feature is not 100% perfect but might work. All SMS and notification data are processed 100% locally on your device for absolute privacy.',
+                      style: GoogleFonts.dmSans(
+                        fontSize: 12,
+                        color: isDark ? Colors.amber[100]?.withValues(alpha: 0.8) : Colors.amber[900]?.withValues(alpha: 0.9),
+                        height: 1.4,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
         SettingTile(
           icon: Icons.auto_awesome,
           title: 'Auto Transaction Detection',

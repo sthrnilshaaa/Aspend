@@ -120,7 +120,7 @@ class AboutPage extends StatelessWidget {
                                 AppDimensions.borderRadiusFull),
                           ),
                           child: Text(
-                            'v5.9.1',
+                            'v5.11.0',
                             style: GoogleFonts.dmSans(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -141,11 +141,11 @@ class AboutPage extends StatelessWidget {
               delegate: SliverChildListDelegate([
                 _buildHowItWorksSection(context),
                 _buildSectionHeader(context, l10n.developerDesigner),
-                _buildDeveloperCard(context, 'SthrKaran', l10n.leadDesigner,
-                    'SK'),
-                const SizedBox(height: 8),
-                _buildDeveloperCard(context, 'nilshaaa', l10n.developer,
-                    'N'),
+                // _buildDeveloperCard(context, 'SthrKaran', l10n.leadDesigner,
+                //     'SK'),
+                // const SizedBox(height: 8),
+                // _buildDeveloperCard(context, 'nilshaaa', l10n.developer,
+                //     'N'),
                 const SizedBox(height: 32),
                 _buildSectionHeader(context, l10n.supportLegal),
                 SettingTile(

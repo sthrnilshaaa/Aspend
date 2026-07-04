@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen>
     } catch (e) {
       debugPrint('SplashScreen: HomeWidget init error: $e');
     }
-    bool isWidgetLaunch = uri != null && uri.host == 'addTransaction';
+    bool isWidgetLaunch = uri != null && (uri.host == 'ADD_INCOME' || uri.host == 'ADD_EXPENSE' || uri.host == 'addTransaction');
 
     final box = await Hive.openBox(AppConstants.settingsBox);
     final introCompleted = box.get('introCompleted', defaultValue: false);

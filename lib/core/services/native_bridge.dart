@@ -35,11 +35,13 @@ class NativeBridge {
               if (data['type'] == 'Notification') {
                 await TransactionDetectionService.processNotification(
                     data['title'] ?? '', data['fullText'] ?? data['text'] ?? '',
-                    packageName: data['packageName'] ?? '');
+                    packageName: data['packageName'] ?? '',
+                    timestamp: data['timestamp'] as int?);
               } else if (data['type'] == 'SMS') {
                 await TransactionDetectionService.processSmsMessage(
                     data['text'] ?? '',
-                    sender: data['packageName'] ?? '');
+                    sender: data['packageName'] ?? '',
+                    timestamp: data['timestamp'] as int?);
               }
             }
           } catch (e) {
@@ -68,15 +70,17 @@ class NativeBridge {
       case 'onNotificationReceived':
         final text = call.arguments['text'] as String? ?? '';
         final packageName = call.arguments['packageName'] as String? ?? '';
+        final timestamp = call.arguments['timestamp'] as int?;
         await TransactionDetectionService.processNotification('', text,
-            packageName: packageName);
+            packageName: packageName, timestamp: timestamp);
         break;
 
       case 'onSmsReceived':
         final body = call.arguments['body'] as String? ?? '';
         final sender = call.arguments['sender'] as String? ?? '';
+        final timestamp = call.arguments['timestamp'] as int?;
         await TransactionDetectionService.processSmsMessage(body,
-            sender: sender);
+            sender: sender, timestamp: timestamp);
         break;
 
 

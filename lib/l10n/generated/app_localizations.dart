@@ -342,6 +342,24 @@ abstract class AppLocalizations {
   /// **'Microphone permission denied'**
   String get microPermissionDenied;
 
+  /// No description provided for @microPermissionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone Access Required'**
+  String get microPermissionTitle;
+
+  /// No description provided for @microPermissionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Aspends requires microphone access to let you input transaction details via voice commands. Your voice inputs are parsed completely offline on your device and are never uploaded or shared.'**
+  String get microPermissionDesc;
+
+  /// No description provided for @microPermissionGrant.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Voice'**
+  String get microPermissionGrant;
+
   /// No description provided for @appearance.
   ///
   /// In en, this message translates to:
@@ -639,7 +657,7 @@ abstract class AppLocalizations {
   /// No description provided for @autoDetectionSetupDesc.
   ///
   /// In en, this message translates to:
-  /// **'To automatically detect transactions, we need specific permissions. All banking and transaction apps will be monitored securely.'**
+  /// **'To automatically detect transactions, Aspends requires Notification Listener and SMS permissions. This allows the app to extract transaction details completely offline. Your financial messages are processed strictly on your device and are never uploaded or shared.'**
   String get autoDetectionSetupDesc;
 
   /// No description provided for @notificationAccess.
@@ -651,7 +669,7 @@ abstract class AppLocalizations {
   /// No description provided for @notificationAccessDesc.
   ///
   /// In en, this message translates to:
-  /// **'Allows us to read transaction alerts from bank and payment apps.'**
+  /// **'Allows reading transaction notification alerts from bank and payment apps to record them automatically.'**
   String get notificationAccessDesc;
 
   /// No description provided for @smsPermission.
@@ -663,7 +681,7 @@ abstract class AppLocalizations {
   /// No description provided for @smsPermissionDesc.
   ///
   /// In en, this message translates to:
-  /// **'Enables reading transaction SMS from your bank.'**
+  /// **'Allows reading incoming transaction SMS alerts from your banks to record them automatically.'**
   String get smsPermissionDesc;
 
   /// No description provided for @finishSetup.

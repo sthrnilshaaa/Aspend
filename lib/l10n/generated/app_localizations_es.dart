@@ -123,6 +123,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get microPermissionDenied => 'Permiso de micrófono denegado';
 
   @override
+  String get microPermissionTitle => 'Microphone Access Required';
+
+  @override
+  String get microPermissionDesc =>
+      'Aspends requires microphone access to let you input transaction details via voice commands. Your voice inputs are parsed completely offline on your device and are never uploaded or shared.';
+
+  @override
+  String get microPermissionGrant => 'Enable Voice';
+
+  @override
   String get appearance => 'Apariencia';
 
   @override

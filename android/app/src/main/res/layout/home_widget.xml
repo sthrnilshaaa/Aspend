@@ -18,29 +18,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
             android:text="Total Balance"
-            android:textColor="@color/teal_300"
+            android:textColor="@color/widget_text_secondary"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/widget_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
             android:text="₹0.00"
-            android:textColor="@color/white"
+            android:textColor="@color/widget_text_primary"
             android:textSize="22sp"
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Middle Section: Stats (Only visible in larger sizes?) 
-         Actually, let's just make it compact but informative -->
+    <!-- Middle Section: Stats -->
     <LinearLayout
         android:id="@+id/stats_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -55,30 +53,28 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
                 android:text="Income"
-                android:textColor="@color/gray_light"
+                android:textColor="@color/widget_text_secondary"
                 android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/widget_income"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
                 android:text="₹0.00"
-                android:textColor="@color/green_600"
+                android:textColor="@color/widget_green_accent"
                 android:textSize="13sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <View
+        <FrameLayout
             android:layout_width="1dp"
             android:layout_height="20dp"
-            android:background="@color/gray_border"
-            android:alpha="0.3" />
+            android:background="#801E2824" />
 
         <!-- Total Expense -->
         <LinearLayout
+            android:id="@+id/expense_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -88,18 +84,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
                 android:text="Expense"
-                android:textColor="@color/gray_light"
+                android:textColor="@color/widget_text_secondary"
                 android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/widget_expense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
                 android:text="₹0.00"
-                android:textColor="@color/red_600"
+                android:textColor="@color/widget_red_accent"
                 android:textSize="13sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -119,27 +113,26 @@
             android:layout_width="0dp"
             android:layout_height="44dp"
             android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
             android:layout_weight="1"
-            android:background="@drawable/widget_button_background"
+            android:background="@drawable/widget_income_button_background"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:src="@drawable/ic_add"
-                android:tint="@color/green_600" />
+                android:src="@drawable/widget_ic_add_green" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
-                android:fontFamily="sans-serif-medium"
+                android:layout_marginLeft="6dp"
                 android:text="Income"
-                android:textColor="@color/green_600"
+                android:textColor="@color/widget_green_accent"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -150,27 +143,26 @@
             android:layout_width="0dp"
             android:layout_height="44dp"
             android:layout_marginStart="6dp"
+            android:layout_marginLeft="6dp"
             android:layout_weight="1"
-            android:background="@drawable/widget_button_background"
+            android:background="@drawable/widget_expense_button_background"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:src="@drawable/ic_remove"
-                android:tint="@color/red_600" />
+                android:src="@drawable/widget_ic_remove_red" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
-                android:fontFamily="sans-serif-medium"
+                android:layout_marginLeft="6dp"
                 android:text="Expense"
-                android:textColor="@color/red_600"
+                android:textColor="@color/widget_red_accent"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>

@@ -87,7 +87,8 @@ class TransactionDetectionService : NotificationListenerService() {
                         "text" to text,
                         "bigText" to bigText,
                         "fullText" to fullText,
-                        "packageName" to sbn.packageName
+                        "packageName" to sbn.packageName,
+                        "timestamp" to sbn.postTime
                     )
                 )
             } else {
@@ -97,7 +98,7 @@ class TransactionDetectionService : NotificationListenerService() {
                 val pendingList = sharedPreferences.getStringSet("pending_notifications", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
                 
                 // Create a JSON-like simple string or proper JSON
-                val data = """{"type":"Notification","title":"${title.replace("\"", "\\\"")}","text":"${text.replace("\"", "\\\"")}","bigText":"${bigText.replace("\"", "\\\"")}","fullText":"${fullText.replace("\"", "\\\"")}","packageName":"${sbn.packageName}"}"""
+                val data = """{"type":"Notification","title":"${title.replace("\"", "\\\"")}","text":"${text.replace("\"", "\\\"")}","bigText":"${bigText.replace("\"", "\\\"")}","fullText":"${fullText.replace("\"", "\\\"")}","packageName":"${sbn.packageName}","timestamp":${sbn.postTime}}"""
                 pendingList.add(data)
                 
                 sharedPreferences.edit().putStringSet("pending_notifications", pendingList).apply()

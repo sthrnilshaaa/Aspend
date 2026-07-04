@@ -29,6 +29,7 @@ import '../../widgets/add_transaction_dialog.dart';
 import '../../widgets/empty_state_view.dart';
 import '../../widgets/glass_action_button.dart';
 import '../../widgets/monitoring_setup_dialog.dart';
+import '../../widgets/microphone_setup_dialog.dart';
 import '../../widgets/recording_hud.dart';
 import '../core/view_models/person_view_model.dart';
 import '../core/models/person_transaction.dart';
@@ -134,12 +135,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> _startRecording() async {
     final l10n = AppLocalizations.of(context)!;
-    // Check permission first
     var status = await Permission.microphone.status;
-    if (status.isDenied) {
-      status = await Permission.microphone.request();
-      if (!status.isGranted) {
-        Fluttertoast.showToast(msg: l10n.microPermissionDenied);
+    if (!status.isGranted) {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (context) => BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: const MicrophoneSetupDialog(),
+        ),
+      );
+      if (confirmed == true) {
+        status = await Permission.microphone.request();
+        if (!status.isGranted) {
+          Fluttertoast.showToast(msg: l10n.microPermissionDenied);
+          return;
+        }
+      } else {
         return;
       }
     }

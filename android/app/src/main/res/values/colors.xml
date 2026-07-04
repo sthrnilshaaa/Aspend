@@ -10,4 +10,21 @@
     <color name="green_600">#43A047</color>
     <color name="red_600">#E53935</color>
     <color name="ic_launcher_background">#0D1311</color>
+
+    <!-- Widget Specific Premium Colors -->
+    <color name="widget_bg_start">#0D0F0E</color>
+    <color name="widget_bg_end">#050806</color>
+    <color name="widget_border">#1E2824</color>
+    
+    <color name="widget_text_primary">#FFFFFF</color>
+    <color name="widget_text_secondary">#8E9A97</color>
+    <color name="widget_text_teal">#4DB6AC</color>
+    
+    <color name="widget_green_bg">#0F2418</color>
+    <color name="widget_green_border">#263D30</color>
+    <color name="widget_green_accent">#55DF69</color>
+    
+    <color name="widget_red_bg">#1E1312</color>
+    <color name="widget_red_border">#322220</color>
+    <color name="widget_red_accent">#FF5252</color>
 </resources> 

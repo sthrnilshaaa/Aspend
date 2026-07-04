@@ -46,40 +46,44 @@ class HomeWidgetProvider : AppWidgetProvider() {
         appWidgetId: Int,
         options: Bundle?
     ) {
-        val views = RemoteViews(context.packageName, R.layout.home_widget)
+        try {
+            val views = RemoteViews(context.packageName, R.layout.home_widget)
 
-        // Get widget data
-        val widgetData = HomeWidgetPlugin.getData(context)
-        val balance = widgetData.getString("balance", "₹0.00")
-        val income = widgetData.getString("total_income", "0.0")
-        val expense = widgetData.getString("total_expenses", "0.0")
+            // Get widget data
+            val widgetData = HomeWidgetPlugin.getData(context)
+            val balance = widgetData.getString("balance", "₹0.00")
+            val income = widgetData.getString("total_income", "0.0")
+            val expense = widgetData.getString("total_expenses", "0.0")
 
-        // Update basic views
-        views.setTextViewText(R.id.widget_balance, balance)
-        views.setTextViewText(R.id.widget_income, "₹${formatAmount(income)}")
-        views.setTextViewText(R.id.widget_expense, "₹${formatAmount(expense)}")
+            // Update basic views
+            views.setTextViewText(R.id.widget_balance, balance)
+            views.setTextViewText(R.id.widget_income, "₹${formatAmount(income)}")
+            views.setTextViewText(R.id.widget_expense, "₹${formatAmount(expense)}")
 
-        // Optional: Hide stats if widget is too small
-        if (options != null) {
-            val minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
-            val minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
-            
-            Log.d(TAG, "Widget ID: $appWidgetId, Size: ${minWidth}x${minHeight}")
+            // Optional: Hide stats if widget is too small
+            if (options != null) {
+                val minHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
+                val minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
+                
+                Log.d(TAG, "Widget ID: $appWidgetId, Size: ${minWidth}x${minHeight}")
 
-            // If height is small, hide stats to save space for buttons and balance
-            if (minHeight < 100) {
-                views.setViewVisibility(R.id.stats_container, View.GONE)
-            } else {
-                views.setViewVisibility(R.id.stats_container, View.VISIBLE)
+                // If height is small, hide stats to save space for buttons and balance
+                if (minHeight < 100) {
+                    views.setViewVisibility(R.id.stats_container, View.GONE)
+                } else {
+                    views.setViewVisibility(R.id.stats_container, View.VISIBLE)
+                }
             }
+
+            // Setup Buttons
+            setupButton(context, views, R.id.income_button, "ADD_INCOME", 0)
+            setupButton(context, views, R.id.expense_button, "ADD_EXPENSE", 1)
+
+            // Update the widget
+            appWidgetManager.updateAppWidget(appWidgetId, views)
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception in updateWidget for widget ID $appWidgetId: ", e)
         }
-
-        // Setup Buttons
-        setupButton(context, views, R.id.income_button, "ADD_INCOME", 0)
-        setupButton(context, views, R.id.expense_button, "ADD_EXPENSE", 1)
-
-        // Update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views)
     }
 
     private fun setupButton(context: Context, views: RemoteViews, viewId: Int, actionStr: String, reqCode: Int) {
@@ -107,13 +111,17 @@ class HomeWidgetProvider : AppWidgetProvider() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
-        if (intent.action == AppWidgetManager.ACTION_APPWIDGET_UPDATE) {
-            val appWidgetManager = AppWidgetManager.getInstance(context)
-            val appWidgetIds = appWidgetManager.getAppWidgetIds(
-                ComponentName(context, HomeWidgetProvider::class.java)
-            )
-            onUpdate(context, appWidgetManager, appWidgetIds)
+        try {
+            super.onReceive(context, intent)
+            if (intent.action == AppWidgetManager.ACTION_APPWIDGET_UPDATE) {
+                val appWidgetManager = AppWidgetManager.getInstance(context)
+                val appWidgetIds = appWidgetManager.getAppWidgetIds(
+                    ComponentName(context, HomeWidgetProvider::class.java)
+                )
+                onUpdate(context, appWidgetManager, appWidgetIds)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception in onReceive for action ${intent.action}: ", e)
         }
     }
 }

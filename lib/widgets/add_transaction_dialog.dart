@@ -9,6 +9,7 @@ import '../core/view_models/transaction_view_model.dart';
 import '../core/view_models/theme_view_model.dart';
 import '../core/view_models/person_view_model.dart';
 import '../core/models/person_transaction.dart';
+import '../core/models/person.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
@@ -47,6 +48,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   late DateTime _selectedDate;
   final List<String> _images = [];
   late FocusNode _amountFocusNode;
+  bool _saveToPerson = false;
+  String? _selectedPersonName;
 
   @override
   void initState() {
@@ -61,13 +64,31 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
       _amount.text = tx.amount.toString();
       _note.text = tx.note;
       _images.addAll(tx.imagePaths ?? []);
+      _saveToPerson = false;
     } else if (ctx != null) {
       _amount.text = ctx.amount.toString();
       _note.text = ctx.note;
       _category = 'Other';
+      _saveToPerson = true;
+      _selectedPersonName = ctx.personName;
     } else {
       _note.text = widget.initialNote ?? '';
       _amount.text = widget.initialAmount?.abs().toStringAsFixed(2) ?? '';
+      
+      // Auto-detect if note refers to a person
+      final initialNoteStr = widget.initialNote;
+      if (initialNoteStr != null && initialNoteStr.isNotEmpty) {
+        final pvm = context.read<PersonViewModel>();
+        final matchingPerson = pvm.people.firstWhere(
+          (p) => p.name.toLowerCase() == initialNoteStr.toLowerCase() ||
+                 initialNoteStr.toLowerCase().contains(p.name.toLowerCase()),
+          orElse: () => Person(name: ''),
+        );
+        if (matchingPerson.name.isNotEmpty) {
+          _saveToPerson = true;
+          _selectedPersonName = matchingPerson.name;
+        }
+      }
     }
   }
 
@@ -98,8 +119,48 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     final vm = context.read<TransactionViewModel>();
     final pvm = context.read<PersonViewModel>();
 
-    if (widget.existingTransaction != null) {
-      vm.updateTransaction(
+    if (_saveToPerson) {
+      if (_selectedPersonName == null || _selectedPersonName!.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Please select a person"),
+          behavior: SnackBarBehavior.floating,
+        ));
+        return;
+      }
+
+      if (widget.existingPersonTransaction != null) {
+        // Editing existing person transaction
+        pvm.updatePersonTransaction(
+          widget.existingPersonTransaction!,
+          PersonTransaction(
+            personName: _selectedPersonName!,
+            amount: amount,
+            note: _note.text,
+            date: _selectedDate,
+            isIncome: widget.isIncome,
+          ),
+        );
+      } else {
+        // Saving a new person transaction OR converting a normal transaction to a person transaction
+        if (widget.existingTransaction != null) {
+          vm.deleteTransaction(widget.existingTransaction!);
+        }
+
+        pvm.addPersonTransaction(
+          PersonTransaction(
+            personName: _selectedPersonName!,
+            amount: amount,
+            note: _note.text,
+            date: _selectedDate,
+            isIncome: widget.isIncome,
+          ),
+          _selectedPersonName!,
+        );
+      }
+    } else {
+      if (widget.existingTransaction != null) {
+        // Editing existing normal transaction
+        vm.updateTransaction(
           widget.existingTransaction!,
           Transaction(
             amount: amount,
@@ -109,31 +170,28 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             category: _category,
             account: _account,
             imagePaths: _images,
-          ));
-    } else if (widget.existingPersonTransaction != null) {
-      pvm.updatePersonTransaction(
-          widget.existingPersonTransaction!,
-          PersonTransaction(
-            personName: widget.existingPersonTransaction!.personName,
-            amount: amount,
-            note: _note.text,
-            date: _selectedDate,
-            isIncome: widget.isIncome,
-          ));
-    } else {
-      final tx = Transaction(
-        amount: amount,
-        note: _note.text,
-        date: _selectedDate,
-        isIncome: widget.isIncome,
-        category: _category,
-        account: _account,
-        imagePaths: _images,
-        originalText: widget.initialNote,
-        source: widget.initialNote != null ? 'Manual Add (History)' : null,
-      );
-      vm.addTransaction(tx);
-      _syncPerson(tx, pvm);
+          ),
+        );
+      } else {
+        // Saving a new normal transaction OR converting a person transaction to a normal transaction
+        if (widget.existingPersonTransaction != null) {
+          pvm.deleteTransaction(widget.existingPersonTransaction!);
+        }
+
+        final tx = Transaction(
+          amount: amount,
+          note: _note.text,
+          date: _selectedDate,
+          isIncome: widget.isIncome,
+          category: _category,
+          account: _account,
+          imagePaths: _images,
+          originalText: widget.initialNote,
+          source: widget.initialNote != null ? 'Manual Add (History)' : null,
+        );
+        vm.addTransaction(tx);
+        _syncPerson(tx, pvm);
+      }
     }
     Navigator.pop(context);
   }
@@ -413,6 +471,97 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
 
                 const SizedBox(height: 16),
 
+                // Save to Person Toggle Section
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.surface,
+                    borderRadius: BorderRadius.circular(AppDimensions.borderRadiusLarge),
+                    border: Border.all(
+                      color: theme.dividerColor.withValues(alpha: 0.1),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.person_outline_rounded,
+                                color: theme.colorScheme.primary,
+                                size: 22,
+                              ),
+                              const SizedBox(width: 12),
+                              Text(
+                                'Save to Person',
+                                style: GoogleFonts.dmSans(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: AppTypography.fontSizeSmall + 1,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Switch(
+                            value: _saveToPerson,
+                            onChanged: (val) {
+                              HapticFeedback.lightImpact();
+                              setState(() {
+                                _saveToPerson = val;
+                                if (val && _selectedPersonName == null) {
+                                  final pvm = context.read<PersonViewModel>();
+                                  if (pvm.people.isNotEmpty) {
+                                    _selectedPersonName = pvm.people.first.name;
+                                  }
+                                }
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      if (_saveToPerson) ...[
+                        const Divider(height: 16),
+                        const SizedBox(height: 4),
+                        Consumer<PersonViewModel>(
+                          builder: (context, pvm, child) {
+                            if (pvm.people.isEmpty) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(
+                                  'No people added yet. Create people under the People section.',
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                            }
+                            
+                            final peopleNames = pvm.people.map((p) => p.name).toList();
+                            if (_selectedPersonName == null || !peopleNames.contains(_selectedPersonName)) {
+                              _selectedPersonName = peopleNames.first;
+                            }
+                            
+                            return _picker(
+                              'Select Person',
+                              _selectedPersonName!,
+                              peopleNames,
+                              (v) => setState(() => _selectedPersonName = v),
+                              'Person',
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
                 // Note Input
                 TextFormField(
                   controller: _note,
@@ -575,6 +724,10 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                       width: 18,
                       height: 18),
                   const SizedBox(width: 8),
+                ] else if (type == 'Person') ...[
+                  const Icon(Icons.person_outline_rounded,
+                      size: 18, color: Colors.grey),
+                  const SizedBox(width: 8),
                 ],
                 Expanded(child: Text(val, style: GoogleFonts.dmSans())),
                 if (type != 'Date') const Icon(Icons.arrow_drop_down),
@@ -713,7 +866,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             ? tvm.incomeCategories
             : (type == 'Expense')
                 ? tvm.expenseCategories
-                : tvm.accounts;
+                : (type == 'Person')
+                    ? items
+                    : tvm.accounts;
 
         return Container(
           decoration: BoxDecoration(
@@ -752,7 +907,12 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                                 height: 20,
                               ),
                             )
-                          : null,
+                          : (type == 'Person')
+                              ? const CircleAvatar(
+                                  radius: 14,
+                                  child: Icon(Icons.person, size: 16),
+                                )
+                              : null,
                       title: Text(item,
                           style: GoogleFonts.dmSans(
                               fontWeight: item == selected
