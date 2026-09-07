@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../core/const/app_colors.dart';
 import '../../core/const/app_dimensions.dart';
-import '../../core/const/app_strings.dart';
 import '../../core/const/app_typography.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../../core/view_models/theme_view_model.dart';
 import '../../core/view_models/transaction_view_model.dart';
 
@@ -20,6 +20,7 @@ class HomeBudgetProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final themeViewModel = context.watch<ThemeViewModel>();
     final budget = themeViewModel.monthlyBudget;
     if (budget <= 0) return const SizedBox.shrink();
@@ -48,7 +49,7 @@ class HomeBudgetProgress extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppDimensions.borderRadiusLarge),
           border: Border.all(
             color: isOverBudget
-                ? Colors.redAccent.withValues(alpha: 0.3)
+                ? AppColors.accentRed.withValues(alpha: 0.3)
                 : theme.dividerColor.withValues(alpha: 0.1),
           ),
           boxShadow: [
@@ -67,7 +68,7 @@ class HomeBudgetProgress extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    AppStrings.budget,
+                    l10n.budget,
                     style: GoogleFonts.dmSans(
                       fontWeight: AppTypography.fontWeightExtraBold,
                       fontSize: isCompact
@@ -78,11 +79,13 @@ class HomeBudgetProgress extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '₹${spent.toStringAsFixed(0)}',
+                  '${themeViewModel.currencySymbol}${spent.toStringAsFixed(0)}',
                   style: GoogleFonts.dmSans(
                     fontWeight: FontWeight.w700,
                     fontSize: isCompact ? 13 : 14,
-                    color: isOverBudget ? Colors.redAccent : Colors.grey,
+                    color: isOverBudget
+                        ? AppColors.accentRed
+                        : theme.colorScheme.onSurface.withValues(alpha: 0.5),
                   ),
                 ),
               ],
@@ -104,7 +107,8 @@ class HomeBudgetProgress extends StatelessWidget {
             if (!isCompact && isOverBudget) ...[
               const SizedBox(height: AppDimensions.paddingLarge),
               Text(
-                '⚠️ Over by ₹${(spent - budget).toStringAsFixed(0)}',
+                l10n.overBudgetBy(
+                    '${themeViewModel.currencySymbol}${(spent - budget).toStringAsFixed(0)}'),
                 style: GoogleFonts.dmSans(
                   fontSize: AppTypography.fontSizeXSmall,
                   color: AppColors.accentRed,

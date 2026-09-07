@@ -37,16 +37,21 @@ class AppColors {
   static const Color balanceCardLineDarkModeNegative = Color(0xFFFF4D4D);
   static const Color balanceCardLineLightModeNegative =
       Color(0xFFDC2626); // Stronger hierarchy
-  static const Color balanceCardLineDarkModePositive =
-    Color(0xFF55DF69);
-     // Color(0xFF34D399); // Electric mint
-  static const Color balanceCardLineLightModePositive =
-  Color(0xFF55DF69);
+  static const Color balanceCardLineDarkModePositive = Color(0xFF55DF69);
+  // Color(0xFF34D399); // Electric mint
+  static const Color balanceCardLineLightModePositive = Color(0xFF55DF69);
   //    Color(0xFF059669); // Deep emerald
 
   // Status & Accent Colors
   static const Color accentGreen = Color(0xFF55DF69);
   static const Color accentRed = Color(0xFFD32E2E);
+
+  // Extra accents used to give each empty-state / illustration its own
+  // identity instead of every screen reusing the same brand green.
+  static const Color accentIndigo = Color(0xFF6C63FF); // People
+  static const Color accentIndigoDeep = Color(0xFF554CE0);
+  static const Color accentAmber = Color(0xFFF5A524); // Charts / insights
+  static const Color accentAmberDeep = Color(0xFFE08900);
 
   static Color getCardShadow(bool isDark) =>
       isDark ? cardShadowDark : cardShadowLight;

@@ -201,7 +201,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String savedAmount(String amount, String category) {
-    return 'Saved ₹$amount for $category';
+    return 'Saved $amount for $category';
   }
 
   @override
@@ -251,10 +251,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get openSourceDesc => 'Proudly open source on GitHub';
 
   @override
+  String get licenses => 'Open Source Licenses';
+
+  @override
+  String get licensesDesc => 'View third-party licenses used in this app';
+
+  @override
   String get rateApp => 'Rate Aspends';
 
   @override
   String get rateAppDesc => 'Support us with a 5-star rating';
+
+  @override
+  String get couldNotLaunchUrl => 'Could not launch URL';
+
+  @override
+  String errorWithDetails(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get madeWithLove => 'Made with ❤️ for better finance';
 
   @override
   String get howAspendWorks => 'HOW ASPEND WORKS';
@@ -324,10 +341,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get budget => 'Budget';
 
   @override
+  String overBudgetBy(String amount) {
+    return '⚠️ Over by $amount';
+  }
+
+  @override
   String get balanceDetailsTitle => 'Balance Details';
 
   @override
   String get editBalanceTitle => 'Edit Balance';
+
+  @override
+  String get tapHoldToEditBalance => 'Tap and hold to edit balance';
+
+  @override
+  String get longPressBalanceCardHint =>
+      'Long press the balance card on the home screen';
 
   @override
   String get newBalanceLabel => 'New Balance';
@@ -495,6 +524,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get requestMoney => 'Request Money';
 
   @override
+  String get requestMoneyTooltip => 'Request Money via UPI';
+
+  @override
   String get generateQr => 'Generate Payment QR';
 
   @override
@@ -528,7 +560,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String settleBalanceDesc(String amount) {
-    return 'This will add a transaction of ₹$amount to bring the balance to zero. Continue?';
+    return 'This will add a transaction of $amount to bring the balance to zero. Continue?';
   }
 
   @override
@@ -766,4 +798,630 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exportPdfDesc => 'Generate PDF reports';
+
+  @override
+  String get biometricNotSupported =>
+      'Biometric authentication is not supported on this device';
+
+  @override
+  String get noBiometricMethods =>
+      'No biometric authentication methods available';
+
+  @override
+  String get authenticateReason => 'Authenticate to enable app lock';
+
+  @override
+  String get authFailedAppLockNotEnabled =>
+      'Authentication failed. App lock not enabled.';
+
+  @override
+  String get appLockEnabledSuccess => 'App lock enabled successfully';
+
+  @override
+  String get appLockDisabledSuccess => 'App lock disabled successfully';
+
+  @override
+  String get failedToEnableAppLock => 'Failed to enable app lock';
+
+  @override
+  String get failedToDisableAppLock => 'Failed to disable app lock';
+
+  @override
+  String get pickAppColor => 'Pick App Color';
+
+  @override
+  String get reset => 'Reset';
+
+  @override
+  String get selectAction => 'Select';
+
+  @override
+  String get appColorResetDefault => 'App color reset to default!';
+
+  @override
+  String get deviceNotSupportBiometricsOrAuth =>
+      'Device does not support biometrics or device authentication.';
+
+  @override
+  String get appLockEnabledDot => 'App lock enabled.';
+
+  @override
+  String get appLockDisabledDot => 'App lock disabled.';
+
+  @override
+  String get cautionToUse => 'Caution to use';
+
+  @override
+  String get autoDetectCautionDesc =>
+      'This feature is not 100% perfect but might work. All SMS and notification data are processed 100% locally on your device for absolute privacy.';
+
+  @override
+  String get autoDetectSettingSubtitle =>
+      'Automatically detect transactions from notifications';
+
+  @override
+  String get permissionsRequiredNoAccess =>
+      'Permissions required: No notification or SMS access granted. Auto-detection cannot be enabled.';
+
+  @override
+  String get noteNotificationAccessMissing =>
+      'Note: Notification access is missing. Only SMS detection will work.';
+
+  @override
+  String get noteSmsPermissionMissing =>
+      'Note: SMS permission is missing. Only Notification detection will work.';
+
+  @override
+  String get autoDetectionEnabledExclaim => 'Auto-detection enabled!';
+
+  @override
+  String get autoDetectionDisabledExclaim => 'Auto-detection disabled!';
+
+  @override
+  String get processRecentDataTitle => 'Process Recent Data';
+
+  @override
+  String get processRecentDataSubtitle =>
+      'Scan recent notifications for transactions';
+
+  @override
+  String get recentDataProcessed => 'Recent data processed successfully!';
+
+  @override
+  String get errorProcessingData => 'Error processing data';
+
+  @override
+  String get testDetectionLogicTitle => 'Test Detection Logic';
+
+  @override
+  String get testDetectionLogicSubtitle =>
+      'Simulate a notification to verify parsing';
+
+  @override
+  String get showDetectionHistoryTitle => 'Show Detection History';
+
+  @override
+  String get showDetectionHistorySubtitle =>
+      'View detailed logs of detected transactions';
+
+  @override
+  String get autoDeleteUndetectedTitle => 'Auto-delete undetected history';
+
+  @override
+  String get autoDeleteUndetectedSubtitle =>
+      'Delete undetected items after 12 hours';
+
+  @override
+  String get testParserDiagnosticTitle => 'Test Parser Diagnostic';
+
+  @override
+  String get testParserDiagnosticDesc =>
+      'Enter a sample notification message to see how our parser handles it.';
+
+  @override
+  String get pasteNotificationHint => 'Paste notification text here...';
+
+  @override
+  String get statusBalanceSync => 'Balance Sync';
+
+  @override
+  String get statusNoActionDetected => 'No Action Detected';
+
+  @override
+  String get transactionType => 'Type';
+
+  @override
+  String get resultLabelMerchant => 'Merchant';
+
+  @override
+  String get resultLabelBank => 'Bank';
+
+  @override
+  String get balanceLabel => 'Balance';
+
+  @override
+  String get resultLabelConfidence => 'Confidence';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
+  String get general => 'General';
+
+  @override
+  String get notAvailable => 'N/A';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get parseText => 'Parse Text';
+
+  @override
+  String get deleteAllDataTitle => 'Delete All Data';
+
+  @override
+  String get deleteAllDataWarningSubtitle => '⚠️ This action cannot be undone';
+
+  @override
+  String get resetIntroTitle => 'Reset Intro';
+
+  @override
+  String get resetIntroSubtitle => 'Show intro screens again';
+
+  @override
+  String get incomeCategories => 'Income Categories';
+
+  @override
+  String get incomeCategoriesDesc => 'Manage categories for income';
+
+  @override
+  String get expenseCategories => 'Expense Categories';
+
+  @override
+  String get expenseCategoriesDesc => 'Manage categories for expenses';
+
+  @override
+  String get accountsTitle => 'Accounts';
+
+  @override
+  String get accountsDesc => 'Manage your accounts';
+
+  @override
+  String get enterNamePlaceholder => 'Enter name...';
+
+  @override
+  String get aboutAppSubtitle => 'Developer, Privacy, Support & More';
+
+  @override
+  String get setMonthlySpendingLimit => 'Set a monthly spending limit';
+
+  @override
+  String get joinPreviousMonthBalanceTitle => 'Join Previous Month Balance';
+
+  @override
+  String get joinPreviousMonthBalanceDesc =>
+      'Include previous month balance in current total';
+
+  @override
+  String get setMonthlyBudgetTitle => 'Set Monthly Budget';
+
+  @override
+  String get budgetAmountLabel => 'Budget Amount';
+
+  @override
+  String get budgetUpdated => 'Budget updated!';
+
+  @override
+  String get confirmDeleteTitle => 'Confirm Delete';
+
+  @override
+  String get confirmDeleteAllDesc =>
+      'Are you sure you want to delete all transactions and reset your balance? This action cannot be undone.';
+
+  @override
+  String get deleteAllButton => 'Delete All';
+
+  @override
+  String get failedDeleteAllData =>
+      'Failed to delete all data. Please try again.';
+
+  @override
+  String get resetIntroConfirmDesc =>
+      'This will show the intro screens again the next time you open the app. Your data will remain unchanged.';
+
+  @override
+  String editFieldTitle(String field) {
+    return 'Edit $field';
+  }
+
+  @override
+  String enterFieldHint(String field) {
+    return 'Enter $field';
+  }
+
+  @override
+  String statusLabel(String status) {
+    return 'Status: $status';
+  }
+
+  @override
+  String manageItemsTitle(String type) {
+    return 'Manage ${type}s';
+  }
+
+  @override
+  String noItemsFound(String type) {
+    return 'No ${type}s found.';
+  }
+
+  @override
+  String addItemButton(String type) {
+    return 'Add $type';
+  }
+
+  @override
+  String editItemTitle(String type) {
+    return 'Edit $type';
+  }
+
+  @override
+  String itemNameLabel(String type) {
+    return '$type Name';
+  }
+
+  @override
+  String monthlyLimitSubtitle(String budget) {
+    return 'Monthly limit: $budget';
+  }
+
+  @override
+  String failedResetIntro(String error) {
+    return 'Failed to reset intro. Please try again.\\n$error';
+  }
+
+  @override
+  String get failedUpdateAutoDetection => 'Failed to update auto-detection';
+
+  @override
+  String get actionCannotBeUndone => 'This action cannot be undone.';
+
+  @override
+  String deleteTransactionsCountTitle(int count) {
+    return 'Delete $count transactions?';
+  }
+
+  @override
+  String deletedTransactionsCount(int count) {
+    return 'Deleted $count transactions';
+  }
+
+  @override
+  String get transactionHistoryTitle => 'Transaction History';
+
+  @override
+  String get upiIdMissingTitle => 'UPI ID Missing';
+
+  @override
+  String get upiIdMissingDesc =>
+      'Please set your UPI ID in Settings to request money via QR code.';
+
+  @override
+  String get openSettings => 'Open Settings';
+
+  @override
+  String get recipientFallback => 'Recipient';
+
+  @override
+  String get paymentLinkCopied => 'Payment link copied!';
+
+  @override
+  String get linkButton => 'Link';
+
+  @override
+  String get shareQr => 'Share QR';
+
+  @override
+  String get upiPaymentLinkSubject => 'UPI Payment Link';
+
+  @override
+  String requestingFrom(String name) {
+    return 'Requesting from $name';
+  }
+
+  @override
+  String upiIdColonValue(String id) {
+    return 'UPI ID: $id';
+  }
+
+  @override
+  String failedShareQr(String error) {
+    return 'Failed to share QR image: $error';
+  }
+
+  @override
+  String payViaUpiQrFor(String name) {
+    return 'Pay via UPI QR for $name';
+  }
+
+  @override
+  String get pleaseSelectPerson => 'Please select a person';
+
+  @override
+  String get amountInInr => 'Amount in INR';
+
+  @override
+  String get currency => 'Currency';
+
+  @override
+  String get selectCurrency => 'Select Currency';
+
+  @override
+  String get searchCurrency => 'Search currency';
+
+  @override
+  String get autoDetectCurrency => 'Auto-detect currency';
+
+  @override
+  String get autoDetectCurrencyDesc =>
+      'Automatically match your device\'s region';
+
+  @override
+  String get popularCurrencies => 'Popular';
+
+  @override
+  String get allCurrencies => 'All Currencies';
+
+  @override
+  String get noCurrencyFound => 'No currency found';
+
+  @override
+  String get requiredField => 'Required';
+
+  @override
+  String get quickCategories => 'Quick Categories';
+
+  @override
+  String get saveToPerson => 'Save to Person';
+
+  @override
+  String get noPeopleCreateHint =>
+      'No people added yet. Create people under the People section.';
+
+  @override
+  String get selectPersonLabel => 'Select Person';
+
+  @override
+  String get selectCategoryTitle => 'Select Category';
+
+  @override
+  String get updateTransactionButton => 'Update Transaction';
+
+  @override
+  String get saveTransactionButton => 'Save Transaction';
+
+  @override
+  String linkedToRecord(String name) {
+    return 'Linked to $name\'s record';
+  }
+
+  @override
+  String selectItemTitle(String type) {
+    return 'Select $type';
+  }
+
+  @override
+  String get personSingular => 'Person';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get setupFailedRetry => 'Failed to complete setup. Please try again.';
+
+  @override
+  String get backButton => 'Back';
+
+  @override
+  String get voiceInputExampleHint =>
+      'Say something like \'Spent 500 on dinner\'';
+
+  @override
+  String get autoDetectionEnabledSuccess =>
+      'Auto-detection enabled successfully!';
+
+  @override
+  String openingRequestQrFor(String name) {
+    return 'Opening Request QR for $name';
+  }
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get uncategorized => 'Uncategorized';
+
+  @override
+  String get timeLabel => 'Time';
+
+  @override
+  String get statusColumnLabel => 'Status';
+
+  @override
+  String get completedLabel => 'Completed';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get serviceLabel => 'Service';
+
+  @override
+  String get refIdLabel => 'Ref ID';
+
+  @override
+  String get detectedViaLabel => 'Detected via';
+
+  @override
+  String get attachmentsLabel => 'Attachments';
+
+  @override
+  String get originalLogLabel => 'Original Log';
+
+  @override
+  String get noNoteProvided => 'No note provided';
+
+  @override
+  String get tapToUnlock => 'Tap to Unlock';
+
+  @override
+  String get addPeopleEmptyDesc => 'Add people to track transactions with them';
+
+  @override
+  String get noPeopleMatchSearch => 'No people match your search';
+
+  @override
+  String get okay => 'Okay';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get unexpectedErrorOccurred => 'An unexpected error occurred';
+
+  @override
+  String get autoDetectionActive => 'Auto-Detection Active';
+
+  @override
+  String get unknownSource => 'Unknown Source';
+
+  @override
+  String get noMessageContentAvailable => 'No message content available';
+
+  @override
+  String get addManually => 'Add Manually';
+
+  @override
+  String get detectedAsIncome => 'Detected as Income';
+
+  @override
+  String get detectedAsExpense => 'Detected as Expense';
+
+  @override
+  String sourceColonValue(String source) {
+    return 'Source: $source';
+  }
+
+  @override
+  String get sourceNotification => 'Notification';
+
+  @override
+  String get sourceSms => 'SMS';
+
+  @override
+  String get sourceRecheckHistory => 'Recheck History';
+
+  @override
+  String get sourceManualAddHistory => 'Manual Add (History)';
+
+  @override
+  String get recentLabel => 'Recent';
+
+  @override
+  String get oldestLabel => 'Oldest';
+
+  @override
+  String get highestLabel => 'Highest';
+
+  @override
+  String get lowestLabel => 'Lowest';
+
+  @override
+  String get glassBlurEffectsTitle => 'Glass Blur Effects';
+
+  @override
+  String get glassBlurEffectsSubtitle =>
+      'Soft blur on glass panels and dialogs — uses more processing power, so turn it off on older devices for smoother performance.';
+
+  @override
+  String get tourBalanceCardTitle => 'Your Balance';
+
+  @override
+  String get tourBalanceCardDesc =>
+      'Tap for income & expense details. Long-press to edit your starting balance.';
+
+  @override
+  String get tourAddIncomeTitle => 'Add Income';
+
+  @override
+  String get tourAddIncomeDesc => 'Log money you\'ve received.';
+
+  @override
+  String get tourMicTitle => 'Record by Voice';
+
+  @override
+  String get tourMicDesc =>
+      'Press and hold, say the amount and what it was for, then release — it\'s saved automatically.';
+
+  @override
+  String get tourAddExpenseTitle => 'Add Expense';
+
+  @override
+  String get tourAddExpenseDesc => 'Log money you\'ve spent.';
+
+  @override
+  String get tourAddPersonTitle => 'Add a Person';
+
+  @override
+  String get tourAddPersonDesc => 'Track what you owe each other over time.';
+
+  @override
+  String get tourPersonCardTitle => 'Open Their Ledger';
+
+  @override
+  String get tourPersonCardDesc =>
+      'Tap a card to see the full history with this person and settle up.';
+
+  @override
+  String get tourPayNowTitle => 'Settle Up';
+
+  @override
+  String get tourPayNowDesc => 'Pay what you owe them directly via UPI.';
+
+  @override
+  String get tourEditPersonTitle => 'Edit Person';
+
+  @override
+  String get tourEditPersonDesc => 'Change their name or photo.';
+
+  @override
+  String get tourDeletePersonTitle => 'Careful — Long-Press Deletes';
+
+  @override
+  String get tourDeletePersonDesc =>
+      'Long-pressing this header permanently deletes this person and their history. You\'ll be asked to confirm first.';
+
+  @override
+  String get tourDeleteTxTitle => 'Long-Press to Delete';
+
+  @override
+  String get tourDeleteTxDesc =>
+      'Tap a transaction to edit it, or long-press to delete it.';
+
+  @override
+  String get replayTipsTitle => 'Show Tips Again';
+
+  @override
+  String get replayTipsSubtitle =>
+      'Replay the pointer-hint tours on Home, People, and Person Details.';
+
+  @override
+  String get replayTipsDone =>
+      'Tips will show again next time you open those screens.';
 }

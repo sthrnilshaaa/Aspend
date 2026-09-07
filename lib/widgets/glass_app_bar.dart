@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:aspends_tracker/core/utils/blur_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/const/app_dimensions.dart';
@@ -67,7 +68,7 @@ class GlassAppBar extends StatelessWidget {
         children: [
           // Persistent Glass Effect Layer
           ClipRRect(
-            child: BackdropFilter(
+            child: ConditionalBackdropFilter(
               filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
               child: Container(
                 decoration: BoxDecoration(

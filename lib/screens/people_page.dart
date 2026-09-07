@@ -7,18 +7,23 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'dart:ui';
 import 'dart:io';
 import '../core/const/app_assets.dart';
 import '../core/models/person.dart';
 import '../core/view_models/person_view_model.dart';
 import '../core/view_models/theme_view_model.dart';
+import '../core/view_models/liquid_navbar_view_model.dart';
+import '../core/services/tour_service.dart';
+import '../core/const/tour_style.dart';
 import '../person/person_details_page.dart';
 import '../core/utils/responsive_utils.dart';
 import '../../widgets/header_delegate.dart';
 import '../../widgets/modern_card.dart';
 import '../../widgets/glass_app_bar.dart';
 import '../../widgets/empty_state_view.dart';
+import '../../widgets/empty_state_illustrations.dart';
 import '../core/const/app_colors.dart';
 import '../core/const/app_dimensions.dart';
 import '../core/const/app_typography.dart';
@@ -37,6 +42,11 @@ class _PeopleTabState extends State<PeopleTab> {
   bool _showFab = true;
   String? _searchQuery;
   late TextEditingController _searchController;
+
+  // Pointer-hint tour — see the matching fields/comment in _HomePageState.
+  final GlobalKey _tourAddPersonKey = GlobalKey();
+  final GlobalKey _tourFirstCardKey = GlobalKey();
+  bool _tourAttempted = false;
 
   @override
   void initState() {
@@ -78,6 +88,26 @@ class _PeopleTabState extends State<PeopleTab> {
     super.dispose();
   }
 
+  /// Starts the People pointer-hint tour the first time this tab is
+  /// actually the visible one and only if it hasn't already been seen. The
+  /// first-card step is skipped entirely when there's no one added yet —
+  /// `hasPeople` reflects that at the moment the tab became active.
+  void _maybeStartTour(bool isActiveTab, bool hasPeople) {
+    if (_tourAttempted || !isActiveTab) return;
+    _tourAttempted = true;
+    TourService.hasSeenPeople().then((seen) {
+      if (seen || !mounted) return;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        ShowcaseView.get().startShowCase([
+          _tourAddPersonKey,
+          if (hasPeople) _tourFirstCardKey,
+        ]);
+        TourService.markPeopleSeen();
+      });
+    });
+  }
+
   void _showPersonDialog(BuildContext context, {Person? existingPerson}) {
     final controller = TextEditingController(text: existingPerson?.name);
     final upiController = TextEditingController(text: existingPerson?.upiId);
@@ -91,11 +121,9 @@ class _PeopleTabState extends State<PeopleTab> {
         builder: (context, setStateDialog) => AlertDialog(
           shape: RoundedRectangleBorder(
               borderRadius:
-                  BorderRadius.circular(AppDimensions.borderRadiusLarge)),
+                  BorderRadius.circular(AppDimensions.borderRadiusMinLarge)),
           title: Text(
-            existingPerson == null
-                ? l10n.addNewPerson
-                : l10n.editPerson,
+            existingPerson == null ? l10n.addNewPerson : l10n.editPerson,
             style: GoogleFonts.dmSans(
               fontSize: AppTypography.fontSizeLarge,
               fontWeight: AppTypography.fontWeightBold,
@@ -127,7 +155,7 @@ class _PeopleTabState extends State<PeopleTab> {
                         ? theme.colorScheme.primary.withValues(alpha: 0.1)
                         : theme.colorScheme.surface,
                     borderRadius: BorderRadius.circular(
-                        AppDimensions.borderRadiusLarge),
+                        AppDimensions.borderRadiusMinLarge),
                     border: Border.all(
                       color: selectedPhotoPath != null
                           ? theme.colorScheme.primary
@@ -165,8 +193,7 @@ class _PeopleTabState extends State<PeopleTab> {
                                 style: GoogleFonts.dmSans(
                                   fontSize: AppTypography.fontSizeXSmall,
                                   color: theme.colorScheme.primary,
-                                  fontWeight:
-                                      AppTypography.fontWeightSemiBold,
+                                  fontWeight: AppTypography.fontWeightSemiBold,
                                 ),
                               ),
                             ],
@@ -190,11 +217,11 @@ class _PeopleTabState extends State<PeopleTab> {
                 controller: controller,
                 decoration: InputDecoration(
                   labelText: l10n.personName,
-                  labelStyle: GoogleFonts.dmSans(
-                      fontSize: AppTypography.fontSizeSmall),
+                  labelStyle:
+                      GoogleFonts.dmSans(fontSize: AppTypography.fontSizeSmall),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                        AppDimensions.borderRadiusSmall),
+                    borderRadius:
+                        BorderRadius.circular(AppDimensions.borderRadiusSmall),
                   ),
                   filled: true,
                   fillColor: theme.colorScheme.surface,
@@ -209,11 +236,11 @@ class _PeopleTabState extends State<PeopleTab> {
                 controller: upiController,
                 decoration: InputDecoration(
                   labelText: l10n.upiId,
-                  labelStyle: GoogleFonts.dmSans(
-                      fontSize: AppTypography.fontSizeSmall),
+                  labelStyle:
+                      GoogleFonts.dmSans(fontSize: AppTypography.fontSizeSmall),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                        AppDimensions.borderRadiusSmall),
+                    borderRadius:
+                        BorderRadius.circular(AppDimensions.borderRadiusSmall),
                   ),
                   filled: true,
                   fillColor: theme.colorScheme.surface,
@@ -233,7 +260,7 @@ class _PeopleTabState extends State<PeopleTab> {
             TextButton(
               onPressed: () => Navigator.pop(context),
               child: Text(
-                'Cancel',
+                l10n.cancel,
                 style: GoogleFonts.dmSans(
                     fontSize: 16, fontWeight: FontWeight.w600),
               ),
@@ -267,11 +294,11 @@ class _PeopleTabState extends State<PeopleTab> {
                 backgroundColor: theme.colorScheme.primary,
                 foregroundColor: theme.colorScheme.onPrimary,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        AppDimensions.borderRadiusSmall)),
+                    borderRadius:
+                        BorderRadius.circular(AppDimensions.borderRadiusSmall)),
               ),
               child: Text(
-                existingPerson == null ? 'Add' : 'Update',
+                existingPerson == null ? l10n.add : l10n.update,
                 style: GoogleFonts.dmSans(
                     fontSize: 16, fontWeight: FontWeight.w600),
               ),
@@ -289,6 +316,8 @@ class _PeopleTabState extends State<PeopleTab> {
       required Color color,
       required dynamic icon}) {
     final theme = Theme.of(context);
+    final currencySymbol =
+        context.select<ThemeViewModel, String>((vm) => vm.currencySymbol);
     final formatted = NumberFormat.currency(
       symbol: '',
       decimalDigits: 2,
@@ -311,7 +340,7 @@ class _PeopleTabState extends State<PeopleTab> {
                 style: BorderStyle.solid,
               ),
               borderRadius:
-                  BorderRadius.circular(AppDimensions.borderRadiusXLarge),
+                  BorderRadius.circular(AppDimensions.borderRadiusLarge),
               color: color.withValues(alpha: 0.1),
             ),
             child: Padding(
@@ -365,7 +394,7 @@ class _PeopleTabState extends State<PeopleTab> {
                   RichText(
                     text: TextSpan(children: [
                       TextSpan(
-                        text: '₹',
+                        text: currencySymbol,
                         style: GoogleFonts.dmSans(
                           fontSize: ResponsiveUtils.getResponsiveFontSize(
                               context,
@@ -413,17 +442,6 @@ class _PeopleTabState extends State<PeopleTab> {
                       ),
                     ]),
                   ),
-                  // Text(
-                  //   '₹${amount.toStringAsFixed(2)}',
-                  //   style: GoogleFonts.dmSans(
-                  //     fontSize: ResponsiveUtils.getResponsiveFontSize(context,
-                  //         mobile: 20, tablet: 24, desktop: 28),
-                  //     fontWeight: FontWeight.w800,
-                  //     color: color,
-                  //     letterSpacing: -0.5,
-                  //   ),
-                  //   overflow: TextOverflow.ellipsis,
-                  // ),
                 ],
               ),
             ),
@@ -436,7 +454,7 @@ class _PeopleTabState extends State<PeopleTab> {
           child: Container(
             height: 3,
             decoration: BoxDecoration(
-              color: color,
+              color: color.withValues(alpha: 0.3),
               // rounded corners only on the top
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(AppDimensions.borderRadiusFull),
@@ -445,22 +463,6 @@ class _PeopleTabState extends State<PeopleTab> {
             ),
           ),
         ),
-        // Positioned(
-        //   left: 35,
-        //   right: 35,
-        //   top: 0,
-        //   child: Container(
-        //     height: 3,
-        //     decoration: BoxDecoration(
-        //       color:  color,
-        //       // rounded corners only on the top
-        //       borderRadius: const BorderRadius.only(
-        //         topLeft: Radius.circular(AppDimensions.borderRadiusFull),
-        //         topRight: Radius.circular(AppDimensions.borderRadiusFull),
-        //       ),
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }
@@ -476,6 +478,10 @@ class _PeopleTabState extends State<PeopleTab> {
         .toList();
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
+    // Only rebuilds People when "is People the active tab" actually flips.
+    final isActiveTab = context
+        .select<LiquidNavbarViewModel, bool>((vm) => vm.currentIndex == 1);
+    _maybeStartTour(isActiveTab, allSortedPeople.isNotEmpty);
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -502,19 +508,34 @@ class _PeopleTabState extends State<PeopleTab> {
               if (people.isEmpty)
                 SliverFillRemaining(
                   hasScrollBody: false,
-                  child: EmptyStateView(
-                    icon: Icons.people_outline,
-                    title: l10n.noPeopleYet,
-                    description: 'Add people to track transactions with them',
-                  ),
+                  child: allSortedPeople.isEmpty
+                      ? EmptyStateView(
+                          // No action button here on purpose — the
+                          // "Add Person" FAB is already on screen, so a
+                          // second add-person CTA would just duplicate it.
+                          illustration: const PeopleEmptyIllustration(
+                            color: AppColors.accentIndigo,
+                            backColor: AppColors.accentIndigoDeep,
+                          ),
+                          title: l10n.noPeopleYet,
+                          description: l10n.addPeopleEmptyDesc,
+                          accentColor: AppColors.accentIndigo,
+                        )
+                      : EmptyStateView(
+                          icon: Icons.search_off_rounded,
+                          title: l10n.noPeopleMatchSearch,
+                          accentColor: AppColors.accentIndigo,
+                        ),
                 )
               else
                 SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   sliver: SliverGrid(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount:
-                          ResponsiveUtils.getResponsiveGridCrossAxisCount(context),
+                          ResponsiveUtils.getResponsiveGridCrossAxisCount(
+                              context),
                       mainAxisSpacing: 16,
                       crossAxisSpacing: 16,
                       childAspectRatio: ResponsiveUtils.isMobile(context)
@@ -527,21 +548,22 @@ class _PeopleTabState extends State<PeopleTab> {
                         final total =
                             personViewModel.getTotalForPerson(person.name);
                         final isPositive = total >= 0;
-    
-                        return RepaintBoundary(
+
+                        final card = RepaintBoundary(
                           child: ZoomTapAnimation(
                             onTap: () {
                               HapticFeedback.selectionClick();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) => PersonDetailPage(person: person),
+                                  builder: (_) =>
+                                      PersonDetailPage(person: person),
                                 ),
                               );
                             },
                             child: ModernCard(
                               padding: const EdgeInsets.all(16),
-                              borderRadius: AppDimensions.borderRadiusXLarge,
+                              borderRadius: AppDimensions.borderRadiusLarge,
                               color: theme.colorScheme.surface,
                               child: IntrinsicHeight(
                                 child: Row(
@@ -549,21 +571,20 @@ class _PeopleTabState extends State<PeopleTab> {
                                     Stack(
                                       children: [
                                         Container(
-                                          width:
-                                              ResponsiveUtils.getResponsiveIconSize(
-                                                  context,
+                                          width: ResponsiveUtils
+                                              .getResponsiveIconSize(context,
                                                   mobile: 60,
                                                   tablet: 56,
                                                   desktop: 64),
-                                          height:
-                                              ResponsiveUtils.getResponsiveIconSize(
-                                                  context,
+                                          height: ResponsiveUtils
+                                              .getResponsiveIconSize(context,
                                                   mobile: 60,
                                                   tablet: 56,
                                                   desktop: 64),
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
-                                                AppDimensions.borderRadiusLarge),
+                                                AppDimensions
+                                                    .borderRadiusMinLarge),
                                             color: theme.colorScheme.primary
                                                 .withValues(alpha: 0.1),
                                             border: Border.all(
@@ -580,17 +601,20 @@ class _PeopleTabState extends State<PeopleTab> {
                                                         .circular(AppDimensions
                                                             .borderRadiusMinLarge),
                                                     child: person.photoPath!
-                                                            .startsWith('assets/')
+                                                            .startsWith(
+                                                                'assets/')
                                                         ? Image.asset(
                                                             person.photoPath!,
                                                             fit: BoxFit.cover)
                                                         : Image.file(
-                                                            File(person.photoPath!),
+                                                            File(person
+                                                                .photoPath!),
                                                             fit: BoxFit.cover,
                                                           ),
                                                   )
                                                 : Icon(Icons.person_rounded,
-                                                    color: theme.colorScheme.primary,
+                                                    color: theme
+                                                        .colorScheme.primary,
                                                     size: 24),
                                           ),
                                         ),
@@ -606,7 +630,8 @@ class _PeopleTabState extends State<PeopleTab> {
                                                   : AppColors.accentRed,
                                               shape: BoxShape.circle,
                                               border: Border.all(
-                                                  color: theme.colorScheme.surface,
+                                                  color:
+                                                      theme.colorScheme.surface,
                                                   width: 2),
                                             ),
                                           ),
@@ -618,19 +643,22 @@ class _PeopleTabState extends State<PeopleTab> {
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             person.name,
                                             style: GoogleFonts.dmSans(
                                               fontWeight: FontWeight.w700,
                                               fontSize: ResponsiveUtils
-                                                  .getResponsiveFontSize(context,
+                                                  .getResponsiveFontSize(
+                                                      context,
                                                       mobile: AppTypography
                                                           .fontSizeMedium,
                                                       tablet: 17,
                                                       desktop: 19),
-                                              color: theme.colorScheme.onSurface,
+                                              color:
+                                                  theme.colorScheme.onSurface,
                                             ),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
@@ -644,41 +672,54 @@ class _PeopleTabState extends State<PeopleTab> {
                                               fontSize: 11,
                                               color: theme.colorScheme.onSurface
                                                   .withValues(alpha: 0.7),
-                                              fontWeight:
-                                                  AppTypography.fontWeightMedium,
+                                              fontWeight: AppTypography
+                                                  .fontWeightMedium,
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
                                     const SizedBox(width: 8),
-                                        Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              '₹ ${total.abs().toStringAsFixed(0)}',
-                                              style: GoogleFonts.dmSans(
-                                                fontWeight: FontWeight.w900,
-                                                fontSize:
-                                                    ResponsiveUtils.getResponsiveFontSize(
-                                                        context,
-                                                        mobile: 16,
-                                                        tablet: 18,
-                                                        desktop: 20),
-                                                color: isPositive
-                                                    ? AppColors.accentGreen
-                                                    : AppColors.accentRed,
-                                              ),
-                                            ),
-                                          ],
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          '${context.select<ThemeViewModel, String>((vm) => vm.currencySymbol)} ${total.abs().toStringAsFixed(0)}',
+                                          style: GoogleFonts.dmSans(
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: ResponsiveUtils
+                                                .getResponsiveFontSize(context,
+                                                    mobile: 16,
+                                                    tablet: 18,
+                                                    desktop: 20),
+                                            color: isPositive
+                                                ? AppColors.accentGreen
+                                                : AppColors.accentRed,
+                                          ),
                                         ),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
                           ),
                         );
+                        return index == 0
+                            ? Showcase(
+                                key: _tourFirstCardKey,
+                                title: l10n.tourPersonCardTitle,
+                                description: l10n.tourPersonCardDesc,
+                                titleTextStyle: TourStyle.title(),
+                                descTextStyle: TourStyle.description(),
+                                targetBorderRadius: BorderRadius.circular(
+                                    AppDimensions.borderRadiusLarge),
+                                child: card,
+                              )
+                            : card;
                       },
                       childCount: people.length,
                     ),
@@ -717,7 +758,7 @@ class _PeopleTabState extends State<PeopleTab> {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
     return ClipRRect(
-      child: BackdropFilter(
+      child: ConditionalBackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: Container(
           decoration: BoxDecoration(
@@ -964,7 +1005,7 @@ class _PeopleTabState extends State<PeopleTab> {
         decoration: BoxDecoration(
           color: theme.colorScheme.surface,
           borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(AppDimensions.borderRadiusXLarge)),
+              top: Radius.circular(AppDimensions.borderRadiusLarge)),
         ),
         padding: const EdgeInsets.all(AppDimensions.paddingLarge),
         child: Column(
@@ -1033,38 +1074,46 @@ class _PeopleTabState extends State<PeopleTab> {
 
   Widget _buildAddPersonFab(BuildContext context, AppLocalizations l10n) {
     final theme = Theme.of(context);
-    return ZoomTapAnimation(
-      onTap: () {
-        _showPersonDialog(context);
-        HapticFeedback.lightImpact();
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 80),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(28),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              decoration: BoxDecoration(
-                color: theme.colorScheme.surface.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(28),
-                border: Border.all(
-                  color: theme.colorScheme.outline.withValues(alpha: 0.2),
-                  width: 1,
+    return Showcase(
+      key: _tourAddPersonKey,
+      title: l10n.tourAddPersonTitle,
+      description: l10n.tourAddPersonDesc,
+      titleTextStyle: TourStyle.title(),
+      descTextStyle: TourStyle.description(),
+      targetBorderRadius: BorderRadius.circular(28),
+      child: ZoomTapAnimation(
+        onTap: () {
+          _showPersonDialog(context);
+          HapticFeedback.lightImpact();
+        },
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 80),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(28),
+            child: ConditionalBackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surface.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(28),
+                  border: Border.all(
+                    color: theme.colorScheme.outline.withValues(alpha: 0.2),
+                    width: 1,
+                  ),
                 ),
-              ),
-              child: FloatingActionButton.extended(
-                onPressed: null,
-                // Tap is handled by ZoomTapAnimation
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                icon: const Icon(Icons.person_add_alt, size: 24),
-                label: Text(
-                  l10n.addPerson,
-                  style: GoogleFonts.dmSans(
-                      fontSize: AppTypography.fontSizeMedium,
-                      fontWeight: AppTypography.fontWeightSemiBold,
-                      color: theme.colorScheme.onSurface),
+                child: FloatingActionButton.extended(
+                  onPressed: null,
+                  // Tap is handled by ZoomTapAnimation
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  icon: const Icon(Icons.person_add_alt, size: 24),
+                  label: Text(
+                    l10n.addPerson,
+                    style: GoogleFonts.dmSans(
+                        fontSize: AppTypography.fontSizeMedium,
+                        fontWeight: AppTypography.fontWeightSemiBold,
+                        color: theme.colorScheme.onSurface),
+                  ),
                 ),
               ),
             ),

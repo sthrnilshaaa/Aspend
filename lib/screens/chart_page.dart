@@ -15,6 +15,7 @@ import '../../widgets/modern_card.dart';
 import '../../widgets/glass_app_bar.dart';
 import '../../widgets/range_selector.dart';
 import '../../widgets/empty_state_view.dart';
+import '../../widgets/empty_state_illustrations.dart';
 import '../core/utils/responsive_utils.dart';
 import '../core/utils/transaction_utils.dart';
 import '../core/const/app_colors.dart';
@@ -184,7 +185,7 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
                                 title: l10n.topCategory,
                                 value: topCategory ?? 'N/A',
                                 subtitle: topCategory != null
-                                    ? '₹${topCategoryAmount.toStringAsFixed(0)}'
+                                    ? '${themeViewModel.currencySymbol}${topCategoryAmount.toStringAsFixed(0)}'
                                     : l10n.noSpending,
                                 icon: topCategory != null
                                     ? TransactionUtils.getCategorySvg(
@@ -202,7 +203,8 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
                               child: _buildInsightCard(
                                 context,
                                 title: l10n.avgDailySpend,
-                                value: '₹${avgSpending.toStringAsFixed(0)}',
+                                value:
+                                    '${themeViewModel.currencySymbol}${avgSpending.toStringAsFixed(0)}',
                                 subtitle: l10n.perDay,
                                 icon: Icons.timer_rounded,
                                 color: Colors.orangeAccent,
@@ -241,9 +243,10 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
                                     child: TabBarView(
                                       controller: _tabController,
                                       children: [
-                                        _buildPieChart(
-                                            totalIncome, totalSpend, isDark, l10n),
-                                        _buildBarChart(filteredTxs, isDark, l10n),
+                                        _buildPieChart(totalIncome, totalSpend,
+                                            isDark, l10n),
+                                        _buildBarChart(
+                                            filteredTxs, isDark, l10n),
                                         _buildCategoryChart(
                                             filteredTxs, isDark, l10n),
                                       ],
@@ -307,7 +310,8 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
                                   _buildPieChart(
                                       totalIncome, totalSpend, isDark, l10n),
                                   _buildBarChart(filteredTxs, isDark, l10n),
-                                  _buildCategoryChart(filteredTxs, isDark, l10n),
+                                  _buildCategoryChart(
+                                      filteredTxs, isDark, l10n),
                                 ],
                               ),
                             ),
@@ -481,13 +485,15 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildPieChart(double totalIncome, double totalSpend, bool isDark, AppLocalizations l10n) {
+  Widget _buildPieChart(double totalIncome, double totalSpend, bool isDark,
+      AppLocalizations l10n) {
     final total = totalIncome + totalSpend;
     if (total == 0) return _buildEmptyState(isDark, l10n);
 
     final netBalance = totalIncome - totalSpend;
     final isSurplus = netBalance >= 0;
     final theme = Theme.of(context);
+    final currencySymbol = context.read<ThemeViewModel>().currencySymbol;
 
     return Stack(
       alignment: Alignment.center,
@@ -505,7 +511,7 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
             ),
             const SizedBox(height: 4),
             Text(
-              '${isSurplus ? '+' : ''}₹${netBalance.toStringAsFixed(0)}',
+              '${isSurplus ? '+' : ''}$currencySymbol${netBalance.toStringAsFixed(0)}',
               style: GoogleFonts.dmSans(
                 fontSize: AppTypography.fontSizeMedium,
                 fontWeight: FontWeight.w800,
@@ -542,8 +548,8 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
                     color: Colors.white,
                     fontWeight: AppTypography.fontWeightBold,
                     fontSize: AppTypography.fontSizeXSmall),
-                badgeWidget:
-                    _buildPieBadge(SvgAppIcons.expenseIcon, AppColors.accentRed),
+                badgeWidget: _buildPieBadge(
+                    SvgAppIcons.expenseIcon, AppColors.accentRed),
                 badgePositionPercentageOffset: 1.15,
               ),
               PieChartSectionData(
@@ -557,8 +563,8 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
                     color: Colors.white,
                     fontWeight: AppTypography.fontWeightBold,
                     fontSize: AppTypography.fontSizeXSmall),
-                badgeWidget:
-                    _buildPieBadge(SvgAppIcons.incomeIcon, AppColors.accentGreen),
+                badgeWidget: _buildPieBadge(
+                    SvgAppIcons.incomeIcon, AppColors.accentGreen),
                 badgePositionPercentageOffset: 1.15,
               ),
             ],
@@ -594,8 +600,10 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildBarChart(List<Transaction> transactions, bool isDark, AppLocalizations l10n) {
+  Widget _buildBarChart(
+      List<Transaction> transactions, bool isDark, AppLocalizations l10n) {
     if (transactions.isEmpty) return _buildEmptyState(isDark, l10n);
+    final currencySymbol = context.read<ThemeViewModel>().currencySymbol;
 
     // 1. Group transactions by selected range
     final Map<String, _TrendData> groupedData = {};
@@ -649,7 +657,7 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
               final isIncome = rodIndex == 0;
               return BarTooltipItem(
-                '${isIncome ? l10n.income : l10n.expense}\n₹${rod.toY.toStringAsFixed(0)}',
+                '${isIncome ? l10n.income : l10n.expense}\n$currencySymbol${rod.toY.toStringAsFixed(0)}',
                 GoogleFonts.dmSans(
                   fontWeight: AppTypography.fontWeightBold,
                   color: isIncome ? AppColors.accentGreen : AppColors.accentRed,
@@ -729,7 +737,8 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
                   end: Alignment.bottomCenter,
                 ),
                 width: entries.length > 15 ? 6 : 10,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(4)),
               ),
               BarChartRodData(
                 toY: value.expense,
@@ -742,7 +751,8 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
                   end: Alignment.bottomCenter,
                 ),
                 width: entries.length > 15 ? 6 : 10,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(4)),
               ),
             ],
           );
@@ -751,7 +761,8 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildCategoryChart(List<Transaction> transactions, bool isDark, AppLocalizations l10n) {
+  Widget _buildCategoryChart(
+      List<Transaction> transactions, bool isDark, AppLocalizations l10n) {
     Map<String, double> categoryData = {};
     for (var tx in transactions) {
       if (!tx.isIncome) {
@@ -810,7 +821,8 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
                               fontWeight: AppTypography.fontWeightBold)),
                     ],
                   ),
-                  Text('₹${item.value.toStringAsFixed(0)}',
+                  Text(
+                      '${context.read<ThemeViewModel>().currencySymbol}${item.value.toStringAsFixed(0)}',
                       style: GoogleFonts.dmSans(
                           fontWeight: AppTypography.fontWeightExtraBold,
                           color: Colors.grey)),
@@ -849,8 +861,8 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
                                     .withValues(alpha: 0.7),
                               ],
                             ),
-                            borderRadius:
-                                BorderRadius.circular(AppDimensions.paddingXSmall),
+                            borderRadius: BorderRadius.circular(
+                                AppDimensions.paddingXSmall),
                           ),
                         ),
                       );
@@ -867,8 +879,10 @@ class _ChartPageState extends State<ChartPage> with TickerProviderStateMixin {
 
   Widget _buildEmptyState(bool isDark, AppLocalizations l10n) {
     return EmptyStateView(
-      icon: Icons.auto_graph_rounded,
+      illustration: const ChartEmptyIllustration(color: AppColors.accentAmber),
       title: l10n.noDataFound,
+      description: l10n.analyticsDesc,
+      accentColor: AppColors.accentAmber,
     );
   }
 }

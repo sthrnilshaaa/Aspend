@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:aspends_tracker/core/repositories/settings_repository.dart';
+import 'package:aspends_tracker/core/const/app_currencies.dart';
+import 'package:aspends_tracker/core/services/currency_service.dart';
 
 class ThemeViewModel with ChangeNotifier {
   final SettingsRepository _repository;
@@ -16,6 +18,9 @@ class ThemeViewModel with ChangeNotifier {
   String? _upiId;
   String? _upiName;
   Locale? _locale;
+  AppCurrency _currency = AppCurrencies.fallback;
+  bool _currencyAutoDetect = true;
+  bool _enableBlurEffects = false;
 
   ThemeViewModel(this._repository) {
     _loadSettings();
@@ -33,6 +38,11 @@ class ThemeViewModel with ChangeNotifier {
   String? get upiId => _upiId;
   String? get upiName => _upiName;
   Locale? get locale => _locale;
+  AppCurrency get currency => _currency;
+  String get currencySymbol => _currency.symbol;
+  String get currencyCode => _currency.code;
+  bool get currencyAutoDetect => _currencyAutoDetect;
+  bool get enableBlurEffects => _enableBlurEffects;
 
   bool get isDarkMode {
     final brightness =
@@ -56,6 +66,16 @@ class ThemeViewModel with ChangeNotifier {
     final localeCode = _repository.getLocale();
     if (localeCode != null) {
       _locale = Locale(localeCode);
+    }
+
+    _currencyAutoDetect = _repository.getCurrencyAutoDetect();
+    _enableBlurEffects = _repository.getEnableBlurEffects();
+    _currency = CurrencyService.resolveCurrency(_repository);
+    if (_repository.getCurrencyCode() == null) {
+      // First run (or upgrade from a version without currency support):
+      // persist the resolved currency so it stays stable across restarts
+      // and other readers of SettingsRepository see the same value.
+      _repository.setCurrencyCode(_currency.code);
     }
 
     // Migration logic
@@ -210,6 +230,37 @@ class ThemeViewModel with ChangeNotifier {
   void setLocale(Locale? locale) async {
     _locale = locale;
     await _repository.setLocale(locale?.languageCode);
+    notifyListeners();
+  }
+
+  /// User explicitly picks a currency; this turns auto-detect off so their
+  /// choice sticks even if they later travel or change their device region.
+  void setCurrency(AppCurrency currency) async {
+    _currency = currency;
+    _currencyAutoDetect = false;
+    await _repository.setCurrencyCode(currency.code);
+    await _repository.setCurrencyAutoDetect(false);
+    notifyListeners();
+  }
+
+  /// Toggles following the device region automatically. Turning it back on
+  /// immediately re-detects and applies the current region's currency.
+  void setCurrencyAutoDetect(bool value) async {
+    _currencyAutoDetect = value;
+    await _repository.setCurrencyAutoDetect(value);
+    if (value) {
+      _currency = CurrencyService.detectFromDevice();
+      await _repository.setCurrencyCode(_currency.code);
+    }
+    notifyListeners();
+  }
+
+  /// Toggles glass/blur (BackdropFilter) effects app-wide. When disabled,
+  /// every blurred surface bypasses its BackdropFilter and simply renders
+  /// its content without the blur, leaving layout and behaviour unchanged.
+  void setEnableBlurEffects(bool value) async {
+    _enableBlurEffects = value;
+    await _repository.setEnableBlurEffects(value);
     notifyListeners();
   }
 }

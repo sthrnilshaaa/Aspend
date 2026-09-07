@@ -1,5 +1,6 @@
 import 'package:aspends_tracker/core/const/app_constants.dart';
-import 'package:hive_flutter/hive_flutter.dart'; 
+import 'package:flutter/foundation.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 class HiveService {
   static const String _settingsBoxName = AppConstants.settingsBox;
   static const String _transactionsBoxName = AppConstants.transactionsBox;
@@ -44,7 +45,7 @@ class HiveService {
           _settingsBox.get(_introCompletedAtKey, defaultValue: 0);
       return introCompleted == true && introCompletedAt > 0;
     } catch (e) {
-      print('Error checking intro completion: $e');
+      debugPrint('Error checking intro completion: $e');
       return false;
     }
   }
@@ -56,7 +57,7 @@ class HiveService {
           _introCompletedAtKey, DateTime.now().millisecondsSinceEpoch);
       await _settingsBox.flush();
     } catch (e) {
-      print('Error marking intro as completed: $e');
+      debugPrint('Error marking intro as completed: $e');
       rethrow;
     }
   }
@@ -67,7 +68,7 @@ class HiveService {
       await _settingsBox.delete(_introCompletedAtKey);
       await _settingsBox.flush();
     } catch (e) {
-      print('Error resetting intro: $e');
+      debugPrint('Error resetting intro: $e');
       rethrow;
     }
   }
@@ -78,7 +79,7 @@ class HiveService {
       final balance = _balanceBox.get(_startingBalanceKey, defaultValue: 0.0);
       return balance ?? 0.0;
     } catch (e) {
-      print('Error getting starting balance: $e');
+      debugPrint('Error getting starting balance: $e');
       return 0.0;
     }
   }
@@ -88,7 +89,7 @@ class HiveService {
       await _balanceBox.put(_startingBalanceKey, balance);
       await _balanceBox.flush();
     } catch (e) {
-      print('Error setting starting balance: $e');
+      debugPrint('Error setting starting balance: $e');
       rethrow;
     }
   }
@@ -98,7 +99,7 @@ class HiveService {
     try {
       return _transactionsBox.values.toList();
     } catch (e) {
-      print('Error getting all transactions: $e');
+      debugPrint('Error getting all transactions: $e');
       return [];
     }
   }
@@ -108,7 +109,7 @@ class HiveService {
       await _transactionsBox.add(transaction);
       await _transactionsBox.flush();
     } catch (e) {
-      print('Error saving transaction: $e');
+      debugPrint('Error saving transaction: $e');
       rethrow;
     }
   }
@@ -118,7 +119,7 @@ class HiveService {
       await _transactionsBox.clear();
       await _transactionsBox.flush();
     } catch (e) {
-      print('Error deleting all transactions: $e');
+      debugPrint('Error deleting all transactions: $e');
       rethrow;
     }
   }
@@ -128,7 +129,7 @@ class HiveService {
     try {
       return _peopleBox.values.toList();
     } catch (e) {
-      print('Error getting all people: $e');
+      debugPrint('Error getting all people: $e');
       return [];
     }
   }
@@ -138,7 +139,7 @@ class HiveService {
       await _peopleBox.add(person);
       await _peopleBox.flush();
     } catch (e) {
-      print('Error saving person: $e');
+      debugPrint('Error saving person: $e');
       rethrow;
     }
   }
@@ -150,7 +151,7 @@ class HiveService {
       await _peopleBox.flush();
       await _personTransactionsBox.flush();
     } catch (e) {
-      print('Error deleting all people: $e');
+      debugPrint('Error deleting all people: $e');
       rethrow;
     }
   }
@@ -160,7 +161,7 @@ class HiveService {
     try {
       return _personTransactionsBox.values.toList();
     } catch (e) {
-      print('Error getting all person transactions: $e');
+      debugPrint('Error getting all person transactions: $e');
       return [];
     }
   }
@@ -170,7 +171,7 @@ class HiveService {
       await _personTransactionsBox.add(personTransaction);
       await _personTransactionsBox.flush();
     } catch (e) {
-      print('Error saving person transaction: $e');
+      debugPrint('Error saving person transaction: $e');
       rethrow;
     }
   }
@@ -183,7 +184,7 @@ class HiveService {
       await setStartingBalance(0.0);
       await resetIntro();
     } catch (e) {
-      print('Error clearing all data: $e');
+      debugPrint('Error clearing all data: $e');
       rethrow;
     }
   }
@@ -195,7 +196,7 @@ class HiveService {
       final hasBalance = await getStartingBalance() > 0;
       return hasTransactions || hasPeople || hasBalance;
     } catch (e) {
-      print('Error checking if app has data: $e');
+      debugPrint('Error checking if app has data: $e');
       return false;
     }
   }
@@ -209,7 +210,7 @@ class HiveService {
       await _peopleBox.close();
       await _personTransactionsBox.close();
     } catch (e) {
-      print('Error closing Hive boxes: $e');
+      debugPrint('Error closing Hive boxes: $e');
     }
   }
 }

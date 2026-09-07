@@ -9,7 +9,7 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
-  String get appName => 'Aspend';
+  String get appName => 'Aspends';
 
   @override
   String get appTagline => 'Dépenses intelligentes, simplifiées.';
@@ -123,14 +123,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get microPermissionDenied => 'Autorisation du microphone refusée';
 
   @override
-  String get microPermissionTitle => 'Microphone Access Required';
+  String get microPermissionTitle => 'Accès au microphone requis';
 
   @override
   String get microPermissionDesc =>
-      'Aspends requires microphone access to let you input transaction details via voice commands. Your voice inputs are parsed completely offline on your device and are never uploaded or shared.';
+      'Aspends a besoin d\'accéder au microphone pour vous permettre de saisir les détails des transactions par commandes vocales. Vos entrées vocales sont traitées entièrement hors ligne sur votre appareil et ne sont jamais téléchargées ni partagées.';
 
   @override
-  String get microPermissionGrant => 'Enable Voice';
+  String get microPermissionGrant => 'Activer la voix';
 
   @override
   String get appearance => 'Apparence';
@@ -203,7 +203,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String savedAmount(String amount, String category) {
-    return '₹$amount enregistré pour $category';
+    return '$amount enregistré pour $category';
   }
 
   @override
@@ -255,10 +255,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get openSourceDesc => 'Fièrement open source sur GitHub';
 
   @override
+  String get licenses => 'Licences open source';
+
+  @override
+  String get licensesDesc =>
+      'Afficher les licences tierces utilisées dans cette application';
+
+  @override
   String get rateApp => 'Taux Aspend';
 
   @override
   String get rateAppDesc => 'Soutenez-nous avec une note de 5 étoiles';
+
+  @override
+  String get couldNotLaunchUrl => 'Impossible d\'ouvrir le lien';
+
+  @override
+  String errorWithDetails(String error) {
+    return 'Erreur : $error';
+  }
+
+  @override
+  String get madeWithLove => 'Fait avec ❤️ pour de meilleures finances';
 
   @override
   String get howAspendWorks => 'COMMENT FONCTIONNE ASPEND';
@@ -319,7 +337,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get grant => 'Accorder';
 
   @override
-  String get appNameShort => 'Aspend';
+  String get appNameShort => 'Aspends';
 
   @override
   String get splashTagline => 'Gestion intelligente de l\'argent';
@@ -328,10 +346,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get budget => 'Budget';
 
   @override
+  String overBudgetBy(String amount) {
+    return '⚠️ Dépassé de $amount';
+  }
+
+  @override
   String get balanceDetailsTitle => 'Détails du solde';
 
   @override
   String get editBalanceTitle => 'Modifier le solde';
+
+  @override
+  String get tapHoldToEditBalance =>
+      'Appuyez de manière prolongée pour modifier le solde';
+
+  @override
+  String get longPressBalanceCardHint =>
+      'Appuyez longuement sur la carte de solde sur l\'écran d\'accueil';
 
   @override
   String get newBalanceLabel => 'Nouvel équilibre';
@@ -500,6 +531,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get requestMoney => 'Demander de l\'argent';
 
   @override
+  String get requestMoneyTooltip => 'Demander de l\'argent via UPI';
+
+  @override
   String get generateQr => 'Générer un QR de paiement';
 
   @override
@@ -534,7 +568,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String settleBalanceDesc(String amount) {
-    return 'Cela ajoutera une transaction de ₹$amount pour ramener le solde à zéro. Continuer?';
+    return 'Cela ajoutera une transaction de $amount pour ramener le solde à zéro. Continuer?';
   }
 
   @override
@@ -777,4 +811,646 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get exportPdfDesc => 'Générer des rapports PDF';
+
+  @override
+  String get biometricNotSupported =>
+      'L\'authentification biométrique n\'est pas prise en charge sur cet appareil';
+
+  @override
+  String get noBiometricMethods =>
+      'Aucune méthode d\'authentification biométrique disponible';
+
+  @override
+  String get authenticateReason =>
+      'Authentifiez-vous pour activer le verrouillage de l\'application';
+
+  @override
+  String get authFailedAppLockNotEnabled =>
+      'Échec de l\'authentification. Verrouillage de l\'application non activé.';
+
+  @override
+  String get appLockEnabledSuccess =>
+      'Verrouillage de l\'application activé avec succès';
+
+  @override
+  String get appLockDisabledSuccess =>
+      'Verrouillage de l\'application désactivé avec succès';
+
+  @override
+  String get failedToEnableAppLock =>
+      'Échec de l\'activation du verrouillage de l\'application';
+
+  @override
+  String get failedToDisableAppLock =>
+      'Échec de la désactivation du verrouillage de l\'application';
+
+  @override
+  String get pickAppColor => 'Choisir la couleur de l\'application';
+
+  @override
+  String get reset => 'Réinitialiser';
+
+  @override
+  String get selectAction => 'Sélectionner';
+
+  @override
+  String get appColorResetDefault =>
+      'Couleur de l\'application réinitialisée par défaut !';
+
+  @override
+  String get deviceNotSupportBiometricsOrAuth =>
+      'L\'appareil ne prend pas en charge la biométrie ou l\'authentification de l\'appareil.';
+
+  @override
+  String get appLockEnabledDot => 'Verrouillage de l\'application activé.';
+
+  @override
+  String get appLockDisabledDot => 'Verrouillage de l\'application désactivé.';
+
+  @override
+  String get cautionToUse => 'Utiliser avec précaution';
+
+  @override
+  String get autoDetectCautionDesc =>
+      'Cette fonctionnalité n\'est pas parfaite à 100 %, mais elle peut fonctionner. Toutes les données de SMS et de notifications sont traitées à 100 % localement sur votre appareil pour une confidentialité absolue.';
+
+  @override
+  String get autoDetectSettingSubtitle =>
+      'Détecter automatiquement les transactions à partir des notifications';
+
+  @override
+  String get permissionsRequiredNoAccess =>
+      'Autorisations requises : aucun accès aux notifications ou aux SMS accordé. La détection automatique ne peut pas être activée.';
+
+  @override
+  String get noteNotificationAccessMissing =>
+      'Remarque : l\'accès aux notifications est manquant. Seule la détection par SMS fonctionnera.';
+
+  @override
+  String get noteSmsPermissionMissing =>
+      'Remarque : l\'autorisation SMS est manquante. Seule la détection par notification fonctionnera.';
+
+  @override
+  String get autoDetectionEnabledExclaim => 'Détection automatique activée !';
+
+  @override
+  String get autoDetectionDisabledExclaim =>
+      'Détection automatique désactivée !';
+
+  @override
+  String get processRecentDataTitle => 'Traiter les données récentes';
+
+  @override
+  String get processRecentDataSubtitle =>
+      'Analyser les notifications récentes à la recherche de transactions';
+
+  @override
+  String get recentDataProcessed => 'Données récentes traitées avec succès !';
+
+  @override
+  String get errorProcessingData => 'Erreur lors du traitement des données';
+
+  @override
+  String get testDetectionLogicTitle => 'Tester la logique de détection';
+
+  @override
+  String get testDetectionLogicSubtitle =>
+      'Simuler une notification pour vérifier l\'analyse';
+
+  @override
+  String get showDetectionHistoryTitle => 'Afficher l\'historique de détection';
+
+  @override
+  String get showDetectionHistorySubtitle =>
+      'Afficher les journaux détaillés des transactions détectées';
+
+  @override
+  String get autoDeleteUndetectedTitle =>
+      'Supprimer automatiquement l\'historique non détecté';
+
+  @override
+  String get autoDeleteUndetectedSubtitle =>
+      'Supprimer les éléments non détectés après 12 heures';
+
+  @override
+  String get testParserDiagnosticTitle => 'Diagnostic de test de l\'analyseur';
+
+  @override
+  String get testParserDiagnosticDesc =>
+      'Entrez un exemple de message de notification pour voir comment notre analyseur le traite.';
+
+  @override
+  String get pasteNotificationHint =>
+      'Collez le texte de la notification ici...';
+
+  @override
+  String get statusBalanceSync => 'Synchronisation du solde';
+
+  @override
+  String get statusNoActionDetected => 'Aucune action détectée';
+
+  @override
+  String get transactionType => 'Type';
+
+  @override
+  String get resultLabelMerchant => 'Commerçant';
+
+  @override
+  String get resultLabelBank => 'Banque';
+
+  @override
+  String get balanceLabel => 'Solde';
+
+  @override
+  String get resultLabelConfidence => 'Confiance';
+
+  @override
+  String get unknown => 'Inconnu';
+
+  @override
+  String get general => 'Général';
+
+  @override
+  String get notAvailable => 'N/D';
+
+  @override
+  String get close => 'Fermer';
+
+  @override
+  String get parseText => 'Analyser le texte';
+
+  @override
+  String get deleteAllDataTitle => 'Supprimer toutes les données';
+
+  @override
+  String get deleteAllDataWarningSubtitle => '⚠️ Cette action est irréversible';
+
+  @override
+  String get resetIntroTitle => 'Réinitialiser l\'introduction';
+
+  @override
+  String get resetIntroSubtitle => 'Réafficher les écrans d\'introduction';
+
+  @override
+  String get incomeCategories => 'Catégories de revenus';
+
+  @override
+  String get incomeCategoriesDesc => 'Gérer les catégories de revenus';
+
+  @override
+  String get expenseCategories => 'Catégories de dépenses';
+
+  @override
+  String get expenseCategoriesDesc => 'Gérer les catégories de dépenses';
+
+  @override
+  String get accountsTitle => 'Comptes';
+
+  @override
+  String get accountsDesc => 'Gérer vos comptes';
+
+  @override
+  String get enterNamePlaceholder => 'Entrez le nom...';
+
+  @override
+  String get aboutAppSubtitle =>
+      'Développeur, confidentialité, assistance et plus';
+
+  @override
+  String get setMonthlySpendingLimit =>
+      'Définir une limite de dépenses mensuelle';
+
+  @override
+  String get joinPreviousMonthBalanceTitle =>
+      'Inclure le solde du mois précédent';
+
+  @override
+  String get joinPreviousMonthBalanceDesc =>
+      'Inclure le solde du mois précédent dans le total actuel';
+
+  @override
+  String get setMonthlyBudgetTitle => 'Définir le budget mensuel';
+
+  @override
+  String get budgetAmountLabel => 'Montant du budget';
+
+  @override
+  String get budgetUpdated => 'Budget mis à jour !';
+
+  @override
+  String get confirmDeleteTitle => 'Confirmer la suppression';
+
+  @override
+  String get confirmDeleteAllDesc =>
+      'Voulez-vous vraiment supprimer toutes les transactions et réinitialiser votre solde ? Cette action est irréversible.';
+
+  @override
+  String get deleteAllButton => 'Tout supprimer';
+
+  @override
+  String get failedDeleteAllData =>
+      'Impossible de supprimer toutes les données. Veuillez réessayer.';
+
+  @override
+  String get resetIntroConfirmDesc =>
+      'Cela réaffichera les écrans d\'introduction la prochaine fois que vous ouvrirez l\'application. Vos données resteront inchangées.';
+
+  @override
+  String editFieldTitle(String field) {
+    return 'Modifier $field';
+  }
+
+  @override
+  String enterFieldHint(String field) {
+    return 'Saisissez $field';
+  }
+
+  @override
+  String statusLabel(String status) {
+    return 'Statut : $status';
+  }
+
+  @override
+  String manageItemsTitle(String type) {
+    return 'Gérer $type';
+  }
+
+  @override
+  String noItemsFound(String type) {
+    return 'Aucun $type trouvé.';
+  }
+
+  @override
+  String addItemButton(String type) {
+    return 'Ajouter $type';
+  }
+
+  @override
+  String editItemTitle(String type) {
+    return 'Modifier $type';
+  }
+
+  @override
+  String itemNameLabel(String type) {
+    return 'Nom du $type';
+  }
+
+  @override
+  String monthlyLimitSubtitle(String budget) {
+    return 'Limite mensuelle : $budget';
+  }
+
+  @override
+  String failedResetIntro(String error) {
+    return 'Échec de la réinitialisation de l\'introduction. Veuillez réessayer.\\n$error';
+  }
+
+  @override
+  String get failedUpdateAutoDetection =>
+      'Échec de la mise à jour de la détection automatique';
+
+  @override
+  String get actionCannotBeUndone => 'Cette action est irréversible.';
+
+  @override
+  String deleteTransactionsCountTitle(int count) {
+    return 'Supprimer $count transactions ?';
+  }
+
+  @override
+  String deletedTransactionsCount(int count) {
+    return '$count transactions supprimées';
+  }
+
+  @override
+  String get transactionHistoryTitle => 'Historique des transactions';
+
+  @override
+  String get upiIdMissingTitle => 'ID UPI manquant';
+
+  @override
+  String get upiIdMissingDesc =>
+      'Veuillez définir votre ID UPI dans les paramètres pour demander de l\'argent via un code QR.';
+
+  @override
+  String get openSettings => 'Ouvrir les paramètres';
+
+  @override
+  String get recipientFallback => 'Destinataire';
+
+  @override
+  String get paymentLinkCopied => 'Lien de paiement copié !';
+
+  @override
+  String get linkButton => 'Lien';
+
+  @override
+  String get shareQr => 'Partager le QR';
+
+  @override
+  String get upiPaymentLinkSubject => 'Lien de paiement UPI';
+
+  @override
+  String requestingFrom(String name) {
+    return 'Demande à $name';
+  }
+
+  @override
+  String upiIdColonValue(String id) {
+    return 'ID UPI : $id';
+  }
+
+  @override
+  String failedShareQr(String error) {
+    return 'Échec du partage de l\'image QR : $error';
+  }
+
+  @override
+  String payViaUpiQrFor(String name) {
+    return 'Payer via QR UPI pour $name';
+  }
+
+  @override
+  String get pleaseSelectPerson => 'Veuillez sélectionner une personne';
+
+  @override
+  String get amountInInr => 'Montant en INR';
+
+  @override
+  String get currency => 'Devise';
+
+  @override
+  String get selectCurrency => 'Choisir la devise';
+
+  @override
+  String get searchCurrency => 'Rechercher une devise';
+
+  @override
+  String get autoDetectCurrency => 'Détection automatique de la devise';
+
+  @override
+  String get autoDetectCurrencyDesc =>
+      'Correspond automatiquement à la région de votre appareil';
+
+  @override
+  String get popularCurrencies => 'Populaires';
+
+  @override
+  String get allCurrencies => 'Toutes les devises';
+
+  @override
+  String get noCurrencyFound => 'Aucune devise trouvée';
+
+  @override
+  String get requiredField => 'Requis';
+
+  @override
+  String get quickCategories => 'Catégories rapides';
+
+  @override
+  String get saveToPerson => 'Enregistrer sur une personne';
+
+  @override
+  String get noPeopleCreateHint =>
+      'Aucune personne ajoutée pour l\'instant. Créez des personnes dans la section Personnes.';
+
+  @override
+  String get selectPersonLabel => 'Sélectionner une personne';
+
+  @override
+  String get selectCategoryTitle => 'Sélectionner une catégorie';
+
+  @override
+  String get updateTransactionButton => 'Mettre à jour la transaction';
+
+  @override
+  String get saveTransactionButton => 'Enregistrer la transaction';
+
+  @override
+  String linkedToRecord(String name) {
+    return 'Lié à l\'enregistrement de $name';
+  }
+
+  @override
+  String selectItemTitle(String type) {
+    return 'Sélectionner $type';
+  }
+
+  @override
+  String get personSingular => 'Personne';
+
+  @override
+  String get error => 'Erreur';
+
+  @override
+  String get retry => 'Réessayer';
+
+  @override
+  String get setupFailedRetry =>
+      'Échec de la configuration. Veuillez réessayer.';
+
+  @override
+  String get backButton => 'Retour';
+
+  @override
+  String get voiceInputExampleHint =>
+      'Dites par exemple « Dépensé 500 pour le dîner »';
+
+  @override
+  String get autoDetectionEnabledSuccess =>
+      'Détection automatique activée avec succès !';
+
+  @override
+  String openingRequestQrFor(String name) {
+    return 'Ouverture du QR de demande pour $name';
+  }
+
+  @override
+  String get add => 'Ajouter';
+
+  @override
+  String get uncategorized => 'Non catégorisé';
+
+  @override
+  String get timeLabel => 'Heure';
+
+  @override
+  String get statusColumnLabel => 'Statut';
+
+  @override
+  String get completedLabel => 'Terminé';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get serviceLabel => 'Service';
+
+  @override
+  String get refIdLabel => 'ID de référence';
+
+  @override
+  String get detectedViaLabel => 'Détecté via';
+
+  @override
+  String get attachmentsLabel => 'Pièces jointes';
+
+  @override
+  String get originalLogLabel => 'Journal original';
+
+  @override
+  String get noNoteProvided => 'Aucune note fournie';
+
+  @override
+  String get tapToUnlock => 'Appuyez pour déverrouiller';
+
+  @override
+  String get addPeopleEmptyDesc =>
+      'Ajoutez des personnes pour suivre les transactions avec elles';
+
+  @override
+  String get noPeopleMatchSearch =>
+      'Aucune personne ne correspond à votre recherche';
+
+  @override
+  String get okay => 'OK';
+
+  @override
+  String get confirm => 'Confirmer';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get unexpectedErrorOccurred => 'Une erreur inattendue s\'est produite';
+
+  @override
+  String get autoDetectionActive => 'Détection automatique active';
+
+  @override
+  String get unknownSource => 'Source inconnue';
+
+  @override
+  String get noMessageContentAvailable => 'Aucun contenu de message disponible';
+
+  @override
+  String get addManually => 'Ajouter manuellement';
+
+  @override
+  String get detectedAsIncome => 'Détecté comme revenu';
+
+  @override
+  String get detectedAsExpense => 'Détecté comme dépense';
+
+  @override
+  String sourceColonValue(String source) {
+    return 'Source : $source';
+  }
+
+  @override
+  String get sourceNotification => 'Notification';
+
+  @override
+  String get sourceSms => 'SMS';
+
+  @override
+  String get sourceRecheckHistory => 'Historique revérifié';
+
+  @override
+  String get sourceManualAddHistory => 'Ajout manuel (historique)';
+
+  @override
+  String get recentLabel => 'Récent';
+
+  @override
+  String get oldestLabel => 'Le plus ancien';
+
+  @override
+  String get highestLabel => 'Le plus élevé';
+
+  @override
+  String get lowestLabel => 'Le plus bas';
+
+  @override
+  String get glassBlurEffectsTitle => 'Effets de flou vitré';
+
+  @override
+  String get glassBlurEffectsSubtitle =>
+      'Flou doux sur les panneaux vitrés et les boîtes de dialogue — utilise plus de puissance de traitement ; désactivez-le sur les anciens appareils pour plus de fluidité.';
+
+  @override
+  String get tourBalanceCardTitle => 'Your Balance';
+
+  @override
+  String get tourBalanceCardDesc =>
+      'Tap for income & expense details. Long-press to edit your starting balance.';
+
+  @override
+  String get tourAddIncomeTitle => 'Add Income';
+
+  @override
+  String get tourAddIncomeDesc => 'Log money you\'ve received.';
+
+  @override
+  String get tourMicTitle => 'Record by Voice';
+
+  @override
+  String get tourMicDesc =>
+      'Press and hold, say the amount and what it was for, then release — it\'s saved automatically.';
+
+  @override
+  String get tourAddExpenseTitle => 'Add Expense';
+
+  @override
+  String get tourAddExpenseDesc => 'Log money you\'ve spent.';
+
+  @override
+  String get tourAddPersonTitle => 'Add a Person';
+
+  @override
+  String get tourAddPersonDesc => 'Track what you owe each other over time.';
+
+  @override
+  String get tourPersonCardTitle => 'Open Their Ledger';
+
+  @override
+  String get tourPersonCardDesc =>
+      'Tap a card to see the full history with this person and settle up.';
+
+  @override
+  String get tourPayNowTitle => 'Settle Up';
+
+  @override
+  String get tourPayNowDesc => 'Pay what you owe them directly via UPI.';
+
+  @override
+  String get tourEditPersonTitle => 'Edit Person';
+
+  @override
+  String get tourEditPersonDesc => 'Change their name or photo.';
+
+  @override
+  String get tourDeletePersonTitle => 'Careful — Long-Press Deletes';
+
+  @override
+  String get tourDeletePersonDesc =>
+      'Long-pressing this header permanently deletes this person and their history. You\'ll be asked to confirm first.';
+
+  @override
+  String get tourDeleteTxTitle => 'Long-Press to Delete';
+
+  @override
+  String get tourDeleteTxDesc =>
+      'Tap a transaction to edit it, or long-press to delete it.';
+
+  @override
+  String get replayTipsTitle => 'Show Tips Again';
+
+  @override
+  String get replayTipsSubtitle =>
+      'Replay the pointer-hint tours on Home, People, and Person Details.';
+
+  @override
+  String get replayTipsDone =>
+      'Tips will show again next time you open those screens.';
 }

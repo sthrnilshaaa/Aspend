@@ -5,11 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../core/const/app_colors.dart';
 import '../../core/const/app_dimensions.dart';
-import '../../core/const/app_strings.dart';
 import '../../core/const/app_typography.dart';
 import '../../core/const/app_assets.dart';
 import '../../core/view_models/theme_view_model.dart';
 import '../../core/view_models/transaction_view_model.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class HomeSearchBar extends StatelessWidget {
   final VoidCallback onFilterTap;
@@ -22,6 +22,7 @@ class HomeSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final isDark = context.select<ThemeViewModel, bool>((vm) => vm.isDarkMode);
     final searchQuery =
         context.select<TransactionViewModel, String?>((vm) => vm.searchQuery);
@@ -102,7 +103,7 @@ class HomeSearchBar extends StatelessWidget {
                             .setSearchQuery(val);
                       },
                       decoration: InputDecoration(
-                        hintText: AppStrings.searchHint,
+                        hintText: l10n.searchHint,
                         hintStyle: GoogleFonts.dmSans(
                           color: theme.colorScheme.onSurface
                               .withValues(alpha: 0.4),

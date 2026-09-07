@@ -1,5 +1,5 @@
 {
-  "appName": "アスペンド",
+  "appName": "Aspends",
   "appTagline": "賢い支出をシンプルに。",
   "totalBalance": "合計残高",
   "income": "所得",
@@ -37,6 +37,9 @@
   "voiceInput": "音声入力",
   "speechUnavailable": "音声認識は利用できません",
   "microPermissionDenied": "マイクの許可が拒否されました",
+  "microPermissionTitle": "マイクへのアクセスが必要です",
+  "microPermissionDesc": "Aspendsでは、音声コマンドで取引の詳細を入力できるようにするためにマイクへのアクセスが必要です。音声入力はすべて端末上でオフラインで解析され、アップロードや共有は一切行われません。",
+  "microPermissionGrant": "音声を有効にする",
   "appearance": "外観",
   "security": "安全",
   "autoDetection": "自動トランザクション検出",
@@ -59,7 +62,7 @@
   "sortBy": "並べ替え",
   "holdToRecord": "長押ししてトランザクションを記録する",
   "couldNotFindAmount": "金額が見つかりませんでした。試してください: 「食費に 500 を費やしました」",
-  "savedAmount": "{category} で ₹{amount} を節約しました",
+  "savedAmount": "{category} で {amount} を節約しました",
   "@savedAmount": {
     "placeholders": {
       "amount": {
@@ -98,8 +101,20 @@
   "projectInfo": "プロジェクト情報",
   "openSource": "オープンソース",
   "openSourceDesc": "GitHub で堂々とオープンソース",
+  "licenses": "オープンソースライセンス",
+  "licensesDesc": "このアプリで使用されているサードパーティライセンスを表示します",
   "rateApp": "レートの上昇",
   "rateAppDesc": "5 つ星の評価でサポートしてください",
+  "couldNotLaunchUrl": "リンクを開けませんでした",
+  "errorWithDetails": "エラー: {error}",
+  "@errorWithDetails": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "madeWithLove": "より良い家計管理のために❤️を込めて作りました",
   "howAspendWorks": "アスペンドの仕組み",
   "howItWorksTitle1": "1. インテリジェントな傍受",
   "howItWorksDesc1": "安全でバッテリーが最適化されたバックグラウンド サービスは、SMS および銀行通知の受信を待機します。",
@@ -117,11 +132,21 @@
   "smsPermissionDesc": "銀行からのトランザクション SMS の読み取りを有効にします。",
   "finishSetup": "セットアップを完了する",
   "grant": "付与",
-  "appNameShort": "アスペンド",
+  "appNameShort": "Aspends",
   "splashTagline": "スマートなお金の管理",
   "budget": "予算",
+  "overBudgetBy": "⚠️ {amount} オーバーしています",
+  "@overBudgetBy": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "balanceDetailsTitle": "残高詳細",
   "editBalanceTitle": "残高の編集",
+  "tapHoldToEditBalance": "長押しで残高を編集",
+  "longPressBalanceCardHint": "ホーム画面の残高カードを長押ししてください",
   "newBalanceLabel": "ニューバランス",
   "viewAll": "すべて見る",
   "searchHint": "カテゴリまたはメモを検索...",
@@ -174,6 +199,7 @@
   "next": "次",
   "getStarted": "始めましょう",
   "requestMoney": "お金を要求する",
+  "requestMoneyTooltip": "UPI経由で送金をリクエスト",
   "generateQr": "支払いQRの生成",
   "sortByNameAZ": "名前 (A ～ Z)",
   "sortByNameZA": "名前 (Z-A)",
@@ -184,7 +210,7 @@
   "noTransactionsYet": "まだ取引はありません",
   "addFirstTransaction": "その人との最初のトランザクションを追加します",
   "settleBalance": "残高の決済",
-  "settleBalanceDesc": "これにより、₹{amount} のトランザクションが追加され、残高がゼロになります。続く？",
+  "settleBalanceDesc": "これにより、{amount} のトランザクションが追加され、残高がゼロになります。続く？",
   "@settleBalanceDesc": {
     "placeholders": {
       "amount": {
@@ -319,5 +345,330 @@
   "exportPeopleTitle": "人物データのエクスポート",
   "exportPeopleDesc": "人のトランザクションをバックアップする",
   "exportPdfTitle": "PDFとしてエクスポート",
-  "exportPdfDesc": "PDF レポートを生成する"
+  "exportPdfDesc": "PDF レポートを生成する",
+  "biometricNotSupported": "このデバイスは生体認証に対応していません",
+  "noBiometricMethods": "利用可能な生体認証方式がありません",
+  "authenticateReason": "アプリロックを有効にするには認証してください",
+  "authFailedAppLockNotEnabled": "認証に失敗しました。アプリロックは有効になりませんでした。",
+  "appLockEnabledSuccess": "アプリロックが正常に有効になりました",
+  "appLockDisabledSuccess": "アプリロックが正常に無効になりました",
+  "failedToEnableAppLock": "アプリロックを有効にできませんでした",
+  "failedToDisableAppLock": "アプリロックを無効にできませんでした",
+  "pickAppColor": "アプリの色を選択",
+  "reset": "リセット",
+  "selectAction": "選択",
+  "appColorResetDefault": "アプリの色をデフォルトにリセットしました！",
+  "deviceNotSupportBiometricsOrAuth": "このデバイスは生体認証またはデバイス認証に対応していません。",
+  "appLockEnabledDot": "アプリロックを有効にしました。",
+  "appLockDisabledDot": "アプリロックを無効にしました。",
+  "cautionToUse": "使用上の注意",
+  "autoDetectCautionDesc": "この機能は100%完璧ではありませんが、動作する可能性があります。すべてのSMSと通知データは、完全なプライバシーのためにデバイス上で100%ローカルに処理されます。",
+  "autoDetectSettingSubtitle": "通知から取引を自動的に検出します",
+  "permissionsRequiredNoAccess": "権限が必要です：通知またはSMSへのアクセスが許可されていません。自動検出を有効にできません。",
+  "noteNotificationAccessMissing": "注意：通知へのアクセスがありません。SMS検出のみが機能します。",
+  "noteSmsPermissionMissing": "注意：SMSの権限がありません。通知検出のみが機能します。",
+  "autoDetectionEnabledExclaim": "自動検出が有効になりました！",
+  "autoDetectionDisabledExclaim": "自動検出が無効になりました！",
+  "processRecentDataTitle": "最近のデータを処理",
+  "processRecentDataSubtitle": "最近の通知から取引をスキャンします",
+  "recentDataProcessed": "最近のデータが正常に処理されました！",
+  "errorProcessingData": "データの処理中にエラーが発生しました",
+  "testDetectionLogicTitle": "検出ロジックをテスト",
+  "testDetectionLogicSubtitle": "通知をシミュレートして解析を確認します",
+  "showDetectionHistoryTitle": "検出履歴を表示",
+  "showDetectionHistorySubtitle": "検出された取引の詳細ログを表示します",
+  "autoDeleteUndetectedTitle": "未検出の履歴を自動削除",
+  "autoDeleteUndetectedSubtitle": "未検出の項目を12時間後に削除します",
+  "testParserDiagnosticTitle": "パーサー診断テスト",
+  "testParserDiagnosticDesc": "サンプルの通知メッセージを入力して、パーサーがどのように処理するかを確認してください。",
+  "pasteNotificationHint": "ここに通知テキストを貼り付けてください...",
+  "statusBalanceSync": "残高同期",
+  "statusNoActionDetected": "アクションは検出されませんでした",
+  "transactionType": "種類",
+  "resultLabelMerchant": "販売店",
+  "resultLabelBank": "銀行",
+  "balanceLabel": "残高",
+  "resultLabelConfidence": "信頼度",
+  "unknown": "不明",
+  "general": "一般",
+  "notAvailable": "該当なし",
+  "close": "閉じる",
+  "parseText": "テキストを解析",
+  "deleteAllDataTitle": "すべてのデータを削除",
+  "deleteAllDataWarningSubtitle": "⚠️ この操作は元に戻せません",
+  "resetIntroTitle": "イントロをリセット",
+  "resetIntroSubtitle": "イントロ画面を再度表示します",
+  "incomeCategories": "収入カテゴリー",
+  "incomeCategoriesDesc": "収入のカテゴリーを管理します",
+  "expenseCategories": "支出カテゴリー",
+  "expenseCategoriesDesc": "支出のカテゴリーを管理します",
+  "accountsTitle": "アカウント",
+  "accountsDesc": "アカウントを管理します",
+  "enterNamePlaceholder": "名前を入力...",
+  "aboutAppSubtitle": "開発者、プライバシー、サポートなど",
+  "setMonthlySpendingLimit": "月々の支出上限を設定します",
+  "joinPreviousMonthBalanceTitle": "前月の残高を合算する",
+  "joinPreviousMonthBalanceDesc": "現在の合計に前月の残高を含めます",
+  "setMonthlyBudgetTitle": "月間予算を設定",
+  "budgetAmountLabel": "予算金額",
+  "budgetUpdated": "予算を更新しました！",
+  "confirmDeleteTitle": "削除の確認",
+  "confirmDeleteAllDesc": "すべての取引を削除し、残高をリセットしてもよろしいですか？この操作は元に戻せません。",
+  "deleteAllButton": "すべて削除",
+  "failedDeleteAllData": "すべてのデータを削除できませんでした。もう一度お試しください。",
+  "resetIntroConfirmDesc": "これにより、次回アプリを開いたときに再びイントロ画面が表示されます。データは変更されません。",
+  "editFieldTitle": "{field}を編集",
+  "@editFieldTitle": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "enterFieldHint": "{field}を入力",
+  "@enterFieldHint": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "statusLabel": "ステータス: {status}",
+  "@statusLabel": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "manageItemsTitle": "{type}を管理",
+  "@manageItemsTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "noItemsFound": "{type}が見つかりません。",
+  "@noItemsFound": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "addItemButton": "{type}を追加",
+  "@addItemButton": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "editItemTitle": "{type}を編集",
+  "@editItemTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "itemNameLabel": "{type}名",
+  "@itemNameLabel": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "monthlyLimitSubtitle": "月間上限: {budget}",
+  "@monthlyLimitSubtitle": {
+    "placeholders": {
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "failedResetIntro": "イントロをリセットできませんでした。もう一度お試しください。\\n{error}",
+  "@failedResetIntro": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedUpdateAutoDetection": "自動検出を更新できませんでした",
+  "actionCannotBeUndone": "この操作は元に戻せません。",
+  "deleteTransactionsCountTitle": "{count}件の取引を削除しますか？",
+  "@deleteTransactionsCountTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deletedTransactionsCount": "{count}件の取引を削除しました",
+  "@deletedTransactionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "transactionHistoryTitle": "取引履歴",
+  "upiIdMissingTitle": "UPI IDがありません",
+  "upiIdMissingDesc": "QRコードで送金をリクエストするには、設定でUPI IDを設定してください。",
+  "openSettings": "設定を開く",
+  "recipientFallback": "受取人",
+  "paymentLinkCopied": "支払いリンクをコピーしました！",
+  "linkButton": "リンク",
+  "shareQr": "QRを共有",
+  "upiPaymentLinkSubject": "UPI支払いリンク",
+  "requestingFrom": "{name}にリクエスト中",
+  "@requestingFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "upiIdColonValue": "UPI ID: {id}",
+  "@upiIdColonValue": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "failedShareQr": "QR画像を共有できませんでした: {error}",
+  "@failedShareQr": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "payViaUpiQrFor": "{name}へのUPI QRでの支払い",
+  "@payViaUpiQrFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectPerson": "人物を選択してください",
+  "amountInInr": "金額（INR）",
+  "currency": "通貨",
+  "selectCurrency": "通貨を選択",
+  "searchCurrency": "通貨を検索",
+  "autoDetectCurrency": "通貨を自動検出",
+  "autoDetectCurrencyDesc": "デバイスの地域に自動的に合わせます",
+  "popularCurrencies": "人気",
+  "allCurrencies": "すべての通貨",
+  "noCurrencyFound": "通貨が見つかりません",
+  "requiredField": "必須",
+  "quickCategories": "クイックカテゴリー",
+  "saveToPerson": "人物に保存",
+  "noPeopleCreateHint": "まだ人物が追加されていません。「People」セクションで人物を作成してください。",
+  "selectPersonLabel": "人物を選択",
+  "selectCategoryTitle": "カテゴリーを選択",
+  "updateTransactionButton": "取引を更新",
+  "saveTransactionButton": "取引を保存",
+  "linkedToRecord": "{name}の記録にリンクしました",
+  "@linkedToRecord": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "selectItemTitle": "{type}を選択",
+  "@selectItemTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "personSingular": "人物",
+  "error": "エラー",
+  "retry": "再試行",
+  "setupFailedRetry": "セットアップを完了できませんでした。もう一度お試しください。",
+  "backButton": "戻る",
+  "voiceInputExampleHint": "「夕食に500円使った」のように話してください",
+  "autoDetectionEnabledSuccess": "自動検出が正常に有効になりました！",
+  "openingRequestQrFor": "{name}のリクエストQRを開いています",
+  "@openingRequestQrFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "add": "追加",
+  "uncategorized": "未分類",
+  "timeLabel": "時刻",
+  "statusColumnLabel": "ステータス",
+  "completedLabel": "完了",
+  "notes": "メモ",
+  "serviceLabel": "サービス",
+  "refIdLabel": "参照ID",
+  "detectedViaLabel": "検出元",
+  "attachmentsLabel": "添付ファイル",
+  "originalLogLabel": "元のログ",
+  "noNoteProvided": "メモはありません",
+  "tapToUnlock": "タップしてロック解除",
+  "addPeopleEmptyDesc": "人物を追加して取引を記録しましょう",
+  "noPeopleMatchSearch": "検索に一致する人はいません",
+  "okay": "OK",
+  "confirm": "確認",
+  "ok": "OK",
+  "unexpectedErrorOccurred": "予期しないエラーが発生しました",
+  "autoDetectionActive": "自動検出が有効",
+  "unknownSource": "不明な送信元",
+  "noMessageContentAvailable": "メッセージ内容がありません",
+  "addManually": "手動で追加",
+  "detectedAsIncome": "収入として検出されました",
+  "detectedAsExpense": "支出として検出されました",
+  "sourceColonValue": "送信元: {source}",
+  "@sourceColonValue": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "sourceNotification": "通知",
+  "sourceSms": "SMS",
+  "sourceRecheckHistory": "履歴の再チェック",
+  "sourceManualAddHistory": "手動追加（履歴から）",
+  "recentLabel": "最近",
+  "oldestLabel": "最も古い",
+  "highestLabel": "最高",
+  "lowestLabel": "最低",
+  "glassBlurEffectsTitle": "グラスブラー効果",
+  "glassBlurEffectsSubtitle": "ガラスパネルやダイアログに柔らかなぼかし効果を追加します。処理能力を多く使用するため、古いデバイスではオフにするとスムーズに動作します。",
+  "tourBalanceCardTitle": "Your Balance",
+  "tourBalanceCardDesc": "Tap for income & expense details. Long-press to edit your starting balance.",
+  "tourAddIncomeTitle": "Add Income",
+  "tourAddIncomeDesc": "Log money you've received.",
+  "tourMicTitle": "Record by Voice",
+  "tourMicDesc": "Press and hold, say the amount and what it was for, then release — it's saved automatically.",
+  "tourAddExpenseTitle": "Add Expense",
+  "tourAddExpenseDesc": "Log money you've spent.",
+  "tourAddPersonTitle": "Add a Person",
+  "tourAddPersonDesc": "Track what you owe each other over time.",
+  "tourPersonCardTitle": "Open Their Ledger",
+  "tourPersonCardDesc": "Tap a card to see the full history with this person and settle up.",
+  "tourPayNowTitle": "Settle Up",
+  "tourPayNowDesc": "Pay what you owe them directly via UPI.",
+  "tourEditPersonTitle": "Edit Person",
+  "tourEditPersonDesc": "Change their name or photo.",
+  "tourDeletePersonTitle": "Careful — Long-Press Deletes",
+  "tourDeletePersonDesc": "Long-pressing this header permanently deletes this person and their history. You'll be asked to confirm first.",
+  "tourDeleteTxTitle": "Long-Press to Delete",
+  "tourDeleteTxDesc": "Tap a transaction to edit it, or long-press to delete it.",
+  "replayTipsTitle": "Show Tips Again",
+  "replayTipsSubtitle": "Replay the pointer-hint tours on Home, People, and Person Details.",
+  "replayTipsDone": "Tips will show again next time you open those screens."
 }

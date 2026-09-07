@@ -20,19 +20,20 @@ import '../core/services/pdf_service.dart';
 import '../core/const/app_typography.dart';
 import '../core/services/transaction_detection_service.dart';
 import '../core/services/native_bridge.dart';
+import '../core/services/tour_service.dart';
 import '../core/utils/transaction_parser.dart';
 import '../core/utils/responsive_utils.dart';
 import '../core/utils/error_handler.dart';
 import 'detection_history_page.dart';
-import 'app_selection_page.dart';
 import 'about_page.dart';
 import '../../widgets/glass_app_bar.dart';
 import '../../widgets/settings_widgets.dart';
 import '../../widgets/monitoring_setup_dialog.dart';
 import '../core/utils/blur_utils.dart';
 import '../core/utils/transaction_utils.dart';
-import '../core/const/app_strings.dart';
 import '../core/const/app_constants.dart';
+import '../core/const/app_currencies.dart';
+import '../core/const/app_dimensions.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -59,6 +60,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> _setAppLockEnabled(bool enabled) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       if (enabled) {
         final localAuth = LocalAuthentication();
@@ -67,20 +69,18 @@ class _SettingsPageState extends State<SettingsPage> {
 
         if (!canCheckDeviceSupport) {
           if (!mounted) return;
-          ErrorHandler.showErrorSnackBar(context,
-              'Biometric authentication is not supported on this device');
+          ErrorHandler.showErrorSnackBar(context, l10n.biometricNotSupported);
           return;
         }
 
         if (!canCheckBiometrics) {
           if (!mounted) return;
-          ErrorHandler.showErrorSnackBar(
-              context, 'No biometric authentication methods available');
+          ErrorHandler.showErrorSnackBar(context, l10n.noBiometricMethods);
           return;
         }
 
         final didAuthenticate = await localAuth.authenticate(
-          localizedReason: 'Authenticate to enable app lock',
+          localizedReason: l10n.authenticateReason,
           biometricOnly: false,
           persistAcrossBackgrounding: true,
         );
@@ -88,7 +88,7 @@ class _SettingsPageState extends State<SettingsPage> {
         if (!didAuthenticate) {
           if (!mounted) return;
           ErrorHandler.showErrorSnackBar(
-              context, 'Authentication failed. App lock not enabled.');
+              context, l10n.authFailedAppLockNotEnabled);
           return;
         }
       }
@@ -101,16 +101,14 @@ class _SettingsPageState extends State<SettingsPage> {
       });
 
       if (!mounted) return;
-      ErrorHandler.showSuccessSnackBar(
-          context,
-          enabled
-              ? 'App lock enabled successfully'
-              : 'App lock disabled successfully');
+      ErrorHandler.showSuccessSnackBar(context,
+          enabled ? l10n.appLockEnabledSuccess : l10n.appLockDisabledSuccess);
     } catch (e) {
       if (!mounted) return;
       ErrorHandler.handleError(context, e,
-          customMessage:
-              'Failed to ${enabled ? 'enable' : 'disable'} app lock');
+          customMessage: enabled
+              ? l10n.failedToEnableAppLock
+              : l10n.failedToDisableAppLock);
     }
   }
 
@@ -150,11 +148,15 @@ class _SettingsPageState extends State<SettingsPage> {
                           _buildThemeCard(context, isDark),
                           const SizedBox(height: 12),
                           _buildLanguagePicker(context),
+                          const SizedBox(height: 12),
+                          _buildCurrencyPicker(context),
+                          const SizedBox(height: 12),
+                          _buildBlurEffectsToggle(context),
                         ],
                       ),
                       const SizedBox(height: 24),
 
-                       TitledSection(
+                      TitledSection(
                         title: l10n.security,
                         icon: Icons.security,
                         children: [
@@ -223,23 +225,6 @@ class _SettingsPageState extends State<SettingsPage> {
                           _buildAppInfoSection(context, isDark),
                         ],
                       ),
-                      // const SizedBox(height: 8),
-                      // // Add developer credit at the very bottom
-                      // Center(
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.only(top: 16, bottom: 8),
-                      //     child: Text(
-                      //       AppStrings.developedBy,
-                      //       style: GoogleFonts.dmSans(
-                      //         fontSize: 12,
-                      //         color: Colors.grey,
-                      //         fontWeight: FontWeight.w500,
-                      //         letterSpacing: 0.2,
-                      //       ),
-                      //       textAlign: TextAlign.center,
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
@@ -258,7 +243,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget _buildThemeCard(BuildContext context, bool isDark) {
     final theme = Theme.of(context);
-    final useAdaptive = context.watch<ThemeViewModel>().useAdaptiveColor;
     final l10n = AppLocalizations.of(context)!;
     return Card(
       elevation: 2,
@@ -269,11 +253,7 @@ class _SettingsPageState extends State<SettingsPage> {
           children: [
             Row(
               children: [
-                Icon(Icons.palette,
-                    size: 24,
-                    color: useAdaptive
-                        ? theme.colorScheme.primary
-                        : Colors.teal.shade600),
+                Icon(Icons.palette, size: 24, color: theme.colorScheme.primary),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -335,6 +315,7 @@ class _SettingsPageState extends State<SettingsPage> {
   void _showLanguageDialog(BuildContext context) {
     final themeViewModel = context.read<ThemeViewModel>();
     final l10n = AppLocalizations.of(context)!;
+    final primary = Theme.of(context).colorScheme.primary;
 
     final List<Map<String, String>> langs = [
       {'code': 'en', 'name': 'English'},
@@ -361,7 +342,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ListTile(
                 title: Text(l10n.systemDefault),
                 trailing: themeViewModel.locale == null
-                    ? const Icon(Icons.check, color: Colors.green)
+                    ? Icon(Icons.check, color: primary)
                     : null,
                 onTap: () {
                   themeViewModel.setLocale(null);
@@ -369,15 +350,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
               ...langs.map((l) => ListTile(
-                title: Text(l['name']!),
-                trailing: themeViewModel.locale?.languageCode == l['code']
-                    ? const Icon(Icons.check, color: Colors.green)
-                    : null,
-                onTap: () {
-                  themeViewModel.setLocale(Locale(l['code']!, ''));
-                  Navigator.pop(context);
-                },
-              )),
+                    title: Text(l['name']!),
+                    trailing: themeViewModel.locale?.languageCode == l['code']
+                        ? Icon(Icons.check, color: primary)
+                        : null,
+                    onTap: () {
+                      themeViewModel.setLocale(Locale(l['code']!, ''));
+                      Navigator.pop(context);
+                    },
+                  )),
             ],
           ),
         ),
@@ -385,11 +366,235 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
+  Widget _buildCurrencyPicker(BuildContext context) {
+    final themeViewModel = context.watch<ThemeViewModel>();
+    final l10n = AppLocalizations.of(context)!;
+    final currency = themeViewModel.currency;
+
+    final subtitle = themeViewModel.currencyAutoDetect
+        ? '${currency.flag} ${currency.code} — ${currency.name} (${l10n.autoDetectCurrency})'
+        : '${currency.flag} ${currency.code} — ${currency.name}';
+
+    return SettingTile(
+      icon: Icons.currency_exchange,
+      title: l10n.currency,
+      subtitle: subtitle,
+      onTap: () => _showCurrencyPicker(context),
+    );
+  }
+
+  Widget _buildBlurEffectsToggle(BuildContext context) {
+    final themeViewModel = context.watch<ThemeViewModel>();
+    final l10n = AppLocalizations.of(context)!;
+
+    return SettingTile(
+      icon: Icons.blur_on,
+      title: l10n.glassBlurEffectsTitle,
+      subtitle: l10n.glassBlurEffectsSubtitle,
+      onTap: null,
+      trailing: Switch(
+        value: themeViewModel.enableBlurEffects,
+        onChanged: (value) {
+          HapticFeedback.lightImpact();
+          themeViewModel.setEnableBlurEffects(value);
+        },
+      ),
+    );
+  }
+
+  void _showCurrencyPicker(BuildContext context) {
+    final themeViewModel = context.read<ThemeViewModel>();
+    final l10n = AppLocalizations.of(context)!;
+    String query = '';
+
+    BlurUtils.showBlurredBottomSheet(
+      context: context,
+      child: StatefulBuilder(
+        builder: (c, setSheetState) {
+          final theme = Theme.of(c);
+          final normalizedQuery = query.trim().toLowerCase();
+          final filtered = normalizedQuery.isEmpty
+              ? AppCurrencies.all
+              : AppCurrencies.all
+                  .where((currency) =>
+                      currency.code.toLowerCase().contains(normalizedQuery) ||
+                      currency.name.toLowerCase().contains(normalizedQuery))
+                  .toList();
+          final popular =
+              AppCurrencies.popularCodes.map(AppCurrencies.byCode).toList();
+
+          return DraggableScrollableSheet(
+            initialChildSize: 0.8,
+            minChildSize: 0.5,
+            maxChildSize: 0.92,
+            expand: false,
+            builder: (sheetContext, scrollController) {
+              return Container(
+                decoration: BoxDecoration(
+                  color: theme.scaffoldBackgroundColor,
+                  borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(AppDimensions.borderRadiusLarge)),
+                ),
+                padding: EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  top: 12,
+                  bottom: MediaQuery.of(sheetContext).viewInsets.bottom + 16,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Container(
+                        width: 40,
+                        height: 4,
+                        margin: const EdgeInsets.only(bottom: 16),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withValues(alpha: 0.3),
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      l10n.selectCurrency,
+                      style: GoogleFonts.dmSans(
+                          fontSize: AppTypography.fontSizeLarge - 2,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 12),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      decoration: BoxDecoration(
+                        color:
+                            theme.colorScheme.primary.withValues(alpha: 0.06),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: SwitchListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: Text(
+                          l10n.autoDetectCurrency,
+                          style: GoogleFonts.dmSans(
+                              fontWeight: FontWeight.w600, fontSize: 14),
+                        ),
+                        subtitle: Text(
+                          l10n.autoDetectCurrencyDesc,
+                          style: GoogleFonts.dmSans(fontSize: 12),
+                        ),
+                        value: themeViewModel.currencyAutoDetect,
+                        onChanged: (value) {
+                          themeViewModel.setCurrencyAutoDetect(value);
+                          setSheetState(() {});
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    TextField(
+                      decoration: InputDecoration(
+                        hintText: l10n.searchCurrency,
+                        prefixIcon: const Icon(Icons.search, size: 20),
+                        isDense: true,
+                      ),
+                      onChanged: (value) => setSheetState(() => query = value),
+                    ),
+                    const SizedBox(height: 14),
+                    if (normalizedQuery.isEmpty) ...[
+                      Text(
+                        l10n.popularCurrencies.toUpperCase(),
+                        style: GoogleFonts.dmSans(
+                          fontSize: AppTypography.fontSizeXSmall,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1,
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.5),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: popular.map((currency) {
+                          final selected = !themeViewModel.currencyAutoDetect &&
+                              themeViewModel.currencyCode == currency.code;
+                          return ChoiceChip(
+                            label: Text('${currency.flag} ${currency.code}'),
+                            selected: selected,
+                            onSelected: (_) {
+                              themeViewModel.setCurrency(currency);
+                              Navigator.pop(c);
+                            },
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        l10n.allCurrencies.toUpperCase(),
+                        style: GoogleFonts.dmSans(
+                          fontSize: AppTypography.fontSizeXSmall,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1,
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.5),
+                        ),
+                      ),
+                    ],
+                    Expanded(
+                      child: filtered.isEmpty
+                          ? Center(
+                              child: Text(
+                                l10n.noCurrencyFound,
+                                style: GoogleFonts.dmSans(
+                                    color: theme.colorScheme.onSurface
+                                        .withValues(alpha: 0.6)),
+                              ),
+                            )
+                          : ListView.builder(
+                              controller: scrollController,
+                              itemCount: filtered.length,
+                              itemBuilder: (context, index) {
+                                final currency = filtered[index];
+                                final selected =
+                                    !themeViewModel.currencyAutoDetect &&
+                                        themeViewModel.currencyCode ==
+                                            currency.code;
+                                return ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  leading: Text(
+                                    currency.flag,
+                                    style: const TextStyle(fontSize: 22),
+                                  ),
+                                  title: Text(
+                                    '${currency.name} (${currency.code})',
+                                    style: GoogleFonts.dmSans(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14),
+                                  ),
+                                  subtitle: Text(currency.symbol),
+                                  trailing: selected
+                                      ? Icon(Icons.check,
+                                          color: theme.colorScheme.primary)
+                                      : null,
+                                  onTap: () {
+                                    themeViewModel.setCurrency(currency);
+                                    Navigator.pop(c);
+                                  },
+                                );
+                              },
+                            ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
   Widget _buildThemeSegmentedControl(BuildContext context) {
-    final viewModel = context.watch<ThemeViewModel>();
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    
+
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
@@ -398,15 +603,19 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       child: Row(
         children: [
-          _buildThemeOption(context, ThemeMode.system, Icons.settings_suggest_rounded, l10n.systemDefault),
-          _buildThemeOption(context, ThemeMode.light, Icons.light_mode_rounded, l10n.lightMode),
-          _buildThemeOption(context, ThemeMode.dark, Icons.dark_mode_rounded, l10n.darkMode),
+          _buildThemeOption(context, ThemeMode.system,
+              Icons.settings_suggest_rounded, l10n.systemDefault),
+          _buildThemeOption(context, ThemeMode.light, Icons.light_mode_rounded,
+              l10n.lightMode),
+          _buildThemeOption(
+              context, ThemeMode.dark, Icons.dark_mode_rounded, l10n.darkMode),
         ],
       ),
     );
   }
 
-  Widget _buildThemeOption(BuildContext context, ThemeMode mode, IconData icon, String label) {
+  Widget _buildThemeOption(
+      BuildContext context, ThemeMode mode, IconData icon, String label) {
     final viewModel = context.watch<ThemeViewModel>();
     final isSelected = viewModel.themeMode == mode;
     final theme = Theme.of(context);
@@ -423,20 +632,24 @@ class _SettingsPageState extends State<SettingsPage> {
           decoration: BoxDecoration(
             color: isSelected ? theme.colorScheme.primary : Colors.transparent,
             borderRadius: BorderRadius.circular(8),
-            boxShadow: isSelected ? [
-              BoxShadow(
-                color: theme.colorScheme.primary.withValues(alpha: 0.3),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              )
-            ] : [],
+            boxShadow: isSelected
+                ? [
+                    BoxShadow(
+                      color: theme.colorScheme.primary.withValues(alpha: 0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    )
+                  ]
+                : [],
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 icon,
-                color: isSelected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurfaceVariant,
+                color: isSelected
+                    ? theme.colorScheme.onPrimary
+                    : theme.colorScheme.onSurfaceVariant,
                 size: 20,
               ),
               const SizedBox(height: 4),
@@ -445,7 +658,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 style: GoogleFonts.dmSans(
                   fontSize: 12,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                  color: isSelected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurfaceVariant,
+                  color: isSelected
+                      ? theme.colorScheme.onPrimary
+                      : theme.colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
@@ -457,6 +672,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget _buildAdaptiveColorSwitch(BuildContext context) {
     final viewModel = context.watch<ThemeViewModel>();
+    final l10n = AppLocalizations.of(context)!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -465,7 +681,7 @@ class _SettingsPageState extends State<SettingsPage> {
             Icon(Icons.color_lens, color: Colors.teal.shade600, size: 24),
             const SizedBox(width: 12),
             Text(
-              AppStrings.adaptiveColor,
+              l10n.adaptiveColor,
               style: GoogleFonts.dmSans(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -487,16 +703,17 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget _buildColorPickerTile(BuildContext context) {
     final viewModel = context.watch<ThemeViewModel>();
     final currentColor = viewModel.customSeedColor ?? Colors.green;
+    final l10n = AppLocalizations.of(context)!;
     return SettingTile(
       icon: Icons.color_lens,
-      title: AppStrings.appColor,
-      subtitle: AppStrings.selectColor,
+      title: l10n.appColor,
+      subtitle: l10n.selectColor,
       onTap: () async {
         Color selectedColor = currentColor;
         BlurUtils.showBlurredDialog(
           context: context,
           child: AlertDialog(
-            title: const Text('Pick App Color'),
+            title: Text(l10n.pickAppColor),
             content: SingleChildScrollView(
               child: BlockPicker(
                 pickerColor: selectedColor,
@@ -507,19 +724,19 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             actions: [
               TextButton(
-                child: const Text('Reset'),
+                child: Text(l10n.reset),
                 onPressed: () {
                   viewModel.setCustomSeedColor(null);
                   Navigator.of(context).pop();
-                  _showSnackBar(context, 'App color reset to default!');
+                  _showSnackBar(context, l10n.appColorResetDefault);
                 },
               ),
               TextButton(
-                child: const Text('Cancel'),
+                child: Text(l10n.cancel),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               ElevatedButton(
-                child: const Text('Select'),
+                child: Text(l10n.selectAction),
                 onPressed: () {
                   viewModel.setCustomSeedColor(selectedColor);
                   Navigator.of(context).pop();
@@ -534,10 +751,11 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _buildAppLockSection(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SettingTile(
       icon: Icons.lock,
-      title: AppStrings.appLock,
-      subtitle: AppStrings.appLockDesc,
+      title: l10n.appLock,
+      subtitle: l10n.appLockDesc,
       trailing: Switch(
         value: _appLockEnabled,
         onChanged: (value) async {
@@ -548,29 +766,27 @@ class _SettingsPageState extends State<SettingsPage> {
                   await localAuth.isDeviceSupported();
               if (!mounted) return;
               if (!canCheck) {
-                _showSnackBar(context,
-                    'Device does not support biometrics or device authentication.');
+                _showSnackBar(context, l10n.deviceNotSupportBiometricsOrAuth);
                 return;
               }
               final didAuthenticate = await localAuth.authenticate(
-                localizedReason: 'Authenticate to enable app lock',
+                localizedReason: l10n.authenticateReason,
                 biometricOnly: false,
                 persistAcrossBackgrounding: true,
               );
               if (!mounted) return;
               if (!didAuthenticate) {
-                _showSnackBar(
-                    context, 'Authentication failed. App lock not enabled.');
+                _showSnackBar(context, l10n.authFailedAppLockNotEnabled);
                 return;
               }
             }
             await _setAppLockEnabled(value);
             if (!mounted) return;
-            _showSnackBar(
-                context, value ? 'App lock enabled.' : 'App lock disabled.');
+            _showSnackBar(context,
+                value ? l10n.appLockEnabledDot : l10n.appLockDisabledDot);
           } catch (e) {
             if (!mounted) return;
-            _showSnackBar(context, 'Error: \n$e');
+            _showSnackBar(context, l10n.errorWithDetails(e.toString()));
           }
         },
       ),
@@ -579,20 +795,21 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget _buildUpiSettingsTile(BuildContext context) {
     final viewModel = context.watch<ThemeViewModel>();
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         SettingTile(
           icon: Icons.qr_code_2_rounded,
-          title: AppStrings.upiId,
-          subtitle: viewModel.upiId ?? AppStrings.upiIdDesc,
-          onTap: () => _showUpiInputDialog(context, 'UPI ID', viewModel.upiId,
+          title: l10n.upiId,
+          subtitle: viewModel.upiId ?? l10n.upiIdDesc,
+          onTap: () => _showUpiInputDialog(context, l10n.upiId, viewModel.upiId,
               (val) => viewModel.setUpiId(val)),
         ),
         SettingTile(
           icon: Icons.person_pin_outlined,
-          title: AppStrings.upiName,
-          subtitle: viewModel.upiName ?? AppStrings.upiNameDesc,
-          onTap: () => _showUpiInputDialog(context, 'Display Name',
+          title: l10n.upiName,
+          subtitle: viewModel.upiName ?? l10n.upiNameDesc,
+          onTap: () => _showUpiInputDialog(context, l10n.upiName,
               viewModel.upiName, (val) => viewModel.setUpiName(val)),
         ),
       ],
@@ -601,26 +818,27 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void _showUpiInputDialog(BuildContext context, String title,
       String? currentValue, Function(String) onSave) {
+    final l10n = AppLocalizations.of(context)!;
     final controller = TextEditingController(text: currentValue);
     BlurUtils.showBlurredDialog(
       context: context,
       child: AlertDialog(
-        title: Text('Edit $title'),
+        title: Text(l10n.editFieldTitle(title)),
         content: TextField(
           controller: controller,
           decoration: InputDecoration(
-            hintText: 'Enter $title',
+            hintText: l10n.enterFieldHint(title),
             border: const OutlineInputBorder(),
           ),
           autofocus: true,
         ),
         actions: [
           TextButton(
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
             onPressed: () => Navigator.pop(context),
           ),
           ElevatedButton(
-            child: const Text('Save'),
+            child: Text(l10n.save),
             onPressed: () {
               onSave(controller.text.trim());
               Navigator.pop(context);
@@ -632,8 +850,9 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _buildAutoDetectionSection(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = theme.brightness == Brightness.dark;
 
     return Column(
       children: [
@@ -662,7 +881,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Caution to use',
+                      l10n.cautionToUse,
                       style: GoogleFonts.dmSans(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
@@ -671,10 +890,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'This feature is not 100% perfect but might work. All SMS and notification data are processed 100% locally on your device for absolute privacy.',
+                      l10n.autoDetectCautionDesc,
                       style: GoogleFonts.dmSans(
                         fontSize: 12,
-                        color: isDark ? Colors.amber[100]?.withValues(alpha: 0.8) : Colors.amber[900]?.withValues(alpha: 0.9),
+                        color: isDark
+                            ? Colors.amber[100]?.withValues(alpha: 0.8)
+                            : Colors.amber[900]?.withValues(alpha: 0.9),
                         height: 1.4,
                       ),
                     ),
@@ -686,8 +907,8 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         SettingTile(
           icon: Icons.auto_awesome,
-          title: 'Auto Transaction Detection',
-          subtitle: 'Automatically detect transactions from notifications',
+          title: l10n.autoDetectTitle,
+          subtitle: l10n.autoDetectSettingSubtitle,
           trailing: FutureBuilder<bool>(
             future: TransactionDetectionService.isEnabled(),
             builder: (context, snapshot) {
@@ -700,8 +921,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       margin: const EdgeInsets.only(right: 8),
                       width: 8,
                       height: 8,
-                      decoration: const BoxDecoration(
-                        color: Colors.green,
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -713,13 +934,15 @@ class _SettingsPageState extends State<SettingsPage> {
                         if (value) {
                           final hasNotification =
                               await NativeBridge.checkNotificationPermission();
-                          final hasSms = await NativeBridge.checkSmsPermission();
+                          final hasSms =
+                              await NativeBridge.checkSmsPermission();
 
                           if (!hasNotification && !hasSms) {
                             final confirmed = await showDialog<bool>(
                               context: context,
-                              builder: (context) => BackdropFilter(
+                              builder: (context) => ConditionalBackdropFilter(
                                 filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                                isRouteBarrier: true,
                                 child: const MonitoringSetupDialog(),
                               ),
                             );
@@ -731,23 +954,24 @@ class _SettingsPageState extends State<SettingsPage> {
 
                           final notificationAccess =
                               await NativeBridge.checkNotificationPermission();
-                          final smsAccess = await NativeBridge.checkSmsPermission();
+                          final smsAccess =
+                              await NativeBridge.checkSmsPermission();
 
                           if (!notificationAccess && !smsAccess) {
                             if (mounted) {
-                              ErrorHandler.showErrorSnackBar(context,
-                                  'Permissions required: No notification or SMS access granted. Auto-detection cannot be enabled.');
+                              ErrorHandler.showErrorSnackBar(
+                                  context, l10n.permissionsRequiredNoAccess);
                               setState(() {});
                             }
                             return;
                           }
 
                           if (!notificationAccess && mounted) {
-                            ErrorHandler.showWarningSnackBar(context,
-                                'Note: Notification access is missing. Only SMS detection will work.');
+                            ErrorHandler.showWarningSnackBar(
+                                context, l10n.noteNotificationAccessMissing);
                           } else if (!smsAccess && mounted) {
-                            ErrorHandler.showWarningSnackBar(context,
-                                'Note: SMS permission is missing. Only Notification detection will work.');
+                            ErrorHandler.showWarningSnackBar(
+                                context, l10n.noteSmsPermissionMissing);
                           }
 
                           await NativeBridge.requestBatteryOptimization();
@@ -762,14 +986,14 @@ class _SettingsPageState extends State<SettingsPage> {
                         ErrorHandler.showSuccessSnackBar(
                             context,
                             value
-                                ? 'Auto-detection enabled!'
-                                : 'Auto-detection disabled!');
+                                ? l10n.autoDetectionEnabledExclaim
+                                : l10n.autoDetectionDisabledExclaim);
 
                         setState(() {});
                       } catch (e) {
                         if (mounted) {
                           ErrorHandler.handleError(context, e,
-                              customMessage: 'Failed to update auto-detection');
+                              customMessage: l10n.failedUpdateAutoDetection);
                         }
                       }
                     },
@@ -781,34 +1005,33 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         SettingTile(
           icon: Icons.history,
-          title: 'Process Recent Data',
-          subtitle: 'Scan recent notifications for transactions',
+          title: l10n.processRecentDataTitle,
+          subtitle: l10n.processRecentDataSubtitle,
           onTap: () async {
             HapticFeedback.lightImpact();
             try {
               await TransactionDetectionService.processRecentSms();
               if (mounted) {
                 ErrorHandler.showSuccessSnackBar(
-                    context, 'Recent data processed successfully!');
+                    context, l10n.recentDataProcessed);
               }
             } catch (e) {
               if (!mounted) return;
               ErrorHandler.handleError(context, e,
-                  customMessage: 'Error processing data');
+                  customMessage: l10n.errorProcessingData);
             }
           },
         ),
         SettingTile(
           icon: Icons.bug_report_outlined,
-          title: 'Test Detection Logic',
-          subtitle: 'Simulate a notification to verify parsing',
+          title: l10n.testDetectionLogicTitle,
+          subtitle: l10n.testDetectionLogicSubtitle,
           onTap: () => _showTestDetectionDialog(context),
         ),
-
         SettingTile(
           icon: Icons.manage_history,
-          title: 'Show Detection History',
-          subtitle: 'View detailed logs of detected transactions',
+          title: l10n.showDetectionHistoryTitle,
+          subtitle: l10n.showDetectionHistorySubtitle,
           onTap: () {
             HapticFeedback.lightImpact();
             Navigator.push(
@@ -820,8 +1043,8 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         SettingTile(
           icon: Icons.auto_delete_outlined,
-          title: 'Auto-delete undetected history',
-          subtitle: 'Delete undetected items after 12 hours',
+          title: l10n.autoDeleteUndetectedTitle,
+          subtitle: l10n.autoDeleteUndetectedSubtitle,
           trailing: Switch(
             value: context.watch<ThemeViewModel>().autoDeleteUndetected,
             onChanged: (value) {
@@ -835,34 +1058,35 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _showTestDetectionDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final TextEditingController controller = TextEditingController(
       text:
           'Alert: Your account XX1234 has been debited by Rs. 500.00 for a purchase at AMAZON. Ref: 12345678.',
     );
-    
+
     ParsedTransaction? result;
 
     BlurUtils.showBlurredDialog(
       context: context,
       child: StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Test Parser Diagnostic'),
+          title: Text(l10n.testParserDiagnosticTitle),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Enter a sample notification message to see how our parser handles it.',
-                  style: TextStyle(fontSize: 13),
+                Text(
+                  l10n.testParserDiagnosticDesc,
+                  style: const TextStyle(fontSize: 13),
                 ),
                 const SizedBox(height: 12),
                 TextField(
                   controller: controller,
                   maxLines: 3,
-                  decoration: const InputDecoration(
-                    hintText: 'Paste notification text here...',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    hintText: l10n.pasteNotificationHint,
+                    border: const OutlineInputBorder(),
                   ),
                 ),
                 if (result != null) ...[
@@ -870,7 +1094,11 @@ class _SettingsPageState extends State<SettingsPage> {
                   const Divider(),
                   const SizedBox(height: 10),
                   Text(
-                      'Status: ${result!.isBalanceUpdate ? 'Balance Sync' : result!.amount > 0 ? 'Transaction Detected' : 'No Action Detected'}',
+                      l10n.statusLabel(result!.isBalanceUpdate
+                          ? l10n.statusBalanceSync
+                          : result!.amount > 0
+                              ? l10n.transactionDetected
+                              : l10n.statusNoActionDetected),
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: result!.amount > 0 || result!.isBalanceUpdate
@@ -878,17 +1106,23 @@ class _SettingsPageState extends State<SettingsPage> {
                               : Colors.orange)),
                   const SizedBox(height: 8),
                   _resultItem(
-                      'Amount', '₹${result!.amount.toStringAsFixed(2)}'),
+                      l10n.amount, '₹${result!.amount.toStringAsFixed(2)}'),
+                  _resultItem(l10n.transactionType,
+                      result!.isIncome ? l10n.income : l10n.expense),
+                  _resultItem(l10n.resultLabelMerchant,
+                      result!.merchant ?? l10n.unknown),
+                  _resultItem(l10n.category, result!.category ?? l10n.general),
                   _resultItem(
-                      'Type', result!.isIncome ? 'Income' : 'Expense'),
-                  _resultItem('Merchant', result!.merchant ?? 'Unknown'),
-                  _resultItem('Category', result!.category ?? 'General'),
-                  _resultItem('Bank', result!.bank ?? 'Unknown'),
-                  _resultItem('Account', result!.account ?? 'N/A'),
-                  _resultItem('Balance',
-                      result!.balance != null ? '₹${result!.balance}' : 'N/A'),
+                      l10n.resultLabelBank, result!.bank ?? l10n.unknown),
                   _resultItem(
-                      'Confidence', '${(result!.confidence * 100).toInt()}%'),
+                      l10n.account, result!.account ?? l10n.notAvailable),
+                  _resultItem(
+                      l10n.balanceLabel,
+                      result!.balance != null
+                          ? '₹${result!.balance}'
+                          : l10n.notAvailable),
+                  _resultItem(l10n.resultLabelConfidence,
+                      '${(result!.confidence * 100).toInt()}%'),
                 ],
               ],
             ),
@@ -896,23 +1130,23 @@ class _SettingsPageState extends State<SettingsPage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Close'),
+              child: Text(l10n.close),
             ),
             ElevatedButton(
               onPressed: () {
                 final text = controller.text;
-                final parsed = TransactionParser.parse(text,
-                    packageName: 'com.test.bank');
+                final parsed =
+                    TransactionParser.parse(text, packageName: 'com.test.bank');
                 setDialogState(() {
                   result = parsed;
                 });
 
                 if (parsed == null) {
                   ErrorHandler.showErrorSnackBar(
-                      context, 'Pattern not recognized');
+                      context, l10n.patternNotMatched);
                 }
               },
-              child: const Text('Parse Text'),
+              child: Text(l10n.parseText),
             ),
           ],
         ),
@@ -926,8 +1160,11 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('$label:', style: const TextStyle(fontSize: 12, color: Colors.grey)),
-          Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
+          Text('$label:',
+              style: const TextStyle(fontSize: 12, color: Colors.grey)),
+          Text(value,
+              style:
+                  const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
         ],
       ),
     );
@@ -976,7 +1213,8 @@ class _SettingsPageState extends State<SettingsPage> {
           onTap: () async {
             HapticFeedback.lightImpact();
             try {
-              final strategy = await _showConflictResolutionSheet(context, l10n);
+              final strategy =
+                  await _showConflictResolutionSheet(context, l10n);
               if (strategy == null) {
                 if (!mounted) return;
                 _showSnackBar(context, l10n.restoreFailedCancelled);
@@ -1043,12 +1281,13 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _buildDataManagementSection(BuildContext context, bool isDark) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         SettingTile(
           icon: Icons.delete_forever,
-          title: 'Delete All Data',
-          subtitle: '⚠️ This action cannot be undone',
+          title: l10n.deleteAllDataTitle,
+          subtitle: l10n.deleteAllDataWarningSubtitle,
           isDestructive: true,
           onTap: () {
             HapticFeedback.lightImpact();
@@ -1057,11 +1296,22 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         SettingTile(
           icon: Icons.refresh,
-          title: 'Reset Intro',
-          subtitle: 'Show intro screens again',
+          title: l10n.resetIntroTitle,
+          subtitle: l10n.resetIntroSubtitle,
           onTap: () {
             HapticFeedback.lightImpact();
             _confirmResetIntro(context);
+          },
+        ),
+        SettingTile(
+          icon: Icons.touch_app_outlined,
+          title: l10n.replayTipsTitle,
+          subtitle: l10n.replayTipsSubtitle,
+          onTap: () async {
+            HapticFeedback.lightImpact();
+            await TourService.resetAll();
+            if (!mounted) return;
+            _showSnackBar(context, l10n.replayTipsDone);
           },
         ),
       ],
@@ -1069,31 +1319,47 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _buildCustomOptionsSection(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         SettingTile(
           icon: Icons.category_outlined,
-          title: 'Income Categories',
-          subtitle: 'Manage categories for income',
+          title: l10n.incomeCategories,
+          subtitle: l10n.incomeCategoriesDesc,
           onTap: () => _showManageItemsDialog(context, 'Income'),
         ),
         SettingTile(
           icon: Icons.category_outlined,
-          title: 'Expense Categories',
-          subtitle: 'Manage categories for expenses',
+          title: l10n.expenseCategories,
+          subtitle: l10n.expenseCategoriesDesc,
           onTap: () => _showManageItemsDialog(context, 'Expense'),
         ),
         SettingTile(
           icon: Icons.account_balance_outlined,
-          title: 'Accounts',
-          subtitle: 'Manage your accounts',
+          title: l10n.accountsTitle,
+          subtitle: l10n.accountsDesc,
           onTap: () => _showManageItemsDialog(context, 'Account'),
         ),
       ],
     );
   }
 
+  /// Localized display label for the internal item-type identifier
+  /// ('Income' / 'Expense' / 'Account') used across the manage-items dialogs.
+  String _typeLabel(AppLocalizations l10n, String type) {
+    switch (type) {
+      case 'Income':
+        return l10n.income;
+      case 'Expense':
+        return l10n.expense;
+      default:
+        return l10n.account;
+    }
+  }
+
   void _showManageItemsDialog(BuildContext context, String type) {
+    final l10n = AppLocalizations.of(context)!;
+    final typeLabel = _typeLabel(l10n, type);
     BlurUtils.showBlurredBottomSheet(
       context: context,
       child: StatefulBuilder(
@@ -1115,7 +1381,7 @@ class _SettingsPageState extends State<SettingsPage> {
             height: MediaQuery.of(context).size.height * 0.75,
             child: Column(
               children: [
-                Text('Manage ${type}s',
+                Text(l10n.manageItemsTitle(typeLabel),
                     style: GoogleFonts.dmSans(
                         fontSize: 18, fontWeight: FontWeight.bold)),
                 const Divider(),
@@ -1123,7 +1389,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: items.isEmpty
                       ? Center(
                           child: Text(
-                            'No ${type.toLowerCase()}s found.',
+                            l10n.noItemsFound(typeLabel.toLowerCase()),
                             style: GoogleFonts.dmSans(color: Colors.grey),
                           ),
                         )
@@ -1190,9 +1456,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           borderRadius: BorderRadius.circular(12)),
                     ),
                     icon: const Icon(Icons.add),
-                    label: Text('Add $type',
-                        style:
-                            GoogleFonts.dmSans(fontWeight: FontWeight.bold)),
+                    label: Text(l10n.addItemButton(typeLabel),
+                        style: GoogleFonts.dmSans(fontWeight: FontWeight.bold)),
                     onPressed: () => _showEditItemDialog(
                         context, null, type, (n) => setStateDialog(() {})),
                   ),
@@ -1207,6 +1472,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void _showEditItemDialog(
       BuildContext context, String? old, String type, Function(String) onDone) {
+    final l10n = AppLocalizations.of(context)!;
+    final typeLabel = _typeLabel(l10n, type);
     final controller = TextEditingController(text: old);
 
     BlurUtils.showBlurredBottomSheet(
@@ -1217,14 +1484,16 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius:
-                const BorderRadius.vertical(top: Radius.circular(24)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
           ),
           padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('${old == null ? 'Add' : 'Edit'} $type',
+              Text(
+                  old == null
+                      ? l10n.addItemButton(typeLabel)
+                      : l10n.editItemTitle(typeLabel),
                   style: GoogleFonts.dmSans(
                       fontSize: 18, fontWeight: FontWeight.bold)),
               const SizedBox(height: 24),
@@ -1232,8 +1501,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 controller: controller,
                 autofocus: true,
                 decoration: InputDecoration(
-                  hintText: 'Enter name...',
-                  labelText: '$type Name',
+                  hintText: l10n.enterNamePlaceholder,
+                  labelText: l10n.itemNameLabel(typeLabel),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12)),
                 ),
@@ -1245,7 +1514,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   Expanded(
                     child: TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
+                      child: Text(l10n.cancel),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -1259,8 +1528,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       onPressed: () {
                         final val = controller.text.trim();
                         if (val.isNotEmpty) {
-                          final themeViewModel =
-                              context.read<ThemeViewModel>();
+                          final themeViewModel = context.read<ThemeViewModel>();
                           if (old == null) {
                             themeViewModel.addItem(val, type);
                           } else {
@@ -1270,7 +1538,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           Navigator.pop(context);
                         }
                       },
-                      child: const Text('Save'),
+                      child: Text(l10n.save),
                     ),
                   ),
                 ],
@@ -1283,12 +1551,13 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _buildAppInfoSection(BuildContext context, bool isDark) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         SettingTile(
           icon: Icons.info_outline,
-          title: 'About ${AppStrings.appNameShort}',
-          subtitle: 'Developer, Privacy, Support & More',
+          title: l10n.aboutApp,
+          subtitle: l10n.aboutAppSubtitle,
           onTap: () {
             HapticFeedback.lightImpact();
             Navigator.push(
@@ -1304,22 +1573,25 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget _buildBudgetSection(BuildContext context) {
     final themeViewModel = context.watch<ThemeViewModel>();
     final budget = themeViewModel.monthlyBudget;
+    final l10n = AppLocalizations.of(context)!;
     return SettingTile(
       icon: Icons.track_changes,
-      title: 'Monthly Budget',
+      title: l10n.monthlyBudget,
       subtitle: budget > 0
-          ? 'Monthly limit: ₹$budget'
-          : 'Set a monthly spending limit',
+          ? l10n.monthlyLimitSubtitle(
+              '${themeViewModel.currencySymbol}${budget.toString()}')
+          : l10n.setMonthlySpendingLimit,
       onTap: () => _showBudgetDialog(context),
     );
   }
 
   Widget _buildBalanceCalculationTile(BuildContext context) {
     final viewModel = context.watch<ThemeViewModel>();
+    final l10n = AppLocalizations.of(context)!;
     return SettingTile(
       icon: Icons.calculate_outlined,
-      title: 'Join Previous Month Balance',
-      subtitle: 'Include previous month balance in current total',
+      title: l10n.joinPreviousMonthBalanceTitle,
+      subtitle: l10n.joinPreviousMonthBalanceDesc,
       onTap: null,
       trailing: Switch(
         value: viewModel.joinPreviousMonthBalance,
@@ -1333,24 +1605,25 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void _showBudgetDialog(BuildContext context) {
     final viewModel = context.read<ThemeViewModel>();
+    final l10n = AppLocalizations.of(context)!;
     final controller =
         TextEditingController(text: viewModel.monthlyBudget.toString());
     BlurUtils.showBlurredDialog(
       context: context,
       child: AlertDialog(
-        title: const Text('Set Monthly Budget'),
+        title: Text(l10n.setMonthlyBudgetTitle),
         content: TextField(
           controller: controller,
           keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            labelText: 'Budget Amount',
-            prefixText: '₹ ',
+          decoration: InputDecoration(
+            labelText: l10n.budgetAmountLabel,
+            prefixText: '${viewModel.currencySymbol} ',
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -1358,18 +1631,19 @@ class _SettingsPageState extends State<SettingsPage> {
               viewModel.setMonthlyBudget(val);
               if (!mounted) return;
               Navigator.pop(context);
-              ErrorHandler.showSuccessSnackBar(context, 'Budget updated!');
+              ErrorHandler.showSuccessSnackBar(context, l10n.budgetUpdated);
             },
-            child: const Text('Save'),
+            child: Text(l10n.save),
           ),
         ],
       ),
     );
   }
 
-  Future<String?> _showConflictResolutionSheet(BuildContext context, AppLocalizations l10n) async {
+  Future<String?> _showConflictResolutionSheet(
+      BuildContext context, AppLocalizations l10n) async {
     final theme = Theme.of(context);
-    
+
     return showModalBottomSheet<String>(
       context: context,
       backgroundColor: Colors.transparent,
@@ -1417,7 +1691,7 @@ class _SettingsPageState extends State<SettingsPage> {
               title: l10n.mergeSkipDuplicates,
               desc: l10n.mergeSkipDesc,
               icon: Icons.merge_type_rounded,
-              color: Colors.blueAccent,
+              color: theme.colorScheme.primary,
               value: 'merge',
             ),
             const SizedBox(height: 16),
@@ -1426,7 +1700,10 @@ class _SettingsPageState extends State<SettingsPage> {
               title: l10n.overwriteConflicts,
               desc: l10n.overwriteConflictsDesc,
               icon: Icons.copy_all_rounded,
-              color: Colors.orangeAccent,
+              // Amber: this option can replace existing records on conflict,
+              // so it keeps the app's one caution color instead of a
+              // one-off orange.
+              color: Colors.amber.shade700,
               value: 'overwrite',
             ),
             const SizedBox(height: 16),
@@ -1445,7 +1722,7 @@ class _SettingsPageState extends State<SettingsPage> {
     required String value,
   }) {
     final theme = Theme.of(context);
-    
+
     return InkWell(
       onTap: () => Navigator.pop(context, value),
       borderRadius: BorderRadius.circular(16),
@@ -1490,7 +1767,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 ],
               ),
             ),
-            Icon(Icons.arrow_forward_ios_rounded, size: 14, color: theme.colorScheme.onSurface.withValues(alpha: 0.3)),
+            Icon(Icons.arrow_forward_ios_rounded,
+                size: 14,
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.3)),
           ],
         ),
       ),
@@ -1502,7 +1781,7 @@ class _SettingsPageState extends State<SettingsPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -1516,19 +1795,19 @@ class _SettingsPageState extends State<SettingsPage> {
     final isDark =
         Provider.of<ThemeViewModel>(context, listen: false).isDarkMode;
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     BlurUtils.showBlurredDialog(
       context: context,
       child: AlertDialog(
         backgroundColor: theme.colorScheme.surface,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Row(
           children: [
             const Icon(Icons.warning, color: Colors.red, size: 24),
             const SizedBox(width: 8),
             Text(
-              'Confirm Delete',
+              l10n.confirmDeleteTitle,
               style: GoogleFonts.dmSans(
                 fontWeight: FontWeight.bold,
                 color: isDark ? Colors.white : Colors.black,
@@ -1537,7 +1816,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
         ),
         content: Text(
-          'Are you sure you want to delete all transactions and reset your balance? This action cannot be undone.',
+          l10n.confirmDeleteAllDesc,
           style: GoogleFonts.dmSans(
             color: isDark ? Colors.white70 : Colors.black87,
           ),
@@ -1545,7 +1824,7 @@ class _SettingsPageState extends State<SettingsPage> {
         actions: [
           TextButton(
             child: Text(
-              'Cancel',
+              l10n.cancel,
               style: TextStyle(color: theme.colorScheme.primary),
             ),
             onPressed: () {
@@ -1555,7 +1834,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ElevatedButton.icon(
             icon: const Icon(Icons.delete),
-            label: const Text('Delete All'),
+            label: Text(l10n.deleteAllButton),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
@@ -1566,19 +1845,17 @@ class _SettingsPageState extends State<SettingsPage> {
                 final box = await Hive.openBox<double>('balanceBox');
                 await box.clear();
                 if (!context.mounted) return;
-                await Provider.of<TransactionViewModel>(context,
-                        listen: false)
+                await Provider.of<TransactionViewModel>(context, listen: false)
                     .deleteAllData();
                 await Provider.of<PersonViewModel>(context, listen: false)
                     .deleteAllData();
                 if (!context.mounted) return;
                 Navigator.pop(context);
-                _showSnackBar(context, 'All data deleted successfully!');
+                _showSnackBar(context, l10n.allDataDeleted);
               } catch (e) {
                 if (!context.mounted) return;
                 Navigator.pop(context);
-                _showSnackBar(
-                    context, 'Failed to delete all data. Please try again.');
+                _showSnackBar(context, l10n.failedDeleteAllData);
               }
             },
           ),
@@ -1591,19 +1868,19 @@ class _SettingsPageState extends State<SettingsPage> {
     final isDark =
         Provider.of<ThemeViewModel>(context, listen: false).isDarkMode;
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     BlurUtils.showBlurredDialog(
       context: context,
       child: AlertDialog(
         backgroundColor: theme.colorScheme.surface,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Row(
           children: [
-            const Icon(Icons.refresh, color: Colors.orange, size: 24),
+            Icon(Icons.refresh, color: theme.colorScheme.primary, size: 24),
             const SizedBox(width: 8),
             Text(
-              'Reset Intro',
+              l10n.resetIntroTitle,
               style: GoogleFonts.dmSans(
                 fontWeight: FontWeight.bold,
                 color: isDark ? Colors.white : Colors.black,
@@ -1612,7 +1889,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
         ),
         content: Text(
-          'This will show the intro screens again the next time you open the app. Your data will remain unchanged.',
+          l10n.resetIntroConfirmDesc,
           style: GoogleFonts.dmSans(
             color: isDark ? Colors.white70 : Colors.black87,
           ),
@@ -1620,7 +1897,7 @@ class _SettingsPageState extends State<SettingsPage> {
         actions: [
           TextButton(
             child: Text(
-              'Cancel',
+              l10n.cancel,
               style: TextStyle(color: theme.colorScheme.primary),
             ),
             onPressed: () {
@@ -1630,9 +1907,9 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ElevatedButton.icon(
             icon: const Icon(Icons.refresh),
-            label: const Text('Reset'),
+            label: Text(l10n.reset),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange,
+              backgroundColor: theme.colorScheme.primary,
               foregroundColor: Colors.white,
             ),
             onPressed: () async {
@@ -1645,12 +1922,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 await settingsBox.put('introCompleted', false);
                 if (!context.mounted) return;
                 Navigator.pop(context);
-                _showSnackBar(context, 'Intro reset successfully!');
+                _showSnackBar(context, l10n.introReset);
               } catch (e) {
                 if (!context.mounted) return;
                 Navigator.pop(context);
-                _showSnackBar(
-                    context, 'Failed to reset intro. Please try again.\n$e');
+                _showSnackBar(context, l10n.failedResetIntro(e.toString()));
               }
             },
           ),

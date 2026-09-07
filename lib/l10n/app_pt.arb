@@ -1,5 +1,5 @@
 {
-  "appName": "Aspende",
+  "appName": "Aspends",
   "appTagline": "Gastos inteligentes, simplificados.",
   "totalBalance": "Saldo Total",
   "income": "Renda",
@@ -23,7 +23,7 @@
   "telegramSupport": "Suporte de telegrama",
   "addTransaction": "Adicionar transação",
   "editTransaction": "Editar transação",
-  "deleteTransaction": "Delete Transaction",
+  "deleteTransaction": "Excluir Transação",
   "amount": "Quantia",
   "category": "Categoria",
   "account": "Conta",
@@ -37,6 +37,9 @@
   "voiceInput": "Entrada de voz",
   "speechUnavailable": "Reconhecimento de fala indisponível",
   "microPermissionDenied": "Permissão de microfone negada",
+  "microPermissionTitle": "Acesso ao microfone necessário",
+  "microPermissionDesc": "O Aspends precisa de acesso ao microfone para permitir que você insira detalhes de transações por comandos de voz. Suas entradas de voz são processadas totalmente offline no seu dispositivo e nunca são enviadas ou compartilhadas.",
+  "microPermissionGrant": "Ativar voz",
   "appearance": "Aparência",
   "security": "Segurança",
   "autoDetection": "Detecção automática de transações",
@@ -59,7 +62,7 @@
   "sortBy": "Ordenar por",
   "holdToRecord": "Segure para registrar a transação",
   "couldNotFindAmount": "Não foi possível encontrar o valor. Experimente: 'Gastei 500 em comida'",
-  "savedAmount": "Salvo ₹{amount} para {category}",
+  "savedAmount": "Salvo {amount} para {category}",
   "@savedAmount": {
     "placeholders": {
       "amount": {
@@ -98,8 +101,20 @@
   "projectInfo": "Informações do projeto",
   "openSource": "Código aberto",
   "openSourceDesc": "Código aberto orgulhosamente no GitHub",
+  "licenses": "Licenças de código aberto",
+  "licensesDesc": "Ver as licenças de terceiros usadas neste aplicativo",
   "rateApp": "Taxa de despesas",
   "rateAppDesc": "Apoie-nos com uma classificação de 5 estrelas",
+  "couldNotLaunchUrl": "Não foi possível abrir o link",
+  "errorWithDetails": "Erro: {error}",
+  "@errorWithDetails": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "madeWithLove": "Feito com ❤️ para finanças melhores",
   "howAspendWorks": "COMO FUNCIONA O ASPEND",
   "howItWorksTitle1": "1. Interceptação Inteligente",
   "howItWorksDesc1": "Um serviço de segundo plano seguro e com bateria otimizada escuta SMS recebidos e notificações bancárias.",
@@ -117,11 +132,21 @@
   "smsPermissionDesc": "Permite a leitura de SMS de transações do seu banco.",
   "finishSetup": "Concluir configuração",
   "grant": "Conceder",
-  "appNameShort": "Aspende",
+  "appNameShort": "Aspends",
   "splashTagline": "Gestão Inteligente de Dinheiro",
   "budget": "Orçamento",
+  "overBudgetBy": "⚠️ Ultrapassado em {amount}",
+  "@overBudgetBy": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "balanceDetailsTitle": "Detalhes do saldo",
   "editBalanceTitle": "Editar saldo",
+  "tapHoldToEditBalance": "Toque e segure para editar o saldo",
+  "longPressBalanceCardHint": "Mantenha pressionado o cartão de saldo na tela inicial",
   "newBalanceLabel": "Novo equilíbrio",
   "viewAll": "Ver tudo",
   "searchHint": "Pesquisar categorias ou notas...",
@@ -174,6 +199,7 @@
   "next": "Próximo",
   "getStarted": "Comece",
   "requestMoney": "Solicitar dinheiro",
+  "requestMoneyTooltip": "Solicitar dinheiro via UPI",
   "generateQr": "Gerar QR de pagamento",
   "sortByNameAZ": "Nome (A-Z)",
   "sortByNameZA": "Nome (Z-A)",
@@ -184,7 +210,7 @@
   "noTransactionsYet": "Nenhuma transação ainda",
   "addFirstTransaction": "Adicione sua primeira transação com a pessoa",
   "settleBalance": "Liquidar Saldo",
-  "settleBalanceDesc": "Isso adicionará uma transação de ₹{amount} para zerar o saldo. Continuar?",
+  "settleBalanceDesc": "Isso adicionará uma transação de {amount} para zerar o saldo. Continuar?",
   "@settleBalanceDesc": {
     "placeholders": {
       "amount": {
@@ -319,5 +345,330 @@
   "exportPeopleTitle": "Exportar dados de pessoas",
   "exportPeopleDesc": "Faça backup de transações de pessoas",
   "exportPdfTitle": "Exportar como PDF",
-  "exportPdfDesc": "Gere relatórios em PDF"
+  "exportPdfDesc": "Gere relatórios em PDF",
+  "biometricNotSupported": "A autenticação biométrica não é compatível com este dispositivo",
+  "noBiometricMethods": "Nenhum método de autenticação biométrica disponível",
+  "authenticateReason": "Autentique-se para ativar o bloqueio do aplicativo",
+  "authFailedAppLockNotEnabled": "Falha na autenticação. Bloqueio do aplicativo não ativado.",
+  "appLockEnabledSuccess": "Bloqueio do aplicativo ativado com sucesso",
+  "appLockDisabledSuccess": "Bloqueio do aplicativo desativado com sucesso",
+  "failedToEnableAppLock": "Falha ao ativar o bloqueio do aplicativo",
+  "failedToDisableAppLock": "Falha ao desativar o bloqueio do aplicativo",
+  "pickAppColor": "Escolher cor do aplicativo",
+  "reset": "Redefinir",
+  "selectAction": "Selecionar",
+  "appColorResetDefault": "Cor do aplicativo redefinida para o padrão!",
+  "deviceNotSupportBiometricsOrAuth": "O dispositivo não suporta biometria ou autenticação do dispositivo.",
+  "appLockEnabledDot": "Bloqueio do aplicativo ativado.",
+  "appLockDisabledDot": "Bloqueio do aplicativo desativado.",
+  "cautionToUse": "Cuidado ao usar",
+  "autoDetectCautionDesc": "Este recurso não é 100% perfeito, mas pode funcionar. Todos os dados de SMS e notificações são processados 100% localmente no seu dispositivo para privacidade absoluta.",
+  "autoDetectSettingSubtitle": "Detecta transações automaticamente a partir de notificações",
+  "permissionsRequiredNoAccess": "Permissões necessárias: nenhum acesso a notificações ou SMS concedido. A detecção automática não pode ser ativada.",
+  "noteNotificationAccessMissing": "Nota: o acesso a notificações está ausente. Apenas a detecção por SMS funcionará.",
+  "noteSmsPermissionMissing": "Nota: a permissão de SMS está ausente. Apenas a detecção por notificação funcionará.",
+  "autoDetectionEnabledExclaim": "Detecção automática ativada!",
+  "autoDetectionDisabledExclaim": "Detecção automática desativada!",
+  "processRecentDataTitle": "Processar dados recentes",
+  "processRecentDataSubtitle": "Verificar notificações recentes em busca de transações",
+  "recentDataProcessed": "Dados recentes processados com sucesso!",
+  "errorProcessingData": "Erro ao processar dados",
+  "testDetectionLogicTitle": "Testar lógica de detecção",
+  "testDetectionLogicSubtitle": "Simule uma notificação para verificar a análise",
+  "showDetectionHistoryTitle": "Mostrar histórico de detecção",
+  "showDetectionHistorySubtitle": "Ver registros detalhados das transações detectadas",
+  "autoDeleteUndetectedTitle": "Excluir automaticamente o histórico não detectado",
+  "autoDeleteUndetectedSubtitle": "Excluir itens não detectados após 12 horas",
+  "testParserDiagnosticTitle": "Diagnóstico de teste do analisador",
+  "testParserDiagnosticDesc": "Digite uma mensagem de notificação de exemplo para ver como nosso analisador a processa.",
+  "pasteNotificationHint": "Cole o texto da notificação aqui...",
+  "statusBalanceSync": "Sincronização de saldo",
+  "statusNoActionDetected": "Nenhuma ação detectada",
+  "transactionType": "Tipo",
+  "resultLabelMerchant": "Comerciante",
+  "resultLabelBank": "Banco",
+  "balanceLabel": "Saldo",
+  "resultLabelConfidence": "Confiança",
+  "unknown": "Desconhecido",
+  "general": "Geral",
+  "notAvailable": "N/D",
+  "close": "Fechar",
+  "parseText": "Analisar texto",
+  "deleteAllDataTitle": "Excluir todos os dados",
+  "deleteAllDataWarningSubtitle": "⚠️ Esta ação não pode ser desfeita",
+  "resetIntroTitle": "Redefinir introdução",
+  "resetIntroSubtitle": "Mostrar as telas de introdução novamente",
+  "incomeCategories": "Categorias de renda",
+  "incomeCategoriesDesc": "Gerenciar categorias de renda",
+  "expenseCategories": "Categorias de despesas",
+  "expenseCategoriesDesc": "Gerenciar categorias de despesas",
+  "accountsTitle": "Contas",
+  "accountsDesc": "Gerenciar suas contas",
+  "enterNamePlaceholder": "Digite o nome...",
+  "aboutAppSubtitle": "Desenvolvedor, privacidade, suporte e mais",
+  "setMonthlySpendingLimit": "Defina um limite de gastos mensal",
+  "joinPreviousMonthBalanceTitle": "Incluir saldo do mês anterior",
+  "joinPreviousMonthBalanceDesc": "Incluir o saldo do mês anterior no total atual",
+  "setMonthlyBudgetTitle": "Definir orçamento mensal",
+  "budgetAmountLabel": "Valor do orçamento",
+  "budgetUpdated": "Orçamento atualizado!",
+  "confirmDeleteTitle": "Confirmar exclusão",
+  "confirmDeleteAllDesc": "Tem certeza de que deseja excluir todas as transações e redefinir seu saldo? Esta ação não pode ser desfeita.",
+  "deleteAllButton": "Excluir tudo",
+  "failedDeleteAllData": "Falha ao excluir todos os dados. Tente novamente.",
+  "resetIntroConfirmDesc": "Isso mostrará as telas de introdução novamente na próxima vez que você abrir o aplicativo. Seus dados permanecerão inalterados.",
+  "editFieldTitle": "Editar {field}",
+  "@editFieldTitle": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "enterFieldHint": "Digite {field}",
+  "@enterFieldHint": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "statusLabel": "Status: {status}",
+  "@statusLabel": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "manageItemsTitle": "Gerenciar {type}",
+  "@manageItemsTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "noItemsFound": "Nenhum {type} encontrado.",
+  "@noItemsFound": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "addItemButton": "Adicionar {type}",
+  "@addItemButton": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "editItemTitle": "Editar {type}",
+  "@editItemTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "itemNameLabel": "Nome de {type}",
+  "@itemNameLabel": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "monthlyLimitSubtitle": "Limite mensal: {budget}",
+  "@monthlyLimitSubtitle": {
+    "placeholders": {
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "failedResetIntro": "Falha ao redefinir a introdução. Tente novamente.\\n{error}",
+  "@failedResetIntro": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedUpdateAutoDetection": "Falha ao atualizar a detecção automática",
+  "actionCannotBeUndone": "Esta ação não pode ser desfeita.",
+  "deleteTransactionsCountTitle": "Excluir {count} transações?",
+  "@deleteTransactionsCountTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deletedTransactionsCount": "{count} transações excluídas",
+  "@deletedTransactionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "transactionHistoryTitle": "Histórico de transações",
+  "upiIdMissingTitle": "ID UPI ausente",
+  "upiIdMissingDesc": "Defina seu ID UPI nas Configurações para solicitar dinheiro via código QR.",
+  "openSettings": "Abrir configurações",
+  "recipientFallback": "Destinatário",
+  "paymentLinkCopied": "Link de pagamento copiado!",
+  "linkButton": "Link",
+  "shareQr": "Compartilhar QR",
+  "upiPaymentLinkSubject": "Link de pagamento UPI",
+  "requestingFrom": "Solicitando de {name}",
+  "@requestingFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "upiIdColonValue": "ID UPI: {id}",
+  "@upiIdColonValue": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "failedShareQr": "Falha ao compartilhar a imagem QR: {error}",
+  "@failedShareQr": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "payViaUpiQrFor": "Pagar via QR UPI para {name}",
+  "@payViaUpiQrFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectPerson": "Por favor, selecione uma pessoa",
+  "amountInInr": "Valor em INR",
+  "currency": "Moeda",
+  "selectCurrency": "Selecionar moeda",
+  "searchCurrency": "Pesquisar moeda",
+  "autoDetectCurrency": "Detectar moeda automaticamente",
+  "autoDetectCurrencyDesc": "Corresponde automaticamente à região do seu dispositivo",
+  "popularCurrencies": "Populares",
+  "allCurrencies": "Todas as moedas",
+  "noCurrencyFound": "Nenhuma moeda encontrada",
+  "requiredField": "Obrigatório",
+  "quickCategories": "Categorias rápidas",
+  "saveToPerson": "Salvar na pessoa",
+  "noPeopleCreateHint": "Nenhuma pessoa adicionada ainda. Crie pessoas na seção Pessoas.",
+  "selectPersonLabel": "Selecionar pessoa",
+  "selectCategoryTitle": "Selecionar categoria",
+  "updateTransactionButton": "Atualizar transação",
+  "saveTransactionButton": "Salvar transação",
+  "linkedToRecord": "Vinculado ao registro de {name}",
+  "@linkedToRecord": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "selectItemTitle": "Selecionar {type}",
+  "@selectItemTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "personSingular": "Pessoa",
+  "error": "Erro",
+  "retry": "Tentar novamente",
+  "setupFailedRetry": "Falha ao concluir a configuração. Tente novamente.",
+  "backButton": "Voltar",
+  "voiceInputExampleHint": "Diga algo como 'Gastei 500 no jantar'",
+  "autoDetectionEnabledSuccess": "Detecção automática ativada com sucesso!",
+  "openingRequestQrFor": "Abrindo QR de solicitação para {name}",
+  "@openingRequestQrFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "add": "Adicionar",
+  "uncategorized": "Sem categoria",
+  "timeLabel": "Hora",
+  "statusColumnLabel": "Status",
+  "completedLabel": "Concluído",
+  "notes": "Notas",
+  "serviceLabel": "Serviço",
+  "refIdLabel": "ID de referência",
+  "detectedViaLabel": "Detectado via",
+  "attachmentsLabel": "Anexos",
+  "originalLogLabel": "Registro original",
+  "noNoteProvided": "Nenhuma nota fornecida",
+  "tapToUnlock": "Toque para desbloquear",
+  "addPeopleEmptyDesc": "Adicione pessoas para rastrear transações com elas",
+  "noPeopleMatchSearch": "Nenhuma pessoa corresponde à sua pesquisa",
+  "okay": "Ok",
+  "confirm": "Confirmar",
+  "ok": "OK",
+  "unexpectedErrorOccurred": "Ocorreu um erro inesperado",
+  "autoDetectionActive": "Detecção automática ativa",
+  "unknownSource": "Fonte desconhecida",
+  "noMessageContentAvailable": "Nenhum conteúdo de mensagem disponível",
+  "addManually": "Adicionar manualmente",
+  "detectedAsIncome": "Detectado como renda",
+  "detectedAsExpense": "Detectado como despesa",
+  "sourceColonValue": "Fonte: {source}",
+  "@sourceColonValue": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "sourceNotification": "Notificação",
+  "sourceSms": "SMS",
+  "sourceRecheckHistory": "Histórico reverificado",
+  "sourceManualAddHistory": "Adicionado manualmente (histórico)",
+  "recentLabel": "Recente",
+  "oldestLabel": "Mais antigo",
+  "highestLabel": "Mais alto",
+  "lowestLabel": "Mais baixo",
+  "glassBlurEffectsTitle": "Efeitos de desfoque de vidro",
+  "glassBlurEffectsSubtitle": "Desfoque suave em painéis de vidro e diálogos — usa mais poder de processamento; desative em dispositivos mais antigos para um desempenho mais suave.",
+  "tourBalanceCardTitle": "Your Balance",
+  "tourBalanceCardDesc": "Tap for income & expense details. Long-press to edit your starting balance.",
+  "tourAddIncomeTitle": "Add Income",
+  "tourAddIncomeDesc": "Log money you've received.",
+  "tourMicTitle": "Record by Voice",
+  "tourMicDesc": "Press and hold, say the amount and what it was for, then release — it's saved automatically.",
+  "tourAddExpenseTitle": "Add Expense",
+  "tourAddExpenseDesc": "Log money you've spent.",
+  "tourAddPersonTitle": "Add a Person",
+  "tourAddPersonDesc": "Track what you owe each other over time.",
+  "tourPersonCardTitle": "Open Their Ledger",
+  "tourPersonCardDesc": "Tap a card to see the full history with this person and settle up.",
+  "tourPayNowTitle": "Settle Up",
+  "tourPayNowDesc": "Pay what you owe them directly via UPI.",
+  "tourEditPersonTitle": "Edit Person",
+  "tourEditPersonDesc": "Change their name or photo.",
+  "tourDeletePersonTitle": "Careful — Long-Press Deletes",
+  "tourDeletePersonDesc": "Long-pressing this header permanently deletes this person and their history. You'll be asked to confirm first.",
+  "tourDeleteTxTitle": "Long-Press to Delete",
+  "tourDeleteTxDesc": "Tap a transaction to edit it, or long-press to delete it.",
+  "replayTipsTitle": "Show Tips Again",
+  "replayTipsSubtitle": "Replay the pointer-hint tours on Home, People, and Person Details.",
+  "replayTipsDone": "Tips will show again next time you open those screens."
 }

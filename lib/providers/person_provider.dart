@@ -20,14 +20,14 @@ class PersonProvider with ChangeNotifier {
       _people = box.values.toList();
       notifyListeners();
     } catch (e) {
-      print('Error loading people: $e');
+      debugPrint('Error loading people: $e');
       // Fallback to direct Hive access
       try {
         final peopleBox = Hive.box<Person>('people');
         _people = peopleBox.values.toList();
         notifyListeners();
       } catch (fallbackError) {
-        print('Fallback error loading people: $fallbackError');
+        debugPrint('Fallback error loading people: $fallbackError');
         // Initialize with empty state
         _people = [];
         notifyListeners();
@@ -45,7 +45,7 @@ class PersonProvider with ChangeNotifier {
       _people.add(person);
       notifyListeners();
     } catch (e) {
-      print('Error adding person: $e');
+      debugPrint('Error adding person: $e');
       // Fallback to direct Hive access
       try {
         final peopleBox = Hive.box<Person>('people');
@@ -53,7 +53,7 @@ class PersonProvider with ChangeNotifier {
         _people.add(person);
         notifyListeners();
       } catch (fallbackError) {
-        print('Fallback error adding person: $fallbackError');
+        debugPrint('Fallback error adding person: $fallbackError');
       }
     }
   }
@@ -68,7 +68,7 @@ class PersonProvider with ChangeNotifier {
       _people.removeWhere((p) => p.key == person.key);
       notifyListeners();
     } catch (e) {
-      print('Error deleting person: $e');
+      debugPrint('Error deleting person: $e');
       // Fallback to direct Hive access
       try {
         final peopleBox = Hive.box<Person>('people');
@@ -76,7 +76,7 @@ class PersonProvider with ChangeNotifier {
         _people.removeWhere((p) => p.key == person.key);
         notifyListeners();
       } catch (fallbackError) {
-        print('Fallback error deleting person: $fallbackError');
+        debugPrint('Fallback error deleting person: $fallbackError');
       }
     }
   }
@@ -99,7 +99,7 @@ class PersonProvider with ChangeNotifier {
       _people.clear();
       notifyListeners();
     } catch (e) {
-      print('Error deleting all people data: $e');
+      debugPrint('Error deleting all people data: $e');
       // Fallback to direct Hive access
       try {
         final peopleBox = Hive.box<Person>('people');
@@ -107,7 +107,7 @@ class PersonProvider with ChangeNotifier {
         _people.clear();
         notifyListeners();
       } catch (fallbackError) {
-        print('Fallback error deleting all people data: $fallbackError');
+        debugPrint('Fallback error deleting all people data: $fallbackError');
       }
     }
   }
@@ -150,13 +150,13 @@ class PersonProvider with ChangeNotifier {
       await txBox.add(tx);
       notifyListeners();
     } catch (e) {
-      print('Error adding person transaction: $e');
+      debugPrint('Error adding person transaction: $e');
       // Fallback to direct Hive access
       try {
         Hive.box<PersonTransaction>('personTransactions').add(tx);
         notifyListeners();
       } catch (fallbackError) {
-        print('Fallback error adding person transaction: $fallbackError');
+        debugPrint('Fallback error adding person transaction: $fallbackError');
       }
     }
   }

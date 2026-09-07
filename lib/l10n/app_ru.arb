@@ -1,5 +1,5 @@
 {
-  "appName": "Аспендирует",
+  "appName": "Aspends",
   "appTagline": "Разумные траты, упрощенные.",
   "totalBalance": "Общий баланс",
   "income": "Доход",
@@ -37,6 +37,9 @@
   "voiceInput": "Голосовой ввод",
   "speechUnavailable": "Распознавание речи недоступно",
   "microPermissionDenied": "Разрешение на использование микрофона отклонено",
+  "microPermissionTitle": "Требуется доступ к микрофону",
+  "microPermissionDesc": "Aspends требуется доступ к микрофону, чтобы вы могли вводить данные транзакций с помощью голосовых команд. Ваши голосовые данные полностью обрабатываются офлайн на вашем устройстве и никогда не отправляются и не передаются третьим лицам.",
+  "microPermissionGrant": "Включить голос",
   "appearance": "Появление",
   "security": "Безопасность",
   "autoDetection": "Автоматическое обнаружение транзакций",
@@ -59,7 +62,7 @@
   "sortBy": "Сортировать по",
   "holdToRecord": "Удерживайте, чтобы записать транзакцию",
   "couldNotFindAmount": "Не удалось найти сумму. Попробуйте: «Потратил 500 на еду»",
-  "savedAmount": "Сохранено ₹{amount} для {category}",
+  "savedAmount": "Сохранено {amount} для {category}",
   "@savedAmount": {
     "placeholders": {
       "amount": {
@@ -98,8 +101,20 @@
   "projectInfo": "Информация о проекте",
   "openSource": "Открытый исходный код",
   "openSourceDesc": "С гордостью открытый исходный код на GitHub",
+  "licenses": "Лицензии с открытым исходным кодом",
+  "licensesDesc": "Просмотр лицензий сторонних компонентов, используемых в приложении",
   "rateApp": "Ставка расходов",
   "rateAppDesc": "Поддержите нас, поставив 5-звездочный рейтинг",
+  "couldNotLaunchUrl": "Не удалось открыть ссылку",
+  "errorWithDetails": "Ошибка: {error}",
+  "@errorWithDetails": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "madeWithLove": "Сделано с ❤️ ради лучших финансов",
   "howAspendWorks": "КАК РАБОТАЕТ АСПЕНД",
   "howItWorksTitle1": "1. Интеллектуальный перехват",
   "howItWorksDesc1": "Безопасная фоновая служба, оптимизированная для работы от аккумулятора, прослушивает входящие SMS и банковские уведомления.",
@@ -117,11 +132,21 @@
   "smsPermissionDesc": "Позволяет читать транзакционные SMS от вашего банка.",
   "finishSetup": "Завершить настройку",
   "grant": "Грант",
-  "appNameShort": "Аспендирует",
+  "appNameShort": "Aspends",
   "splashTagline": "Умное управление деньгами",
   "budget": "Бюджет",
+  "overBudgetBy": "⚠️ Превышение на {amount}",
+  "@overBudgetBy": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "balanceDetailsTitle": "Детали баланса",
   "editBalanceTitle": "Изменить баланс",
+  "tapHoldToEditBalance": "Нажмите и удерживайте, чтобы изменить баланс",
+  "longPressBalanceCardHint": "Нажмите и удерживайте карточку баланса на главном экране",
   "newBalanceLabel": "Новый Баланс",
   "viewAll": "Посмотреть все",
   "searchHint": "Поиск по категориям или заметкам...",
@@ -174,6 +199,7 @@
   "next": "Следующий",
   "getStarted": "Начать",
   "requestMoney": "Запросить деньги",
+  "requestMoneyTooltip": "Запросить деньги через UPI",
   "generateQr": "Создать платежный QR-код",
   "sortByNameAZ": "Имя (А-Я)",
   "sortByNameZA": "Имя (Я-А)",
@@ -184,7 +210,7 @@
   "noTransactionsYet": "Транзакций пока нет",
   "addFirstTransaction": "Добавьте свою первую транзакцию с человеком",
   "settleBalance": "Погасить баланс",
-  "settleBalanceDesc": "Это добавит транзакцию на сумму ₹{amount} чтобы свести баланс к нулю. Продолжать?",
+  "settleBalanceDesc": "Это добавит транзакцию на сумму {amount} чтобы свести баланс к нулю. Продолжать?",
   "@settleBalanceDesc": {
     "placeholders": {
       "amount": {
@@ -319,5 +345,330 @@
   "exportPeopleTitle": "Экспорт данных о людях",
   "exportPeopleDesc": "Резервное копирование транзакций людей",
   "exportPdfTitle": "Экспортировать в PDF",
-  "exportPdfDesc": "Создание отчетов в формате PDF"
+  "exportPdfDesc": "Создание отчетов в формате PDF",
+  "biometricNotSupported": "Биометрическая аутентификация не поддерживается на этом устройстве",
+  "noBiometricMethods": "Нет доступных методов биометрической аутентификации",
+  "authenticateReason": "Пройдите аутентификацию, чтобы включить блокировку приложения",
+  "authFailedAppLockNotEnabled": "Аутентификация не удалась. Блокировка приложения не включена.",
+  "appLockEnabledSuccess": "Блокировка приложения успешно включена",
+  "appLockDisabledSuccess": "Блокировка приложения успешно отключена",
+  "failedToEnableAppLock": "Не удалось включить блокировку приложения",
+  "failedToDisableAppLock": "Не удалось отключить блокировку приложения",
+  "pickAppColor": "Выберите цвет приложения",
+  "reset": "Сбросить",
+  "selectAction": "Выбрать",
+  "appColorResetDefault": "Цвет приложения сброшен на стандартный!",
+  "deviceNotSupportBiometricsOrAuth": "Устройство не поддерживает биометрию или аутентификацию устройства.",
+  "appLockEnabledDot": "Блокировка приложения включена.",
+  "appLockDisabledDot": "Блокировка приложения отключена.",
+  "cautionToUse": "Используйте с осторожностью",
+  "autoDetectCautionDesc": "Эта функция не идеальна на 100%, но может работать. Все данные SMS и уведомлений обрабатываются на 100% локально на вашем устройстве для полной конфиденциальности.",
+  "autoDetectSettingSubtitle": "Автоматически определять транзакции из уведомлений",
+  "permissionsRequiredNoAccess": "Требуются разрешения: доступ к уведомлениям или SMS не предоставлен. Автоопределение включить нельзя.",
+  "noteNotificationAccessMissing": "Примечание: нет доступа к уведомлениям. Будет работать только определение по SMS.",
+  "noteSmsPermissionMissing": "Примечание: нет разрешения на SMS. Будет работать только определение по уведомлениям.",
+  "autoDetectionEnabledExclaim": "Автоопределение включено!",
+  "autoDetectionDisabledExclaim": "Автоопределение отключено!",
+  "processRecentDataTitle": "Обработать последние данные",
+  "processRecentDataSubtitle": "Сканировать недавние уведомления на предмет транзакций",
+  "recentDataProcessed": "Последние данные успешно обработаны!",
+  "errorProcessingData": "Ошибка обработки данных",
+  "testDetectionLogicTitle": "Тест логики обнаружения",
+  "testDetectionLogicSubtitle": "Смоделируйте уведомление, чтобы проверить разбор",
+  "showDetectionHistoryTitle": "Показать историю обнаружения",
+  "showDetectionHistorySubtitle": "Просмотр подробных журналов обнаруженных транзакций",
+  "autoDeleteUndetectedTitle": "Автоудаление необнаруженной истории",
+  "autoDeleteUndetectedSubtitle": "Удалять необнаруженные записи через 12 часов",
+  "testParserDiagnosticTitle": "Диагностика тестового парсера",
+  "testParserDiagnosticDesc": "Введите пример текста уведомления, чтобы увидеть, как его обрабатывает наш парсер.",
+  "pasteNotificationHint": "Вставьте текст уведомления сюда...",
+  "statusBalanceSync": "Синхронизация баланса",
+  "statusNoActionDetected": "Действие не обнаружено",
+  "transactionType": "Тип",
+  "resultLabelMerchant": "Продавец",
+  "resultLabelBank": "Банк",
+  "balanceLabel": "Баланс",
+  "resultLabelConfidence": "Уверенность",
+  "unknown": "Неизвестно",
+  "general": "Общее",
+  "notAvailable": "Н/Д",
+  "close": "Закрыть",
+  "parseText": "Разобрать текст",
+  "deleteAllDataTitle": "Удалить все данные",
+  "deleteAllDataWarningSubtitle": "⚠️ Это действие невозможно отменить",
+  "resetIntroTitle": "Сбросить вступление",
+  "resetIntroSubtitle": "Показать вступительные экраны снова",
+  "incomeCategories": "Категории доходов",
+  "incomeCategoriesDesc": "Управление категориями доходов",
+  "expenseCategories": "Категории расходов",
+  "expenseCategoriesDesc": "Управление категориями расходов",
+  "accountsTitle": "Счета",
+  "accountsDesc": "Управление вашими счетами",
+  "enterNamePlaceholder": "Введите имя...",
+  "aboutAppSubtitle": "Разработчик, конфиденциальность, поддержка и многое другое",
+  "setMonthlySpendingLimit": "Установите месячный лимит расходов",
+  "joinPreviousMonthBalanceTitle": "Учитывать баланс предыдущего месяца",
+  "joinPreviousMonthBalanceDesc": "Включить баланс предыдущего месяца в текущий итог",
+  "setMonthlyBudgetTitle": "Установить месячный бюджет",
+  "budgetAmountLabel": "Сумма бюджета",
+  "budgetUpdated": "Бюджет обновлён!",
+  "confirmDeleteTitle": "Подтвердите удаление",
+  "confirmDeleteAllDesc": "Вы уверены, что хотите удалить все транзакции и сбросить баланс? Это действие невозможно отменить.",
+  "deleteAllButton": "Удалить всё",
+  "failedDeleteAllData": "Не удалось удалить все данные. Попробуйте снова.",
+  "resetIntroConfirmDesc": "Вступительные экраны появятся снова при следующем открытии приложения. Ваши данные останутся без изменений.",
+  "editFieldTitle": "Изменить {field}",
+  "@editFieldTitle": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "enterFieldHint": "Введите {field}",
+  "@enterFieldHint": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "statusLabel": "Статус: {status}",
+  "@statusLabel": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "manageItemsTitle": "Управление: {type}",
+  "@manageItemsTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "noItemsFound": "{type} не найдено.",
+  "@noItemsFound": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "addItemButton": "Добавить {type}",
+  "@addItemButton": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "editItemTitle": "Изменить {type}",
+  "@editItemTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "itemNameLabel": "Название: {type}",
+  "@itemNameLabel": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "monthlyLimitSubtitle": "Месячный лимит: {budget}",
+  "@monthlyLimitSubtitle": {
+    "placeholders": {
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "failedResetIntro": "Не удалось сбросить вступление. Попробуйте снова.\\n{error}",
+  "@failedResetIntro": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedUpdateAutoDetection": "Не удалось обновить автоопределение",
+  "actionCannotBeUndone": "Это действие невозможно отменить.",
+  "deleteTransactionsCountTitle": "Удалить {count} транзакций?",
+  "@deleteTransactionsCountTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deletedTransactionsCount": "Удалено {count} транзакций",
+  "@deletedTransactionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "transactionHistoryTitle": "История транзакций",
+  "upiIdMissingTitle": "Отсутствует UPI ID",
+  "upiIdMissingDesc": "Укажите UPI ID в настройках, чтобы запрашивать деньги через QR-код.",
+  "openSettings": "Открыть настройки",
+  "recipientFallback": "Получатель",
+  "paymentLinkCopied": "Ссылка на оплату скопирована!",
+  "linkButton": "Ссылка",
+  "shareQr": "Поделиться QR-кодом",
+  "upiPaymentLinkSubject": "Ссылка на оплату UPI",
+  "requestingFrom": "Запрос от {name}",
+  "@requestingFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "upiIdColonValue": "Идентификатор UPI: {id}",
+  "@upiIdColonValue": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "failedShareQr": "Не удалось поделиться изображением QR: {error}",
+  "@failedShareQr": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "payViaUpiQrFor": "Оплата через UPI QR для {name}",
+  "@payViaUpiQrFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectPerson": "Пожалуйста, выберите человека",
+  "amountInInr": "Сумма в INR",
+  "currency": "Валюта",
+  "selectCurrency": "Выбрать валюту",
+  "searchCurrency": "Поиск валюты",
+  "autoDetectCurrency": "Автоопределение валюты",
+  "autoDetectCurrencyDesc": "Автоматически соответствует региону вашего устройства",
+  "popularCurrencies": "Популярные",
+  "allCurrencies": "Все валюты",
+  "noCurrencyFound": "Валюта не найдена",
+  "requiredField": "Обязательно",
+  "quickCategories": "Быстрые категории",
+  "saveToPerson": "Сохранить у человека",
+  "noPeopleCreateHint": "Люди ещё не добавлены. Создайте людей в разделе «Люди».",
+  "selectPersonLabel": "Выберите человека",
+  "selectCategoryTitle": "Выберите категорию",
+  "updateTransactionButton": "Обновить транзакцию",
+  "saveTransactionButton": "Сохранить транзакцию",
+  "linkedToRecord": "Связано с записью {name}",
+  "@linkedToRecord": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "selectItemTitle": "Выберите {type}",
+  "@selectItemTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "personSingular": "Человек",
+  "error": "Ошибка",
+  "retry": "Повторить",
+  "setupFailedRetry": "Не удалось завершить настройку. Попробуйте снова.",
+  "backButton": "Назад",
+  "voiceInputExampleHint": "Скажите что-то вроде «Потратил 500 на ужин»",
+  "autoDetectionEnabledSuccess": "Автоопределение успешно включено!",
+  "openingRequestQrFor": "Открытие QR-запроса для {name}",
+  "@openingRequestQrFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "add": "Добавить",
+  "uncategorized": "Без категории",
+  "timeLabel": "Время",
+  "statusColumnLabel": "Статус",
+  "completedLabel": "Завершено",
+  "notes": "Заметки",
+  "serviceLabel": "Сервис",
+  "refIdLabel": "ID ссылки",
+  "detectedViaLabel": "Обнаружено через",
+  "attachmentsLabel": "Вложения",
+  "originalLogLabel": "Исходный журнал",
+  "noNoteProvided": "Заметка не указана",
+  "tapToUnlock": "Нажмите, чтобы разблокировать",
+  "addPeopleEmptyDesc": "Добавьте людей, чтобы отслеживать транзакции с ними",
+  "noPeopleMatchSearch": "Нет людей, соответствующих вашему запросу",
+  "okay": "Хорошо",
+  "confirm": "Подтвердить",
+  "ok": "ОК",
+  "unexpectedErrorOccurred": "Произошла непредвиденная ошибка",
+  "autoDetectionActive": "Автоопределение активно",
+  "unknownSource": "Неизвестный источник",
+  "noMessageContentAvailable": "Содержимое сообщения недоступно",
+  "addManually": "Добавить вручную",
+  "detectedAsIncome": "Определено как доход",
+  "detectedAsExpense": "Определено как расход",
+  "sourceColonValue": "Источник: {source}",
+  "@sourceColonValue": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "sourceNotification": "Уведомление",
+  "sourceSms": "SMS",
+  "sourceRecheckHistory": "Повторная проверка истории",
+  "sourceManualAddHistory": "Добавлено вручную (из истории)",
+  "recentLabel": "Недавние",
+  "oldestLabel": "Старые",
+  "highestLabel": "Наибольшая",
+  "lowestLabel": "Наименьшая",
+  "glassBlurEffectsTitle": "Эффекты размытия стекла",
+  "glassBlurEffectsSubtitle": "Мягкое размытие на стеклянных панелях и в диалоговых окнах — требует больше вычислительной мощности. Отключите на старых устройствах для более плавной работы.",
+  "tourBalanceCardTitle": "Your Balance",
+  "tourBalanceCardDesc": "Tap for income & expense details. Long-press to edit your starting balance.",
+  "tourAddIncomeTitle": "Add Income",
+  "tourAddIncomeDesc": "Log money you've received.",
+  "tourMicTitle": "Record by Voice",
+  "tourMicDesc": "Press and hold, say the amount and what it was for, then release — it's saved automatically.",
+  "tourAddExpenseTitle": "Add Expense",
+  "tourAddExpenseDesc": "Log money you've spent.",
+  "tourAddPersonTitle": "Add a Person",
+  "tourAddPersonDesc": "Track what you owe each other over time.",
+  "tourPersonCardTitle": "Open Their Ledger",
+  "tourPersonCardDesc": "Tap a card to see the full history with this person and settle up.",
+  "tourPayNowTitle": "Settle Up",
+  "tourPayNowDesc": "Pay what you owe them directly via UPI.",
+  "tourEditPersonTitle": "Edit Person",
+  "tourEditPersonDesc": "Change their name or photo.",
+  "tourDeletePersonTitle": "Careful — Long-Press Deletes",
+  "tourDeletePersonDesc": "Long-pressing this header permanently deletes this person and their history. You'll be asked to confirm first.",
+  "tourDeleteTxTitle": "Long-Press to Delete",
+  "tourDeleteTxDesc": "Tap a transaction to edit it, or long-press to delete it.",
+  "replayTipsTitle": "Show Tips Again",
+  "replayTipsSubtitle": "Replay the pointer-hint tours on Home, People, and Person Details.",
+  "replayTipsDone": "Tips will show again next time you open those screens."
 }

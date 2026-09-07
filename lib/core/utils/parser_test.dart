@@ -1,3 +1,6 @@
+// Manual debug script for TransactionParser — run directly with `dart run`,
+// not part of the app's widget tree, so plain `print` output is appropriate.
+// ignore_for_file: avoid_print
 import 'package:aspends_tracker/core/utils/transaction_parser.dart';
 
 void main() {

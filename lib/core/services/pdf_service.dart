@@ -3,15 +3,19 @@ import 'dart:io';
 import 'package:aspends_tracker/core/models/person.dart';
 import 'package:aspends_tracker/core/models/person_transaction.dart';
 import 'package:aspends_tracker/core/models/transaction.dart';
+import 'package:aspends_tracker/core/repositories/settings_repository.dart';
+import 'package:aspends_tracker/core/services/currency_service.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 //import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw; 
+import 'package:pdf/widgets.dart' as pw;
 class PDFService {
   static Future<File> generateHomeTransactionPDF() async {
     final box = Hive.box<Transaction>('transactions');
     final pdf = pw.Document();
     final txList = box.values.toList();
+    final currencySymbol =
+        CurrencyService.resolveCurrency(SettingsRepository()).symbol;
 
     pdf.addPage(
       pw.MultiPage(
@@ -24,7 +28,7 @@ class PDFService {
               return [
                 tx.date.toString().split('.').first,
                 tx.note,
-                '${tx.isIncome ? '+' : '-'}₹${tx.amount.toStringAsFixed(2)}',
+                '${tx.isIncome ? '+' : '-'}$currencySymbol${tx.amount.toStringAsFixed(2)}',
                 tx.account,
                 tx.category,
               ];
@@ -43,6 +47,8 @@ class PDFService {
     final personBox = Hive.box<Person>('people');
     final txBox = Hive.box<PersonTransaction>('personTransactions');
     final pdf = pw.Document();
+    final currencySymbol =
+        CurrencyService.resolveCurrency(SettingsRepository()).symbol;
 
     for (var person in personBox.values) {
       final txs =
@@ -61,7 +67,7 @@ class PDFService {
                       return [
                         tx.date.toString().split('.').first,
                         tx.note,
-                        '${tx.amount >= 0 ? '+' : '-'}₹${tx.amount.toStringAsFixed(2)}',
+                        '${tx.amount >= 0 ? '+' : '-'}$currencySymbol${tx.amount.toStringAsFixed(2)}',
                       ];
                     }).toList(),
                   ),

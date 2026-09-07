@@ -495,7 +495,7 @@ abstract class AppLocalizations {
   /// No description provided for @savedAmount.
   ///
   /// In en, this message translates to:
-  /// **'Saved ₹{amount} for {category}'**
+  /// **'Saved {amount} for {category}'**
   String savedAmount(String amount, String category);
 
   /// No description provided for @logsDeleted.
@@ -582,6 +582,18 @@ abstract class AppLocalizations {
   /// **'Proudly open source on GitHub'**
   String get openSourceDesc;
 
+  /// No description provided for @licenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Source Licenses'**
+  String get licenses;
+
+  /// No description provided for @licensesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'View third-party licenses used in this app'**
+  String get licensesDesc;
+
   /// No description provided for @rateApp.
   ///
   /// In en, this message translates to:
@@ -593,6 +605,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Support us with a 5-star rating'**
   String get rateAppDesc;
+
+  /// No description provided for @couldNotLaunchUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not launch URL'**
+  String get couldNotLaunchUrl;
+
+  /// No description provided for @errorWithDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String errorWithDetails(String error);
+
+  /// No description provided for @madeWithLove.
+  ///
+  /// In en, this message translates to:
+  /// **'Made with ❤️ for better finance'**
+  String get madeWithLove;
 
   /// No description provided for @howAspendWorks.
   ///
@@ -714,6 +744,12 @@ abstract class AppLocalizations {
   /// **'Budget'**
   String get budget;
 
+  /// No description provided for @overBudgetBy.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠️ Over by {amount}'**
+  String overBudgetBy(String amount);
+
   /// No description provided for @balanceDetailsTitle.
   ///
   /// In en, this message translates to:
@@ -725,6 +761,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit Balance'**
   String get editBalanceTitle;
+
+  /// No description provided for @tapHoldToEditBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap and hold to edit balance'**
+  String get tapHoldToEditBalance;
+
+  /// No description provided for @longPressBalanceCardHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Long press the balance card on the home screen'**
+  String get longPressBalanceCardHint;
 
   /// No description provided for @newBalanceLabel.
   ///
@@ -1038,6 +1086,12 @@ abstract class AppLocalizations {
   /// **'Request Money'**
   String get requestMoney;
 
+  /// No description provided for @requestMoneyTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Money via UPI'**
+  String get requestMoneyTooltip;
+
   /// No description provided for @generateQr.
   ///
   /// In en, this message translates to:
@@ -1101,7 +1155,7 @@ abstract class AppLocalizations {
   /// No description provided for @settleBalanceDesc.
   ///
   /// In en, this message translates to:
-  /// **'This will add a transaction of ₹{amount} to bring the balance to zero. Continue?'**
+  /// **'This will add a transaction of {amount} to bring the balance to zero. Continue?'**
   String settleBalanceDesc(String amount);
 
   /// No description provided for @settle.
@@ -1535,6 +1589,1116 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Generate PDF reports'**
   String get exportPdfDesc;
+
+  /// No description provided for @biometricNotSupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric authentication is not supported on this device'**
+  String get biometricNotSupported;
+
+  /// No description provided for @noBiometricMethods.
+  ///
+  /// In en, this message translates to:
+  /// **'No biometric authentication methods available'**
+  String get noBiometricMethods;
+
+  /// No description provided for @authenticateReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Authenticate to enable app lock'**
+  String get authenticateReason;
+
+  /// No description provided for @authFailedAppLockNotEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication failed. App lock not enabled.'**
+  String get authFailedAppLockNotEnabled;
+
+  /// No description provided for @appLockEnabledSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'App lock enabled successfully'**
+  String get appLockEnabledSuccess;
+
+  /// No description provided for @appLockDisabledSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'App lock disabled successfully'**
+  String get appLockDisabledSuccess;
+
+  /// No description provided for @failedToEnableAppLock.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to enable app lock'**
+  String get failedToEnableAppLock;
+
+  /// No description provided for @failedToDisableAppLock.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to disable app lock'**
+  String get failedToDisableAppLock;
+
+  /// No description provided for @pickAppColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick App Color'**
+  String get pickAppColor;
+
+  /// No description provided for @reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
+
+  /// No description provided for @selectAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get selectAction;
+
+  /// No description provided for @appColorResetDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'App color reset to default!'**
+  String get appColorResetDefault;
+
+  /// No description provided for @deviceNotSupportBiometricsOrAuth.
+  ///
+  /// In en, this message translates to:
+  /// **'Device does not support biometrics or device authentication.'**
+  String get deviceNotSupportBiometricsOrAuth;
+
+  /// No description provided for @appLockEnabledDot.
+  ///
+  /// In en, this message translates to:
+  /// **'App lock enabled.'**
+  String get appLockEnabledDot;
+
+  /// No description provided for @appLockDisabledDot.
+  ///
+  /// In en, this message translates to:
+  /// **'App lock disabled.'**
+  String get appLockDisabledDot;
+
+  /// No description provided for @cautionToUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Caution to use'**
+  String get cautionToUse;
+
+  /// No description provided for @autoDetectCautionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'This feature is not 100% perfect but might work. All SMS and notification data are processed 100% locally on your device for absolute privacy.'**
+  String get autoDetectCautionDesc;
+
+  /// No description provided for @autoDetectSettingSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically detect transactions from notifications'**
+  String get autoDetectSettingSubtitle;
+
+  /// No description provided for @permissionsRequiredNoAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Permissions required: No notification or SMS access granted. Auto-detection cannot be enabled.'**
+  String get permissionsRequiredNoAccess;
+
+  /// No description provided for @noteNotificationAccessMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Note: Notification access is missing. Only SMS detection will work.'**
+  String get noteNotificationAccessMissing;
+
+  /// No description provided for @noteSmsPermissionMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Note: SMS permission is missing. Only Notification detection will work.'**
+  String get noteSmsPermissionMissing;
+
+  /// No description provided for @autoDetectionEnabledExclaim.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-detection enabled!'**
+  String get autoDetectionEnabledExclaim;
+
+  /// No description provided for @autoDetectionDisabledExclaim.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-detection disabled!'**
+  String get autoDetectionDisabledExclaim;
+
+  /// No description provided for @processRecentDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Process Recent Data'**
+  String get processRecentDataTitle;
+
+  /// No description provided for @processRecentDataSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan recent notifications for transactions'**
+  String get processRecentDataSubtitle;
+
+  /// No description provided for @recentDataProcessed.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent data processed successfully!'**
+  String get recentDataProcessed;
+
+  /// No description provided for @errorProcessingData.
+  ///
+  /// In en, this message translates to:
+  /// **'Error processing data'**
+  String get errorProcessingData;
+
+  /// No description provided for @testDetectionLogicTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Test Detection Logic'**
+  String get testDetectionLogicTitle;
+
+  /// No description provided for @testDetectionLogicSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Simulate a notification to verify parsing'**
+  String get testDetectionLogicSubtitle;
+
+  /// No description provided for @showDetectionHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Detection History'**
+  String get showDetectionHistoryTitle;
+
+  /// No description provided for @showDetectionHistorySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View detailed logs of detected transactions'**
+  String get showDetectionHistorySubtitle;
+
+  /// No description provided for @autoDeleteUndetectedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-delete undetected history'**
+  String get autoDeleteUndetectedTitle;
+
+  /// No description provided for @autoDeleteUndetectedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete undetected items after 12 hours'**
+  String get autoDeleteUndetectedSubtitle;
+
+  /// No description provided for @testParserDiagnosticTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Test Parser Diagnostic'**
+  String get testParserDiagnosticTitle;
+
+  /// No description provided for @testParserDiagnosticDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a sample notification message to see how our parser handles it.'**
+  String get testParserDiagnosticDesc;
+
+  /// No description provided for @pasteNotificationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste notification text here...'**
+  String get pasteNotificationHint;
+
+  /// No description provided for @statusBalanceSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance Sync'**
+  String get statusBalanceSync;
+
+  /// No description provided for @statusNoActionDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'No Action Detected'**
+  String get statusNoActionDetected;
+
+  /// No description provided for @transactionType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get transactionType;
+
+  /// No description provided for @resultLabelMerchant.
+  ///
+  /// In en, this message translates to:
+  /// **'Merchant'**
+  String get resultLabelMerchant;
+
+  /// No description provided for @resultLabelBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get resultLabelBank;
+
+  /// No description provided for @balanceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get balanceLabel;
+
+  /// No description provided for @resultLabelConfidence.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidence'**
+  String get resultLabelConfidence;
+
+  /// No description provided for @unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get unknown;
+
+  /// No description provided for @general.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get general;
+
+  /// No description provided for @notAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get notAvailable;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @parseText.
+  ///
+  /// In en, this message translates to:
+  /// **'Parse Text'**
+  String get parseText;
+
+  /// No description provided for @deleteAllDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete All Data'**
+  String get deleteAllDataTitle;
+
+  /// No description provided for @deleteAllDataWarningSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠️ This action cannot be undone'**
+  String get deleteAllDataWarningSubtitle;
+
+  /// No description provided for @resetIntroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Intro'**
+  String get resetIntroTitle;
+
+  /// No description provided for @resetIntroSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show intro screens again'**
+  String get resetIntroSubtitle;
+
+  /// No description provided for @incomeCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Income Categories'**
+  String get incomeCategories;
+
+  /// No description provided for @incomeCategoriesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage categories for income'**
+  String get incomeCategoriesDesc;
+
+  /// No description provided for @expenseCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense Categories'**
+  String get expenseCategories;
+
+  /// No description provided for @expenseCategoriesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage categories for expenses'**
+  String get expenseCategoriesDesc;
+
+  /// No description provided for @accountsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts'**
+  String get accountsTitle;
+
+  /// No description provided for @accountsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your accounts'**
+  String get accountsDesc;
+
+  /// No description provided for @enterNamePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter name...'**
+  String get enterNamePlaceholder;
+
+  /// No description provided for @aboutAppSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Developer, Privacy, Support & More'**
+  String get aboutAppSubtitle;
+
+  /// No description provided for @setMonthlySpendingLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a monthly spending limit'**
+  String get setMonthlySpendingLimit;
+
+  /// No description provided for @joinPreviousMonthBalanceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Join Previous Month Balance'**
+  String get joinPreviousMonthBalanceTitle;
+
+  /// No description provided for @joinPreviousMonthBalanceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Include previous month balance in current total'**
+  String get joinPreviousMonthBalanceDesc;
+
+  /// No description provided for @setMonthlyBudgetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Monthly Budget'**
+  String get setMonthlyBudgetTitle;
+
+  /// No description provided for @budgetAmountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Amount'**
+  String get budgetAmountLabel;
+
+  /// No description provided for @budgetUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget updated!'**
+  String get budgetUpdated;
+
+  /// No description provided for @confirmDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Delete'**
+  String get confirmDeleteTitle;
+
+  /// No description provided for @confirmDeleteAllDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete all transactions and reset your balance? This action cannot be undone.'**
+  String get confirmDeleteAllDesc;
+
+  /// No description provided for @deleteAllButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete All'**
+  String get deleteAllButton;
+
+  /// No description provided for @failedDeleteAllData.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete all data. Please try again.'**
+  String get failedDeleteAllData;
+
+  /// No description provided for @resetIntroConfirmDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'This will show the intro screens again the next time you open the app. Your data will remain unchanged.'**
+  String get resetIntroConfirmDesc;
+
+  /// No description provided for @editFieldTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit {field}'**
+  String editFieldTitle(String field);
+
+  /// No description provided for @enterFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter {field}'**
+  String enterFieldHint(String field);
+
+  /// No description provided for @statusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: {status}'**
+  String statusLabel(String status);
+
+  /// No description provided for @manageItemsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage {type}s'**
+  String manageItemsTitle(String type);
+
+  /// No description provided for @noItemsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No {type}s found.'**
+  String noItemsFound(String type);
+
+  /// No description provided for @addItemButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Add {type}'**
+  String addItemButton(String type);
+
+  /// No description provided for @editItemTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit {type}'**
+  String editItemTitle(String type);
+
+  /// No description provided for @itemNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{type} Name'**
+  String itemNameLabel(String type);
+
+  /// No description provided for @monthlyLimitSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly limit: {budget}'**
+  String monthlyLimitSubtitle(String budget);
+
+  /// No description provided for @failedResetIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reset intro. Please try again.\\n{error}'**
+  String failedResetIntro(String error);
+
+  /// No description provided for @failedUpdateAutoDetection.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update auto-detection'**
+  String get failedUpdateAutoDetection;
+
+  /// No description provided for @actionCannotBeUndone.
+  ///
+  /// In en, this message translates to:
+  /// **'This action cannot be undone.'**
+  String get actionCannotBeUndone;
+
+  /// No description provided for @deleteTransactionsCountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {count} transactions?'**
+  String deleteTransactionsCountTitle(int count);
+
+  /// No description provided for @deletedTransactionsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted {count} transactions'**
+  String deletedTransactionsCount(int count);
+
+  /// No description provided for @transactionHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction History'**
+  String get transactionHistoryTitle;
+
+  /// No description provided for @upiIdMissingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'UPI ID Missing'**
+  String get upiIdMissingTitle;
+
+  /// No description provided for @upiIdMissingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Please set your UPI ID in Settings to request money via QR code.'**
+  String get upiIdMissingDesc;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get openSettings;
+
+  /// No description provided for @recipientFallback.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipient'**
+  String get recipientFallback;
+
+  /// No description provided for @paymentLinkCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment link copied!'**
+  String get paymentLinkCopied;
+
+  /// No description provided for @linkButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Link'**
+  String get linkButton;
+
+  /// No description provided for @shareQr.
+  ///
+  /// In en, this message translates to:
+  /// **'Share QR'**
+  String get shareQr;
+
+  /// No description provided for @upiPaymentLinkSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'UPI Payment Link'**
+  String get upiPaymentLinkSubject;
+
+  /// No description provided for @requestingFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Requesting from {name}'**
+  String requestingFrom(String name);
+
+  /// No description provided for @upiIdColonValue.
+  ///
+  /// In en, this message translates to:
+  /// **'UPI ID: {id}'**
+  String upiIdColonValue(String id);
+
+  /// No description provided for @failedShareQr.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to share QR image: {error}'**
+  String failedShareQr(String error);
+
+  /// No description provided for @payViaUpiQrFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay via UPI QR for {name}'**
+  String payViaUpiQrFor(String name);
+
+  /// No description provided for @pleaseSelectPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a person'**
+  String get pleaseSelectPerson;
+
+  /// No description provided for @amountInInr.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount in INR'**
+  String get amountInInr;
+
+  /// No description provided for @currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get currency;
+
+  /// No description provided for @selectCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Currency'**
+  String get selectCurrency;
+
+  /// No description provided for @searchCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Search currency'**
+  String get searchCurrency;
+
+  /// No description provided for @autoDetectCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-detect currency'**
+  String get autoDetectCurrency;
+
+  /// No description provided for @autoDetectCurrencyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically match your device\'s region'**
+  String get autoDetectCurrencyDesc;
+
+  /// No description provided for @popularCurrencies.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular'**
+  String get popularCurrencies;
+
+  /// No description provided for @allCurrencies.
+  ///
+  /// In en, this message translates to:
+  /// **'All Currencies'**
+  String get allCurrencies;
+
+  /// No description provided for @noCurrencyFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No currency found'**
+  String get noCurrencyFound;
+
+  /// No description provided for @requiredField.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get requiredField;
+
+  /// No description provided for @quickCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Categories'**
+  String get quickCategories;
+
+  /// No description provided for @saveToPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Save to Person'**
+  String get saveToPerson;
+
+  /// No description provided for @noPeopleCreateHint.
+  ///
+  /// In en, this message translates to:
+  /// **'No people added yet. Create people under the People section.'**
+  String get noPeopleCreateHint;
+
+  /// No description provided for @selectPersonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Person'**
+  String get selectPersonLabel;
+
+  /// No description provided for @selectCategoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Category'**
+  String get selectCategoryTitle;
+
+  /// No description provided for @updateTransactionButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Transaction'**
+  String get updateTransactionButton;
+
+  /// No description provided for @saveTransactionButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Transaction'**
+  String get saveTransactionButton;
+
+  /// No description provided for @linkedToRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked to {name}\'s record'**
+  String linkedToRecord(String name);
+
+  /// No description provided for @selectItemTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select {type}'**
+  String selectItemTitle(String type);
+
+  /// No description provided for @personSingular.
+  ///
+  /// In en, this message translates to:
+  /// **'Person'**
+  String get personSingular;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @setupFailedRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to complete setup. Please try again.'**
+  String get setupFailedRetry;
+
+  /// No description provided for @backButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get backButton;
+
+  /// No description provided for @voiceInputExampleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Say something like \'Spent 500 on dinner\''**
+  String get voiceInputExampleHint;
+
+  /// No description provided for @autoDetectionEnabledSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-detection enabled successfully!'**
+  String get autoDetectionEnabledSuccess;
+
+  /// No description provided for @openingRequestQrFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening Request QR for {name}'**
+  String openingRequestQrFor(String name);
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @uncategorized.
+  ///
+  /// In en, this message translates to:
+  /// **'Uncategorized'**
+  String get uncategorized;
+
+  /// No description provided for @timeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get timeLabel;
+
+  /// No description provided for @statusColumnLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get statusColumnLabel;
+
+  /// No description provided for @completedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completedLabel;
+
+  /// No description provided for @notes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notes;
+
+  /// No description provided for @serviceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get serviceLabel;
+
+  /// No description provided for @refIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Ref ID'**
+  String get refIdLabel;
+
+  /// No description provided for @detectedViaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Detected via'**
+  String get detectedViaLabel;
+
+  /// No description provided for @attachmentsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Attachments'**
+  String get attachmentsLabel;
+
+  /// No description provided for @originalLogLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Original Log'**
+  String get originalLogLabel;
+
+  /// No description provided for @noNoteProvided.
+  ///
+  /// In en, this message translates to:
+  /// **'No note provided'**
+  String get noNoteProvided;
+
+  /// No description provided for @tapToUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to Unlock'**
+  String get tapToUnlock;
+
+  /// No description provided for @addPeopleEmptyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Add people to track transactions with them'**
+  String get addPeopleEmptyDesc;
+
+  /// No description provided for @noPeopleMatchSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'No people match your search'**
+  String get noPeopleMatchSearch;
+
+  /// No description provided for @okay.
+  ///
+  /// In en, this message translates to:
+  /// **'Okay'**
+  String get okay;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @unexpectedErrorOccurred.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred'**
+  String get unexpectedErrorOccurred;
+
+  /// No description provided for @autoDetectionActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-Detection Active'**
+  String get autoDetectionActive;
+
+  /// No description provided for @unknownSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Source'**
+  String get unknownSource;
+
+  /// No description provided for @noMessageContentAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No message content available'**
+  String get noMessageContentAvailable;
+
+  /// No description provided for @addManually.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Manually'**
+  String get addManually;
+
+  /// No description provided for @detectedAsIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Detected as Income'**
+  String get detectedAsIncome;
+
+  /// No description provided for @detectedAsExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Detected as Expense'**
+  String get detectedAsExpense;
+
+  /// No description provided for @sourceColonValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Source: {source}'**
+  String sourceColonValue(String source);
+
+  /// No description provided for @sourceNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification'**
+  String get sourceNotification;
+
+  /// No description provided for @sourceSms.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS'**
+  String get sourceSms;
+
+  /// No description provided for @sourceRecheckHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Recheck History'**
+  String get sourceRecheckHistory;
+
+  /// No description provided for @sourceManualAddHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual Add (History)'**
+  String get sourceManualAddHistory;
+
+  /// No description provided for @recentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get recentLabel;
+
+  /// No description provided for @oldestLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest'**
+  String get oldestLabel;
+
+  /// No description provided for @highestLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest'**
+  String get highestLabel;
+
+  /// No description provided for @lowestLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest'**
+  String get lowestLabel;
+
+  /// No description provided for @glassBlurEffectsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Glass Blur Effects'**
+  String get glassBlurEffectsTitle;
+
+  /// No description provided for @glassBlurEffectsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Soft blur on glass panels and dialogs — uses more processing power, so turn it off on older devices for smoother performance.'**
+  String get glassBlurEffectsSubtitle;
+
+  /// No description provided for @tourBalanceCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Balance'**
+  String get tourBalanceCardTitle;
+
+  /// No description provided for @tourBalanceCardDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap for income & expense details. Long-press to edit your starting balance.'**
+  String get tourBalanceCardDesc;
+
+  /// No description provided for @tourAddIncomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Income'**
+  String get tourAddIncomeTitle;
+
+  /// No description provided for @tourAddIncomeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Log money you\'ve received.'**
+  String get tourAddIncomeDesc;
+
+  /// No description provided for @tourMicTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Record by Voice'**
+  String get tourMicTitle;
+
+  /// No description provided for @tourMicDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press and hold, say the amount and what it was for, then release — it\'s saved automatically.'**
+  String get tourMicDesc;
+
+  /// No description provided for @tourAddExpenseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Expense'**
+  String get tourAddExpenseTitle;
+
+  /// No description provided for @tourAddExpenseDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Log money you\'ve spent.'**
+  String get tourAddExpenseDesc;
+
+  /// No description provided for @tourAddPersonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a Person'**
+  String get tourAddPersonTitle;
+
+  /// No description provided for @tourAddPersonDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Track what you owe each other over time.'**
+  String get tourAddPersonDesc;
+
+  /// No description provided for @tourPersonCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Their Ledger'**
+  String get tourPersonCardTitle;
+
+  /// No description provided for @tourPersonCardDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a card to see the full history with this person and settle up.'**
+  String get tourPersonCardDesc;
+
+  /// No description provided for @tourPayNowTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settle Up'**
+  String get tourPayNowTitle;
+
+  /// No description provided for @tourPayNowDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay what you owe them directly via UPI.'**
+  String get tourPayNowDesc;
+
+  /// No description provided for @tourEditPersonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Person'**
+  String get tourEditPersonTitle;
+
+  /// No description provided for @tourEditPersonDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Change their name or photo.'**
+  String get tourEditPersonDesc;
+
+  /// No description provided for @tourDeletePersonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Careful — Long-Press Deletes'**
+  String get tourDeletePersonTitle;
+
+  /// No description provided for @tourDeletePersonDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Long-pressing this header permanently deletes this person and their history. You\'ll be asked to confirm first.'**
+  String get tourDeletePersonDesc;
+
+  /// No description provided for @tourDeleteTxTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Long-Press to Delete'**
+  String get tourDeleteTxTitle;
+
+  /// No description provided for @tourDeleteTxDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a transaction to edit it, or long-press to delete it.'**
+  String get tourDeleteTxDesc;
+
+  /// No description provided for @replayTipsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Tips Again'**
+  String get replayTipsTitle;
+
+  /// No description provided for @replayTipsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay the pointer-hint tours on Home, People, and Person Details.'**
+  String get replayTipsSubtitle;
+
+  /// No description provided for @replayTipsDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Tips will show again next time you open those screens.'**
+  String get replayTipsDone;
 }
 
 class _AppLocalizationsDelegate

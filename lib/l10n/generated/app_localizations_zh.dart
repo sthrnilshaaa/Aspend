@@ -9,7 +9,7 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appName => '阿斯彭德斯';
+  String get appName => 'Aspends';
 
   @override
   String get appTagline => '智能支出，简化。';
@@ -123,14 +123,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get microPermissionDenied => '麦克风权限被拒绝';
 
   @override
-  String get microPermissionTitle => 'Microphone Access Required';
+  String get microPermissionTitle => '需要麦克风权限';
 
   @override
   String get microPermissionDesc =>
-      'Aspends requires microphone access to let you input transaction details via voice commands. Your voice inputs are parsed completely offline on your device and are never uploaded or shared.';
+      'Aspends 需要麦克风权限，以便您通过语音命令输入交易详情。您的语音输入完全在设备上离线解析，绝不会上传或共享。';
 
   @override
-  String get microPermissionGrant => 'Enable Voice';
+  String get microPermissionGrant => '启用语音';
 
   @override
   String get appearance => '外貌';
@@ -200,7 +200,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String savedAmount(String amount, String category) {
-    return '为 $category 节省了 卢比$amount';
+    return '为 $category 节省了 $amount';
   }
 
   @override
@@ -250,10 +250,27 @@ class AppLocalizationsZh extends AppLocalizations {
   String get openSourceDesc => '自豪地在 GitHub 上开源';
 
   @override
+  String get licenses => '开源许可证';
+
+  @override
+  String get licensesDesc => '查看此应用中使用的第三方许可证';
+
+  @override
   String get rateApp => '费率上升';
 
   @override
   String get rateAppDesc => '支持我们并给予 5 星评级';
+
+  @override
+  String get couldNotLaunchUrl => '无法打开链接';
+
+  @override
+  String errorWithDetails(String error) {
+    return '错误：$error';
+  }
+
+  @override
+  String get madeWithLove => '用 ❤️ 打造，只为更好的理财';
 
   @override
   String get howAspendWorks => 'ASPEND 如何运作';
@@ -308,7 +325,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get grant => '授予';
 
   @override
-  String get appNameShort => '阿斯彭德斯';
+  String get appNameShort => 'Aspends';
 
   @override
   String get splashTagline => '智能资金管理';
@@ -317,10 +334,21 @@ class AppLocalizationsZh extends AppLocalizations {
   String get budget => '预算';
 
   @override
+  String overBudgetBy(String amount) {
+    return '⚠️ 超支 $amount';
+  }
+
+  @override
   String get balanceDetailsTitle => '余额详情';
 
   @override
   String get editBalanceTitle => '编辑余额';
+
+  @override
+  String get tapHoldToEditBalance => '按住可编辑余额';
+
+  @override
+  String get longPressBalanceCardHint => '长按主屏幕上的余额卡片';
 
   @override
   String get newBalanceLabel => '新百伦';
@@ -479,6 +507,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get requestMoney => '索要钱';
 
   @override
+  String get requestMoneyTooltip => '通过 UPI 请求付款';
+
+  @override
   String get generateQr => '生成支付二维码';
 
   @override
@@ -510,7 +541,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String settleBalanceDesc(String amount) {
-    return '这将添加 卢比$amount 的交易，使余额为零。继续？';
+    return '这将添加 $amount 的交易，使余额为零。继续？';
   }
 
   @override
@@ -744,4 +775,608 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get exportPdfDesc => '生成 PDF 报告';
+
+  @override
+  String get biometricNotSupported => '此设备不支持生物识别身份验证';
+
+  @override
+  String get noBiometricMethods => '没有可用的生物识别身份验证方式';
+
+  @override
+  String get authenticateReason => '进行身份验证以启用应用锁';
+
+  @override
+  String get authFailedAppLockNotEnabled => '身份验证失败。应用锁未启用。';
+
+  @override
+  String get appLockEnabledSuccess => '应用锁已成功启用';
+
+  @override
+  String get appLockDisabledSuccess => '应用锁已成功禁用';
+
+  @override
+  String get failedToEnableAppLock => '启用应用锁失败';
+
+  @override
+  String get failedToDisableAppLock => '禁用应用锁失败';
+
+  @override
+  String get pickAppColor => '选择应用颜色';
+
+  @override
+  String get reset => '重置';
+
+  @override
+  String get selectAction => '选择';
+
+  @override
+  String get appColorResetDefault => '应用颜色已重置为默认值！';
+
+  @override
+  String get deviceNotSupportBiometricsOrAuth => '该设备不支持生物识别或设备身份验证。';
+
+  @override
+  String get appLockEnabledDot => '应用锁已启用。';
+
+  @override
+  String get appLockDisabledDot => '应用锁已禁用。';
+
+  @override
+  String get cautionToUse => '使用须知';
+
+  @override
+  String get autoDetectCautionDesc =>
+      '此功能并非100%完美，但可能有效。所有短信和通知数据均100%在您的设备本地处理，以确保绝对隐私。';
+
+  @override
+  String get autoDetectSettingSubtitle => '自动从通知中检测交易';
+
+  @override
+  String get permissionsRequiredNoAccess => '需要权限：未授予通知或短信访问权限。无法启用自动检测。';
+
+  @override
+  String get noteNotificationAccessMissing => '注意：缺少通知访问权限。仅短信检测可用。';
+
+  @override
+  String get noteSmsPermissionMissing => '注意：缺少短信权限。仅通知检测可用。';
+
+  @override
+  String get autoDetectionEnabledExclaim => '自动检测已启用！';
+
+  @override
+  String get autoDetectionDisabledExclaim => '自动检测已禁用！';
+
+  @override
+  String get processRecentDataTitle => '处理近期数据';
+
+  @override
+  String get processRecentDataSubtitle => '扫描近期通知以查找交易';
+
+  @override
+  String get recentDataProcessed => '近期数据处理成功！';
+
+  @override
+  String get errorProcessingData => '处理数据时出错';
+
+  @override
+  String get testDetectionLogicTitle => '测试检测逻辑';
+
+  @override
+  String get testDetectionLogicSubtitle => '模拟一条通知以验证解析效果';
+
+  @override
+  String get showDetectionHistoryTitle => '显示检测历史记录';
+
+  @override
+  String get showDetectionHistorySubtitle => '查看已检测交易的详细日志';
+
+  @override
+  String get autoDeleteUndetectedTitle => '自动删除未检测到的记录';
+
+  @override
+  String get autoDeleteUndetectedSubtitle => '12小时后删除未检测到的项目';
+
+  @override
+  String get testParserDiagnosticTitle => '解析器诊断测试';
+
+  @override
+  String get testParserDiagnosticDesc => '输入示例通知文本，查看解析器的处理效果。';
+
+  @override
+  String get pasteNotificationHint => '在此粘贴通知文本...';
+
+  @override
+  String get statusBalanceSync => '余额同步';
+
+  @override
+  String get statusNoActionDetected => '未检测到任何操作';
+
+  @override
+  String get transactionType => '类型';
+
+  @override
+  String get resultLabelMerchant => '商户';
+
+  @override
+  String get resultLabelBank => '银行';
+
+  @override
+  String get balanceLabel => '余额';
+
+  @override
+  String get resultLabelConfidence => '置信度';
+
+  @override
+  String get unknown => '未知';
+
+  @override
+  String get general => '常规';
+
+  @override
+  String get notAvailable => '不适用';
+
+  @override
+  String get close => '关闭';
+
+  @override
+  String get parseText => '解析文本';
+
+  @override
+  String get deleteAllDataTitle => '删除所有数据';
+
+  @override
+  String get deleteAllDataWarningSubtitle => '⚠️ 此操作无法撤销';
+
+  @override
+  String get resetIntroTitle => '重置引导页';
+
+  @override
+  String get resetIntroSubtitle => '再次显示引导页';
+
+  @override
+  String get incomeCategories => '收入类别';
+
+  @override
+  String get incomeCategoriesDesc => '管理收入类别';
+
+  @override
+  String get expenseCategories => '支出类别';
+
+  @override
+  String get expenseCategoriesDesc => '管理支出类别';
+
+  @override
+  String get accountsTitle => '账户';
+
+  @override
+  String get accountsDesc => '管理您的账户';
+
+  @override
+  String get enterNamePlaceholder => '输入名称...';
+
+  @override
+  String get aboutAppSubtitle => '开发者、隐私、支持等信息';
+
+  @override
+  String get setMonthlySpendingLimit => '设置每月支出限额';
+
+  @override
+  String get joinPreviousMonthBalanceTitle => '合并上月余额';
+
+  @override
+  String get joinPreviousMonthBalanceDesc => '在当前总额中包含上月余额';
+
+  @override
+  String get setMonthlyBudgetTitle => '设置每月预算';
+
+  @override
+  String get budgetAmountLabel => '预算金额';
+
+  @override
+  String get budgetUpdated => '预算已更新！';
+
+  @override
+  String get confirmDeleteTitle => '确认删除';
+
+  @override
+  String get confirmDeleteAllDesc => '确定要删除所有交易并重置余额吗？此操作无法撤销。';
+
+  @override
+  String get deleteAllButton => '全部删除';
+
+  @override
+  String get failedDeleteAllData => '删除所有数据失败，请重试。';
+
+  @override
+  String get resetIntroConfirmDesc => '下次打开应用时将再次显示引导页。您的数据不会受到影响。';
+
+  @override
+  String editFieldTitle(String field) {
+    return '编辑$field';
+  }
+
+  @override
+  String enterFieldHint(String field) {
+    return '输入$field';
+  }
+
+  @override
+  String statusLabel(String status) {
+    return '状态：$status';
+  }
+
+  @override
+  String manageItemsTitle(String type) {
+    return '管理$type';
+  }
+
+  @override
+  String noItemsFound(String type) {
+    return '未找到$type。';
+  }
+
+  @override
+  String addItemButton(String type) {
+    return '添加$type';
+  }
+
+  @override
+  String editItemTitle(String type) {
+    return '编辑$type';
+  }
+
+  @override
+  String itemNameLabel(String type) {
+    return '$type名称';
+  }
+
+  @override
+  String monthlyLimitSubtitle(String budget) {
+    return '每月限额：$budget';
+  }
+
+  @override
+  String failedResetIntro(String error) {
+    return '重置引导页失败，请重试。\\n$error';
+  }
+
+  @override
+  String get failedUpdateAutoDetection => '更新自动检测失败';
+
+  @override
+  String get actionCannotBeUndone => '此操作无法撤销。';
+
+  @override
+  String deleteTransactionsCountTitle(int count) {
+    return '删除$count笔交易？';
+  }
+
+  @override
+  String deletedTransactionsCount(int count) {
+    return '已删除$count笔交易';
+  }
+
+  @override
+  String get transactionHistoryTitle => '交易历史';
+
+  @override
+  String get upiIdMissingTitle => '缺少 UPI ID';
+
+  @override
+  String get upiIdMissingDesc => '请在设置中设置您的 UPI ID，以便通过二维码请求付款。';
+
+  @override
+  String get openSettings => '打开设置';
+
+  @override
+  String get recipientFallback => '收款人';
+
+  @override
+  String get paymentLinkCopied => '支付链接已复制！';
+
+  @override
+  String get linkButton => '链接';
+
+  @override
+  String get shareQr => '分享二维码';
+
+  @override
+  String get upiPaymentLinkSubject => 'UPI 支付链接';
+
+  @override
+  String requestingFrom(String name) {
+    return '正在向$name请求';
+  }
+
+  @override
+  String upiIdColonValue(String id) {
+    return 'UPI ID：$id';
+  }
+
+  @override
+  String failedShareQr(String error) {
+    return '分享二维码图片失败：$error';
+  }
+
+  @override
+  String payViaUpiQrFor(String name) {
+    return '通过 UPI 二维码向$name付款';
+  }
+
+  @override
+  String get pleaseSelectPerson => '请选择一个人';
+
+  @override
+  String get amountInInr => '金额（印度卢比）';
+
+  @override
+  String get currency => '货币';
+
+  @override
+  String get selectCurrency => '选择货币';
+
+  @override
+  String get searchCurrency => '搜索货币';
+
+  @override
+  String get autoDetectCurrency => '自动检测货币';
+
+  @override
+  String get autoDetectCurrencyDesc => '根据您设备的地区自动设置';
+
+  @override
+  String get popularCurrencies => '常用';
+
+  @override
+  String get allCurrencies => '所有货币';
+
+  @override
+  String get noCurrencyFound => '未找到货币';
+
+  @override
+  String get requiredField => '必填';
+
+  @override
+  String get quickCategories => '快速类别';
+
+  @override
+  String get saveToPerson => '保存到某人';
+
+  @override
+  String get noPeopleCreateHint => '尚未添加任何人。请在“人员”部分创建人员。';
+
+  @override
+  String get selectPersonLabel => '选择人员';
+
+  @override
+  String get selectCategoryTitle => '选择类别';
+
+  @override
+  String get updateTransactionButton => '更新交易';
+
+  @override
+  String get saveTransactionButton => '保存交易';
+
+  @override
+  String linkedToRecord(String name) {
+    return '已关联到$name的记录';
+  }
+
+  @override
+  String selectItemTitle(String type) {
+    return '选择$type';
+  }
+
+  @override
+  String get personSingular => '人员';
+
+  @override
+  String get error => '错误';
+
+  @override
+  String get retry => '重试';
+
+  @override
+  String get setupFailedRetry => '设置未能完成，请重试。';
+
+  @override
+  String get backButton => '返回';
+
+  @override
+  String get voiceInputExampleHint => '试着说\"晚餐花了500元\"';
+
+  @override
+  String get autoDetectionEnabledSuccess => '自动检测已成功启用！';
+
+  @override
+  String openingRequestQrFor(String name) {
+    return '正在打开$name的请求二维码';
+  }
+
+  @override
+  String get add => '添加';
+
+  @override
+  String get uncategorized => '未分类';
+
+  @override
+  String get timeLabel => '时间';
+
+  @override
+  String get statusColumnLabel => '状态';
+
+  @override
+  String get completedLabel => '已完成';
+
+  @override
+  String get notes => '备注';
+
+  @override
+  String get serviceLabel => '服务';
+
+  @override
+  String get refIdLabel => '参考编号';
+
+  @override
+  String get detectedViaLabel => '检测来源';
+
+  @override
+  String get attachmentsLabel => '附件';
+
+  @override
+  String get originalLogLabel => '原始日志';
+
+  @override
+  String get noNoteProvided => '未提供备注';
+
+  @override
+  String get tapToUnlock => '点击解锁';
+
+  @override
+  String get addPeopleEmptyDesc => '添加联系人以跟踪与他们的交易';
+
+  @override
+  String get noPeopleMatchSearch => '没有与您的搜索匹配的联系人';
+
+  @override
+  String get okay => '好的';
+
+  @override
+  String get confirm => '确认';
+
+  @override
+  String get ok => '确定';
+
+  @override
+  String get unexpectedErrorOccurred => '发生意外错误';
+
+  @override
+  String get autoDetectionActive => '自动检测已启用';
+
+  @override
+  String get unknownSource => '未知来源';
+
+  @override
+  String get noMessageContentAvailable => '无可用消息内容';
+
+  @override
+  String get addManually => '手动添加';
+
+  @override
+  String get detectedAsIncome => '已检测为收入';
+
+  @override
+  String get detectedAsExpense => '已检测为支出';
+
+  @override
+  String sourceColonValue(String source) {
+    return '来源：$source';
+  }
+
+  @override
+  String get sourceNotification => '通知';
+
+  @override
+  String get sourceSms => '短信';
+
+  @override
+  String get sourceRecheckHistory => '历史记录复检';
+
+  @override
+  String get sourceManualAddHistory => '手动添加（来自历史记录）';
+
+  @override
+  String get recentLabel => '最近';
+
+  @override
+  String get oldestLabel => '最早';
+
+  @override
+  String get highestLabel => '最高';
+
+  @override
+  String get lowestLabel => '最低';
+
+  @override
+  String get glassBlurEffectsTitle => '玻璃模糊效果';
+
+  @override
+  String get glassBlurEffectsSubtitle =>
+      '为玻璃面板和对话框添加柔和的模糊效果——会占用更多处理性能，在旧设备上关闭可获得更流畅的体验。';
+
+  @override
+  String get tourBalanceCardTitle => 'Your Balance';
+
+  @override
+  String get tourBalanceCardDesc =>
+      'Tap for income & expense details. Long-press to edit your starting balance.';
+
+  @override
+  String get tourAddIncomeTitle => 'Add Income';
+
+  @override
+  String get tourAddIncomeDesc => 'Log money you\'ve received.';
+
+  @override
+  String get tourMicTitle => 'Record by Voice';
+
+  @override
+  String get tourMicDesc =>
+      'Press and hold, say the amount and what it was for, then release — it\'s saved automatically.';
+
+  @override
+  String get tourAddExpenseTitle => 'Add Expense';
+
+  @override
+  String get tourAddExpenseDesc => 'Log money you\'ve spent.';
+
+  @override
+  String get tourAddPersonTitle => 'Add a Person';
+
+  @override
+  String get tourAddPersonDesc => 'Track what you owe each other over time.';
+
+  @override
+  String get tourPersonCardTitle => 'Open Their Ledger';
+
+  @override
+  String get tourPersonCardDesc =>
+      'Tap a card to see the full history with this person and settle up.';
+
+  @override
+  String get tourPayNowTitle => 'Settle Up';
+
+  @override
+  String get tourPayNowDesc => 'Pay what you owe them directly via UPI.';
+
+  @override
+  String get tourEditPersonTitle => 'Edit Person';
+
+  @override
+  String get tourEditPersonDesc => 'Change their name or photo.';
+
+  @override
+  String get tourDeletePersonTitle => 'Careful — Long-Press Deletes';
+
+  @override
+  String get tourDeletePersonDesc =>
+      'Long-pressing this header permanently deletes this person and their history. You\'ll be asked to confirm first.';
+
+  @override
+  String get tourDeleteTxTitle => 'Long-Press to Delete';
+
+  @override
+  String get tourDeleteTxDesc =>
+      'Tap a transaction to edit it, or long-press to delete it.';
+
+  @override
+  String get replayTipsTitle => 'Show Tips Again';
+
+  @override
+  String get replayTipsSubtitle =>
+      'Replay the pointer-hint tours on Home, People, and Person Details.';
+
+  @override
+  String get replayTipsDone =>
+      'Tips will show again next time you open those screens.';
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class ErrorHandler {
   static void showErrorSnackBar(BuildContext context, String message,
       {Duration? duration}) {
     if (!context.mounted) return;
+    final l10n = AppLocalizations.of(context)!;
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -32,7 +34,7 @@ class ErrorHandler {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         duration: duration ?? const Duration(seconds: 3),
         action: SnackBarAction(
-          label: 'Okay',
+          label: l10n.okay,
           textColor: Colors.white,
           onPressed: () {
             ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -45,6 +47,7 @@ class ErrorHandler {
   static void showSuccessSnackBar(BuildContext context, String message,
       {Duration? duration}) {
     if (!context.mounted) return;
+    final l10n = AppLocalizations.of(context)!;
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -72,7 +75,7 @@ class ErrorHandler {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         duration: duration ?? const Duration(seconds: 3),
         action: SnackBarAction(
-          label: 'Okay',
+          label: l10n.okay,
           textColor: Colors.white,
           onPressed: () {
             ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -85,6 +88,7 @@ class ErrorHandler {
   static void showWarningSnackBar(BuildContext context, String message,
       {Duration? duration}) {
     if (!context.mounted) return;
+    final l10n = AppLocalizations.of(context)!;
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -112,7 +116,7 @@ class ErrorHandler {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         duration: duration ?? const Duration(seconds: 3),
         action: SnackBarAction(
-          label: 'Okay',
+          label: l10n.okay,
           textColor: Colors.white,
           onPressed: () {
             ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -125,6 +129,7 @@ class ErrorHandler {
   static void showInfoSnackBar(BuildContext context, String message,
       {Duration? duration}) {
     if (!context.mounted) return;
+    final l10n = AppLocalizations.of(context)!;
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -151,7 +156,7 @@ class ErrorHandler {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         duration: duration ?? const Duration(seconds: 3),
         action: SnackBarAction(
-          label: 'Okay',
+          label: l10n.okay,
           textColor: Colors.white,
           onPressed: () {
             ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -165,11 +170,14 @@ class ErrorHandler {
     BuildContext context, {
     required String title,
     required String message,
-    String confirmText = 'Confirm',
-    String cancelText = 'Cancel',
+    String? confirmText,
+    String? cancelText,
     bool isDestructive = false,
   }) async {
     if (!context.mounted) return false;
+    final l10n = AppLocalizations.of(context)!;
+    final resolvedConfirmText = confirmText ?? l10n.confirm;
+    final resolvedCancelText = cancelText ?? l10n.cancel;
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -191,7 +199,7 @@ class ErrorHandler {
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
             child: Text(
-              cancelText,
+              resolvedCancelText,
               style: GoogleFonts.dmSans(
                 fontWeight: FontWeight.w600,
               ),
@@ -204,7 +212,7 @@ class ErrorHandler {
               foregroundColor: isDestructive ? Colors.white : null,
             ),
             child: Text(
-              confirmText,
+              resolvedConfirmText,
               style: GoogleFonts.dmSans(
                 fontWeight: FontWeight.w600,
               ),
@@ -224,6 +232,7 @@ class ErrorHandler {
     VoidCallback? onRetry,
   }) async {
     if (!context.mounted) return;
+    final l10n = AppLocalizations.of(context)!;
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -280,7 +289,7 @@ class ErrorHandler {
                 onRetry();
               },
               child: Text(
-                'Retry',
+                l10n.retry,
                 style: GoogleFonts.dmSans(
                   fontWeight: FontWeight.w600,
                 ),
@@ -289,7 +298,7 @@ class ErrorHandler {
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(),
             child: Text(
-              'OK',
+              l10n.ok,
               style: GoogleFonts.dmSans(
                 fontWeight: FontWeight.w600,
               ),
@@ -302,7 +311,8 @@ class ErrorHandler {
 
   static void handleError(BuildContext context, dynamic error,
       {String? customMessage}) {
-    String message = customMessage ?? 'An unexpected error occurred';
+    String message = customMessage ??
+        AppLocalizations.of(context)!.unexpectedErrorOccurred;
 
     if (error is Exception) {
       message = error.toString().replaceAll('Exception: ', '');
@@ -318,7 +328,7 @@ class ErrorHandler {
     Clipboard.setData(ClipboardData(text: text));
     showSuccessSnackBar(
       context,
-      successMessage ?? 'Copied to clipboard',
+      successMessage ?? AppLocalizations.of(context)!.copiedToClipboard,
       duration: const Duration(seconds: 2),
     );
   }

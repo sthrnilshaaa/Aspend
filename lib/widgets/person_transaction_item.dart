@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../core/const/app_assets.dart';
 import '../core/const/app_colors.dart';
 import '../core/const/app_dimensions.dart';
 import '../core/models/person_transaction.dart';
 import '../core/utils/blur_utils.dart';
+import '../core/view_models/theme_view_model.dart';
+import '../l10n/generated/app_localizations.dart';
 import '../../widgets/add_transaction_dialog.dart';
 
 class PersonTransactionItem extends StatelessWidget {
@@ -25,6 +28,9 @@ class PersonTransactionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+    final currencySymbol =
+        context.select<ThemeViewModel, String>((vm) => vm.currencySymbol);
     final isPositiveTx = tx.isIncome;
 
     return FadeTransition(
@@ -131,7 +137,7 @@ class PersonTransactionItem extends StatelessWidget {
                                   children: [
                                     Text(
                                       tx.note.isEmpty
-                                          ? 'No note provided'
+                                          ? l10n.noNoteProvided
                                           : tx.note,
                                       style: GoogleFonts.dmSans(
                                         fontSize: 16,
@@ -155,14 +161,28 @@ class PersonTransactionItem extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Text(
-                                '₹${tx.amount.abs().toStringAsFixed(0)}',
-                                style: GoogleFonts.dmSans(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w800,
-                                  color: isPositiveTx
-                                      ? AppColors.accentGreen
-                                      : AppColors.accentRed,
+                              // Capped + auto-shrunk so a very long amount
+                              // scales its font down instead of overflowing
+                              // the row or squeezing the note column to zero.
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.sizeOf(context).width * 0.3,
+                                ),
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    '$currencySymbol${tx.amount.abs().toStringAsFixed(0)}',
+                                    maxLines: 1,
+                                    style: GoogleFonts.dmSans(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w800,
+                                      color: isPositiveTx
+                                          ? AppColors.accentGreen
+                                          : AppColors.accentRed,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],

@@ -9,7 +9,7 @@ class AppLocalizationsHi extends AppLocalizations {
   AppLocalizationsHi([String locale = 'hi']) : super(locale);
 
   @override
-  String get appName => 'निर्भर करता है';
+  String get appName => 'Aspends';
 
   @override
   String get appTagline => 'स्मार्ट खर्च, सरलीकृत।';
@@ -123,14 +123,14 @@ class AppLocalizationsHi extends AppLocalizations {
   String get microPermissionDenied => 'माइक्रोफ़ोन की अनुमति अस्वीकृत';
 
   @override
-  String get microPermissionTitle => 'Microphone Access Required';
+  String get microPermissionTitle => 'माइक्रोफ़ोन एक्सेस आवश्यक है';
 
   @override
   String get microPermissionDesc =>
-      'Aspends requires microphone access to let you input transaction details via voice commands. Your voice inputs are parsed completely offline on your device and are never uploaded or shared.';
+      'Aspends को आपको वॉइस कमांड के ज़रिए लेन-देन का विवरण दर्ज करने देने के लिए माइक्रोफ़ोन एक्सेस की आवश्यकता है। आपकी वॉइस इनपुट पूरी तरह से आपके डिवाइस पर ऑफ़लाइन प्रोसेस की जाती है और इन्हें कभी भी अपलोड या साझा नहीं किया जाता।';
 
   @override
-  String get microPermissionGrant => 'Enable Voice';
+  String get microPermissionGrant => 'वॉइस सक्षम करें';
 
   @override
   String get appearance => 'उपस्थिति';
@@ -201,7 +201,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String savedAmount(String amount, String category) {
-    return '₹$amount को $category के लिए सहेजा गया';
+    return '$amount को $category के लिए सहेजा गया';
   }
 
   @override
@@ -251,10 +251,28 @@ class AppLocalizationsHi extends AppLocalizations {
   String get openSourceDesc => 'GitHub पर गर्व से खुला स्रोत';
 
   @override
+  String get licenses => 'ओपन सोर्स लाइसेंस';
+
+  @override
+  String get licensesDesc =>
+      'इस ऐप में इस्तेमाल किए गए थर्ड-पार्टी लाइसेंस देखें';
+
+  @override
   String get rateApp => 'दर निर्भर करती है';
 
   @override
   String get rateAppDesc => '5-स्टार रेटिंग के साथ हमारा समर्थन करें';
+
+  @override
+  String get couldNotLaunchUrl => 'लिंक नहीं खोला जा सका';
+
+  @override
+  String errorWithDetails(String error) {
+    return 'त्रुटि: $error';
+  }
+
+  @override
+  String get madeWithLove => 'बेहतर वित्त के लिए ❤️ से बनाया गया';
 
   @override
   String get howAspendWorks => 'एस्पेंड कैसे काम करता है';
@@ -315,7 +333,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get grant => 'अनुदान';
 
   @override
-  String get appNameShort => 'निर्भर करता है';
+  String get appNameShort => 'Aspends';
 
   @override
   String get splashTagline => 'स्मार्ट मनी मैनेजमेंट';
@@ -324,10 +342,22 @@ class AppLocalizationsHi extends AppLocalizations {
   String get budget => 'बजट';
 
   @override
+  String overBudgetBy(String amount) {
+    return '⚠️ $amount अधिक खर्च हो गया';
+  }
+
+  @override
   String get balanceDetailsTitle => 'शेष विवरण';
 
   @override
   String get editBalanceTitle => 'संतुलन संपादित करें';
+
+  @override
+  String get tapHoldToEditBalance => 'बैलेंस संपादित करने के लिए दबाकर रखें';
+
+  @override
+  String get longPressBalanceCardHint =>
+      'होम स्क्रीन पर बैलेंस कार्ड को देर तक दबाएं';
 
   @override
   String get newBalanceLabel => 'नया शेष';
@@ -495,6 +525,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get requestMoney => 'पैसे का अनुरोध';
 
   @override
+  String get requestMoneyTooltip => 'UPI के ज़रिए पैसे मांगें';
+
+  @override
   String get generateQr => 'भुगतान क्यूआर उत्पन्न करें';
 
   @override
@@ -528,7 +561,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String settleBalanceDesc(String amount) {
-    return 'इससे शेष राशि को शून्य पर लाने के लिए ₹$amount का लेनदेन जोड़ा जाएगा। जारी रखना?';
+    return 'इससे शेष राशि को शून्य पर लाने के लिए $amount का लेनदेन जोड़ा जाएगा। जारी रखना?';
   }
 
   @override
@@ -767,4 +800,634 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get exportPdfDesc => 'पीडीएफ रिपोर्ट तैयार करें';
+
+  @override
+  String get biometricNotSupported =>
+      'इस डिवाइस पर बायोमेट्रिक प्रमाणीकरण समर्थित नहीं है';
+
+  @override
+  String get noBiometricMethods =>
+      'कोई बायोमेट्रिक प्रमाणीकरण विधि उपलब्ध नहीं है';
+
+  @override
+  String get authenticateReason => 'ऐप लॉक सक्षम करने के लिए प्रमाणित करें';
+
+  @override
+  String get authFailedAppLockNotEnabled =>
+      'प्रमाणीकरण विफल रहा। ऐप लॉक सक्षम नहीं हुआ।';
+
+  @override
+  String get appLockEnabledSuccess => 'ऐप लॉक सफलतापूर्वक सक्षम किया गया';
+
+  @override
+  String get appLockDisabledSuccess => 'ऐप लॉक सफलतापूर्वक अक्षम किया गया';
+
+  @override
+  String get failedToEnableAppLock => 'ऐप लॉक सक्षम करने में विफल';
+
+  @override
+  String get failedToDisableAppLock => 'ऐप लॉक अक्षम करने में विफल';
+
+  @override
+  String get pickAppColor => 'ऐप का रंग चुनें';
+
+  @override
+  String get reset => 'रीसेट करें';
+
+  @override
+  String get selectAction => 'चुनें';
+
+  @override
+  String get appColorResetDefault => 'ऐप का रंग डिफ़ॉल्ट पर रीसेट कर दिया गया!';
+
+  @override
+  String get deviceNotSupportBiometricsOrAuth =>
+      'डिवाइस बायोमेट्रिक्स या डिवाइस प्रमाणीकरण का समर्थन नहीं करता।';
+
+  @override
+  String get appLockEnabledDot => 'ऐप लॉक सक्षम किया गया।';
+
+  @override
+  String get appLockDisabledDot => 'ऐप लॉक अक्षम किया गया।';
+
+  @override
+  String get cautionToUse => 'उपयोग में सावधानी बरतें';
+
+  @override
+  String get autoDetectCautionDesc =>
+      'यह सुविधा 100% सटीक नहीं है लेकिन काम कर सकती है। पूर्ण गोपनीयता के लिए सभी SMS और नोटिफिकेशन डेटा पूरी तरह से आपके डिवाइस पर स्थानीय रूप से प्रोसेस किया जाता है।';
+
+  @override
+  String get autoDetectSettingSubtitle =>
+      'नोटिफिकेशन से लेन-देन स्वचालित रूप से पहचानें';
+
+  @override
+  String get permissionsRequiredNoAccess =>
+      'अनुमतियाँ आवश्यक हैं: कोई नोटिफिकेशन या SMS एक्सेस नहीं दी गई। ऑटो-डिटेक्शन सक्षम नहीं किया जा सकता।';
+
+  @override
+  String get noteNotificationAccessMissing =>
+      'नोट: नोटिफिकेशन एक्सेस गायब है। केवल SMS डिटेक्शन काम करेगा।';
+
+  @override
+  String get noteSmsPermissionMissing =>
+      'नोट: SMS अनुमति गायब है। केवल नोटिफिकेशन डिटेक्शन काम करेगा।';
+
+  @override
+  String get autoDetectionEnabledExclaim => 'ऑटो-डिटेक्शन सक्षम किया गया!';
+
+  @override
+  String get autoDetectionDisabledExclaim => 'ऑटो-डिटेक्शन अक्षम किया गया!';
+
+  @override
+  String get processRecentDataTitle => 'हाल का डेटा प्रोसेस करें';
+
+  @override
+  String get processRecentDataSubtitle =>
+      'लेन-देन के लिए हाल की नोटिफिकेशन स्कैन करें';
+
+  @override
+  String get recentDataProcessed => 'हाल का डेटा सफलतापूर्वक प्रोसेस किया गया!';
+
+  @override
+  String get errorProcessingData => 'डेटा प्रोसेस करने में त्रुटि';
+
+  @override
+  String get testDetectionLogicTitle => 'डिटेक्शन लॉजिक परखें';
+
+  @override
+  String get testDetectionLogicSubtitle =>
+      'पार्सिंग जांचने के लिए एक नोटिफिकेशन सिम्युलेट करें';
+
+  @override
+  String get showDetectionHistoryTitle => 'डिटेक्शन इतिहास दिखाएं';
+
+  @override
+  String get showDetectionHistorySubtitle =>
+      'पहचानी गई लेन-देन के विस्तृत लॉग देखें';
+
+  @override
+  String get autoDeleteUndetectedTitle => 'अनडिटेक्टेड इतिहास स्वतः हटाएं';
+
+  @override
+  String get autoDeleteUndetectedSubtitle =>
+      '12 घंटे बाद अनडिटेक्टेड आइटम हटाएं';
+
+  @override
+  String get testParserDiagnosticTitle => 'पार्सर डायग्नोस्टिक टेस्ट';
+
+  @override
+  String get testParserDiagnosticDesc =>
+      'यह देखने के लिए एक नमूना नोटिफिकेशन संदेश दर्ज करें कि हमारा पार्सर इसे कैसे संभालता है।';
+
+  @override
+  String get pasteNotificationHint => 'यहां नोटिफिकेशन टेक्स्ट पेस्ट करें...';
+
+  @override
+  String get statusBalanceSync => 'बैलेंस सिंक';
+
+  @override
+  String get statusNoActionDetected => 'कोई कार्रवाई नहीं पाई गई';
+
+  @override
+  String get transactionType => 'प्रकार';
+
+  @override
+  String get resultLabelMerchant => 'व्यापारी';
+
+  @override
+  String get resultLabelBank => 'बैंक';
+
+  @override
+  String get balanceLabel => 'बैलेंस';
+
+  @override
+  String get resultLabelConfidence => 'विश्वसनीयता';
+
+  @override
+  String get unknown => 'अज्ञात';
+
+  @override
+  String get general => 'सामान्य';
+
+  @override
+  String get notAvailable => 'उपलब्ध नहीं';
+
+  @override
+  String get close => 'बंद करें';
+
+  @override
+  String get parseText => 'टेक्स्ट पार्स करें';
+
+  @override
+  String get deleteAllDataTitle => 'सभी डेटा हटाएं';
+
+  @override
+  String get deleteAllDataWarningSubtitle =>
+      '⚠️ इस कार्रवाई को पूर्ववत नहीं किया जा सकता';
+
+  @override
+  String get resetIntroTitle => 'इंट्रो रीसेट करें';
+
+  @override
+  String get resetIntroSubtitle => 'इंट्रो स्क्रीन फिर से दिखाएं';
+
+  @override
+  String get incomeCategories => 'आय श्रेणियाँ';
+
+  @override
+  String get incomeCategoriesDesc => 'आय के लिए श्रेणियाँ प्रबंधित करें';
+
+  @override
+  String get expenseCategories => 'व्यय श्रेणियाँ';
+
+  @override
+  String get expenseCategoriesDesc => 'व्यय के लिए श्रेणियाँ प्रबंधित करें';
+
+  @override
+  String get accountsTitle => 'खाते';
+
+  @override
+  String get accountsDesc => 'अपने खातों को प्रबंधित करें';
+
+  @override
+  String get enterNamePlaceholder => 'नाम दर्ज करें...';
+
+  @override
+  String get aboutAppSubtitle => 'डेवलपर, गोपनीयता, सहायता और अधिक';
+
+  @override
+  String get setMonthlySpendingLimit => 'मासिक खर्च की सीमा निर्धारित करें';
+
+  @override
+  String get joinPreviousMonthBalanceTitle => 'पिछले महीने का बैलेंस जोड़ें';
+
+  @override
+  String get joinPreviousMonthBalanceDesc =>
+      'वर्तमान कुल में पिछले महीने का बैलेंस शामिल करें';
+
+  @override
+  String get setMonthlyBudgetTitle => 'मासिक बजट निर्धारित करें';
+
+  @override
+  String get budgetAmountLabel => 'बजट राशि';
+
+  @override
+  String get budgetUpdated => 'बजट अपडेट किया गया!';
+
+  @override
+  String get confirmDeleteTitle => 'हटाने की पुष्टि करें';
+
+  @override
+  String get confirmDeleteAllDesc =>
+      'क्या आप वाकई सभी लेन-देन हटाना और अपना बैलेंस रीसेट करना चाहते हैं? इस कार्रवाई को पूर्ववत नहीं किया जा सकता।';
+
+  @override
+  String get deleteAllButton => 'सभी हटाएं';
+
+  @override
+  String get failedDeleteAllData =>
+      'सभी डेटा हटाने में विफल। कृपया पुनः प्रयास करें।';
+
+  @override
+  String get resetIntroConfirmDesc =>
+      'इससे अगली बार ऐप खोलने पर इंट्रो स्क्रीन फिर से दिखेंगी। आपका डेटा अपरिवर्तित रहेगा।';
+
+  @override
+  String editFieldTitle(String field) {
+    return '$field संपादित करें';
+  }
+
+  @override
+  String enterFieldHint(String field) {
+    return '$field दर्ज करें';
+  }
+
+  @override
+  String statusLabel(String status) {
+    return 'स्थिति: $status';
+  }
+
+  @override
+  String manageItemsTitle(String type) {
+    return '$type प्रबंधित करें';
+  }
+
+  @override
+  String noItemsFound(String type) {
+    return 'कोई $type नहीं मिला।';
+  }
+
+  @override
+  String addItemButton(String type) {
+    return '$type जोड़ें';
+  }
+
+  @override
+  String editItemTitle(String type) {
+    return '$type संपादित करें';
+  }
+
+  @override
+  String itemNameLabel(String type) {
+    return '$type नाम';
+  }
+
+  @override
+  String monthlyLimitSubtitle(String budget) {
+    return 'मासिक सीमा: $budget';
+  }
+
+  @override
+  String failedResetIntro(String error) {
+    return 'इंट्रो रीसेट करने में विफल। कृपया पुनः प्रयास करें।\\n$error';
+  }
+
+  @override
+  String get failedUpdateAutoDetection => 'ऑटो-डिटेक्शन अपडेट करने में विफल';
+
+  @override
+  String get actionCannotBeUndone =>
+      'इस कार्रवाई को पूर्ववत नहीं किया जा सकता।';
+
+  @override
+  String deleteTransactionsCountTitle(int count) {
+    return '$count लेन-देन हटाएं?';
+  }
+
+  @override
+  String deletedTransactionsCount(int count) {
+    return '$count लेन-देन हटाए गए';
+  }
+
+  @override
+  String get transactionHistoryTitle => 'लेन-देन इतिहास';
+
+  @override
+  String get upiIdMissingTitle => 'UPI ID गायब है';
+
+  @override
+  String get upiIdMissingDesc =>
+      'QR कोड के ज़रिए पैसे मांगने के लिए कृपया सेटिंग्स में अपनी UPI ID सेट करें।';
+
+  @override
+  String get openSettings => 'सेटिंग्स खोलें';
+
+  @override
+  String get recipientFallback => 'प्राप्तकर्ता';
+
+  @override
+  String get paymentLinkCopied => 'भुगतान लिंक कॉपी हो गया!';
+
+  @override
+  String get linkButton => 'लिंक';
+
+  @override
+  String get shareQr => 'QR शेयर करें';
+
+  @override
+  String get upiPaymentLinkSubject => 'UPI भुगतान लिंक';
+
+  @override
+  String requestingFrom(String name) {
+    return '$name से अनुरोध किया जा रहा है';
+  }
+
+  @override
+  String upiIdColonValue(String id) {
+    return 'यूपीआई आईडी: $id';
+  }
+
+  @override
+  String failedShareQr(String error) {
+    return 'QR छवि साझा करने में विफल: $error';
+  }
+
+  @override
+  String payViaUpiQrFor(String name) {
+    return '$name के लिए UPI QR से भुगतान करें';
+  }
+
+  @override
+  String get pleaseSelectPerson => 'कृपया एक व्यक्ति चुनें';
+
+  @override
+  String get amountInInr => 'राशि (INR में)';
+
+  @override
+  String get currency => 'मुद्रा';
+
+  @override
+  String get selectCurrency => 'मुद्रा चुनें';
+
+  @override
+  String get searchCurrency => 'मुद्रा खोजें';
+
+  @override
+  String get autoDetectCurrency => 'मुद्रा स्वतः पहचानें';
+
+  @override
+  String get autoDetectCurrencyDesc =>
+      'आपके डिवाइस के क्षेत्र के अनुसार स्वतः सेट करें';
+
+  @override
+  String get popularCurrencies => 'लोकप्रिय';
+
+  @override
+  String get allCurrencies => 'सभी मुद्राएं';
+
+  @override
+  String get noCurrencyFound => 'कोई मुद्रा नहीं मिली';
+
+  @override
+  String get requiredField => 'आवश्यक';
+
+  @override
+  String get quickCategories => 'त्वरित श्रेणियाँ';
+
+  @override
+  String get saveToPerson => 'व्यक्ति में सहेजें';
+
+  @override
+  String get noPeopleCreateHint =>
+      'अभी तक कोई व्यक्ति नहीं जोड़ा गया। लोग अनुभाग में व्यक्ति बनाएं।';
+
+  @override
+  String get selectPersonLabel => 'व्यक्ति चुनें';
+
+  @override
+  String get selectCategoryTitle => 'श्रेणी चुनें';
+
+  @override
+  String get updateTransactionButton => 'लेन-देन अपडेट करें';
+
+  @override
+  String get saveTransactionButton => 'लेन-देन सहेजें';
+
+  @override
+  String linkedToRecord(String name) {
+    return '$name के रिकॉर्ड से जोड़ा गया';
+  }
+
+  @override
+  String selectItemTitle(String type) {
+    return '$type चुनें';
+  }
+
+  @override
+  String get personSingular => 'व्यक्ति';
+
+  @override
+  String get error => 'त्रुटि';
+
+  @override
+  String get retry => 'पुनः प्रयास करें';
+
+  @override
+  String get setupFailedRetry =>
+      'सेटअप पूरा करने में विफल। कृपया पुनः प्रयास करें।';
+
+  @override
+  String get backButton => 'वापस';
+
+  @override
+  String get voiceInputExampleHint =>
+      'कुछ ऐसा कहें जैसे \'डिनर पर 500 खर्च किए\'';
+
+  @override
+  String get autoDetectionEnabledSuccess =>
+      'ऑटो-डिटेक्शन सफलतापूर्वक सक्षम किया गया!';
+
+  @override
+  String openingRequestQrFor(String name) {
+    return '$name के लिए अनुरोध QR खोला जा रहा है';
+  }
+
+  @override
+  String get add => 'जोड़ें';
+
+  @override
+  String get uncategorized => 'अवर्गीकृत';
+
+  @override
+  String get timeLabel => 'समय';
+
+  @override
+  String get statusColumnLabel => 'स्थिति';
+
+  @override
+  String get completedLabel => 'पूर्ण';
+
+  @override
+  String get notes => 'टिप्पणियाँ';
+
+  @override
+  String get serviceLabel => 'सेवा';
+
+  @override
+  String get refIdLabel => 'संदर्भ आईडी';
+
+  @override
+  String get detectedViaLabel => 'इसके ज़रिए पहचाना गया';
+
+  @override
+  String get attachmentsLabel => 'अनुलग्नक';
+
+  @override
+  String get originalLogLabel => 'मूल लॉग';
+
+  @override
+  String get noNoteProvided => 'कोई टिप्पणी नहीं दी गई';
+
+  @override
+  String get tapToUnlock => 'अनलॉक करने के लिए टैप करें';
+
+  @override
+  String get addPeopleEmptyDesc =>
+      'उनके साथ लेन-देन ट्रैक करने के लिए लोगों को जोड़ें';
+
+  @override
+  String get noPeopleMatchSearch => 'कोई भी व्यक्ति आपकी खोज से मेल नहीं खाता';
+
+  @override
+  String get okay => 'ठीक है';
+
+  @override
+  String get confirm => 'पुष्टि करें';
+
+  @override
+  String get ok => 'ठीक है';
+
+  @override
+  String get unexpectedErrorOccurred => 'एक अप्रत्याशित त्रुटि हुई';
+
+  @override
+  String get autoDetectionActive => 'ऑटो-डिटेक्शन सक्रिय है';
+
+  @override
+  String get unknownSource => 'अज्ञात स्रोत';
+
+  @override
+  String get noMessageContentAvailable => 'कोई संदेश सामग्री उपलब्ध नहीं है';
+
+  @override
+  String get addManually => 'मैन्युअल रूप से जोड़ें';
+
+  @override
+  String get detectedAsIncome => 'आय के रूप में पहचाना गया';
+
+  @override
+  String get detectedAsExpense => 'व्यय के रूप में पहचाना गया';
+
+  @override
+  String sourceColonValue(String source) {
+    return 'स्रोत: $source';
+  }
+
+  @override
+  String get sourceNotification => 'सूचना';
+
+  @override
+  String get sourceSms => 'एसएमएस';
+
+  @override
+  String get sourceRecheckHistory => 'पुनः जांचा गया इतिहास';
+
+  @override
+  String get sourceManualAddHistory => 'मैन्युअल जोड़ (इतिहास से)';
+
+  @override
+  String get recentLabel => 'हाल का';
+
+  @override
+  String get oldestLabel => 'सबसे पुराना';
+
+  @override
+  String get highestLabel => 'सबसे अधिक';
+
+  @override
+  String get lowestLabel => 'सबसे कम';
+
+  @override
+  String get glassBlurEffectsTitle => 'ग्लास ब्लर इफ़ेक्ट';
+
+  @override
+  String get glassBlurEffectsSubtitle =>
+      'ग्लास पैनल और डायलॉग पर हल्का ब्लर प्रभाव — इसमें अधिक प्रोसेसिंग पावर लगती है, पुराने डिवाइस पर बेहतर प्रदर्शन के लिए इसे बंद करें।';
+
+  @override
+  String get tourBalanceCardTitle => 'Your Balance';
+
+  @override
+  String get tourBalanceCardDesc =>
+      'Tap for income & expense details. Long-press to edit your starting balance.';
+
+  @override
+  String get tourAddIncomeTitle => 'Add Income';
+
+  @override
+  String get tourAddIncomeDesc => 'Log money you\'ve received.';
+
+  @override
+  String get tourMicTitle => 'Record by Voice';
+
+  @override
+  String get tourMicDesc =>
+      'Press and hold, say the amount and what it was for, then release — it\'s saved automatically.';
+
+  @override
+  String get tourAddExpenseTitle => 'Add Expense';
+
+  @override
+  String get tourAddExpenseDesc => 'Log money you\'ve spent.';
+
+  @override
+  String get tourAddPersonTitle => 'Add a Person';
+
+  @override
+  String get tourAddPersonDesc => 'Track what you owe each other over time.';
+
+  @override
+  String get tourPersonCardTitle => 'Open Their Ledger';
+
+  @override
+  String get tourPersonCardDesc =>
+      'Tap a card to see the full history with this person and settle up.';
+
+  @override
+  String get tourPayNowTitle => 'Settle Up';
+
+  @override
+  String get tourPayNowDesc => 'Pay what you owe them directly via UPI.';
+
+  @override
+  String get tourEditPersonTitle => 'Edit Person';
+
+  @override
+  String get tourEditPersonDesc => 'Change their name or photo.';
+
+  @override
+  String get tourDeletePersonTitle => 'Careful — Long-Press Deletes';
+
+  @override
+  String get tourDeletePersonDesc =>
+      'Long-pressing this header permanently deletes this person and their history. You\'ll be asked to confirm first.';
+
+  @override
+  String get tourDeleteTxTitle => 'Long-Press to Delete';
+
+  @override
+  String get tourDeleteTxDesc =>
+      'Tap a transaction to edit it, or long-press to delete it.';
+
+  @override
+  String get replayTipsTitle => 'Show Tips Again';
+
+  @override
+  String get replayTipsSubtitle =>
+      'Replay the pointer-hint tours on Home, People, and Person Details.';
+
+  @override
+  String get replayTipsDone =>
+      'Tips will show again next time you open those screens.';
 }

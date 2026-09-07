@@ -5,6 +5,8 @@ import 'dart:async';
 import 'package:aspends_tracker/core/models/transaction.dart';
 import 'package:aspends_tracker/core/repositories/transaction_repository.dart';
 import 'package:aspends_tracker/core/repositories/settings_repository.dart';
+import 'package:aspends_tracker/core/services/currency_service.dart';
+import 'package:aspends_tracker/core/const/app_currencies.dart';
 
 enum SortOption {
   dateNewest,
@@ -22,6 +24,7 @@ class TransactionViewModel with ChangeNotifier {
   SortOption _sort = SortOption.dateNewest;
   bool _joinPrev = true;
   bool _isSyncing = false;
+  String _currencySymbol = AppCurrencies.fallback.symbol;
 
   // Filtering state
   String? _searchQuery;
@@ -73,9 +76,12 @@ class TransactionViewModel with ChangeNotifier {
 
   void _loadSettings() {
     _joinPrev = _settings.getJoinPreviousMonthBalance();
+    _currencySymbol = CurrencyService.resolveCurrency(_settings).symbol;
     notifyListeners();
     _updateHW();
   }
+
+  String get currencySymbol => _currencySymbol;
 
   // Filtering Getters & Setters
   String? get searchQuery => _searchQuery;
@@ -297,7 +303,8 @@ class TransactionViewModel with ChangeNotifier {
       .fold(0.0, (s, t) => s + t.amount);
 
   void _showToast(Transaction t) => Fluttertoast.showToast(
-        msg: "Detected ${t.isIncome ? 'Income' : 'Expense'}: ₹${t.amount}",
+        msg:
+            "Detected ${t.isIncome ? 'Income' : 'Expense'}: $currencySymbol${t.amount}",
         backgroundColor: t.isIncome ? Colors.green : Colors.red,
         textColor: Colors.white,
       );
@@ -310,14 +317,15 @@ class TransactionViewModel with ChangeNotifier {
     final monthIncome = monthTxs.where((t) => t.isIncome).fold(0.0, (s, t) => s + t.amount);
     final monthExpense = monthTxs.where((t) => !t.isIncome).fold(0.0, (s, t) => s + t.amount);
     
-    String lastTxText = "";
+    String lastTxText = '';
     if (_txs.isNotEmpty) {
       final last = sortedTransactions.first;
       lastTxText = "${last.isIncome ? '+' : '-'}${last.amount.toStringAsFixed(0)} ${last.note}";
-      if (lastTxText.length > 25) lastTxText = "${lastTxText.substring(0, 22)}...";
+      if (lastTxText.length > 25) lastTxText = '${lastTxText.substring(0, 22)}...';
     }
 
-    await HomeWidget.saveWidgetData('balance', '₹${totalBalance.toStringAsFixed(2)}');
+    await HomeWidget.saveWidgetData(
+        'balance', '$currencySymbol${totalBalance.toStringAsFixed(2)}');
     await HomeWidget.saveWidgetData('total_income', monthIncome.toString());
     await HomeWidget.saveWidgetData('total_expenses', monthExpense.toString());
     await HomeWidget.saveWidgetData('last_transaction', lastTxText);

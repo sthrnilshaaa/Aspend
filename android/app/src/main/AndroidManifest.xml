@@ -33,7 +33,6 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="true"
-        android:persistent="true"
         tools:replace="android:label">
 
         <!-- ✅ Enable Impeller Rendering -->
@@ -132,6 +131,16 @@
         </intent>
         <intent>
             <action android:name="android.speech.RecognitionService" />
+        </intent>
+        <!-- Required so url_launcher's canLaunchUrl/launchUrl can resolve
+             browsers and the Play Store app on Android 11+ package visibility. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="market" />
         </intent>
     </queries>
 

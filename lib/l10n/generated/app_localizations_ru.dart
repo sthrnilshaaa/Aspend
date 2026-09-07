@@ -9,7 +9,7 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get appName => 'Аспендирует';
+  String get appName => 'Aspends';
 
   @override
   String get appTagline => 'Разумные траты, упрощенные.';
@@ -124,14 +124,14 @@ class AppLocalizationsRu extends AppLocalizations {
       'Разрешение на использование микрофона отклонено';
 
   @override
-  String get microPermissionTitle => 'Microphone Access Required';
+  String get microPermissionTitle => 'Требуется доступ к микрофону';
 
   @override
   String get microPermissionDesc =>
-      'Aspends requires microphone access to let you input transaction details via voice commands. Your voice inputs are parsed completely offline on your device and are never uploaded or shared.';
+      'Aspends требуется доступ к микрофону, чтобы вы могли вводить данные транзакций с помощью голосовых команд. Ваши голосовые данные полностью обрабатываются офлайн на вашем устройстве и никогда не отправляются и не передаются третьим лицам.';
 
   @override
-  String get microPermissionGrant => 'Enable Voice';
+  String get microPermissionGrant => 'Включить голос';
 
   @override
   String get appearance => 'Появление';
@@ -204,7 +204,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String savedAmount(String amount, String category) {
-    return 'Сохранено ₹$amount для $category';
+    return 'Сохранено $amount для $category';
   }
 
   @override
@@ -256,10 +256,28 @@ class AppLocalizationsRu extends AppLocalizations {
   String get openSourceDesc => 'С гордостью открытый исходный код на GitHub';
 
   @override
+  String get licenses => 'Лицензии с открытым исходным кодом';
+
+  @override
+  String get licensesDesc =>
+      'Просмотр лицензий сторонних компонентов, используемых в приложении';
+
+  @override
   String get rateApp => 'Ставка расходов';
 
   @override
   String get rateAppDesc => 'Поддержите нас, поставив 5-звездочный рейтинг';
+
+  @override
+  String get couldNotLaunchUrl => 'Не удалось открыть ссылку';
+
+  @override
+  String errorWithDetails(String error) {
+    return 'Ошибка: $error';
+  }
+
+  @override
+  String get madeWithLove => 'Сделано с ❤️ ради лучших финансов';
 
   @override
   String get howAspendWorks => 'КАК РАБОТАЕТ АСПЕНД';
@@ -320,7 +338,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get grant => 'Грант';
 
   @override
-  String get appNameShort => 'Аспендирует';
+  String get appNameShort => 'Aspends';
 
   @override
   String get splashTagline => 'Умное управление деньгами';
@@ -329,10 +347,23 @@ class AppLocalizationsRu extends AppLocalizations {
   String get budget => 'Бюджет';
 
   @override
+  String overBudgetBy(String amount) {
+    return '⚠️ Превышение на $amount';
+  }
+
+  @override
   String get balanceDetailsTitle => 'Детали баланса';
 
   @override
   String get editBalanceTitle => 'Изменить баланс';
+
+  @override
+  String get tapHoldToEditBalance =>
+      'Нажмите и удерживайте, чтобы изменить баланс';
+
+  @override
+  String get longPressBalanceCardHint =>
+      'Нажмите и удерживайте карточку баланса на главном экране';
 
   @override
   String get newBalanceLabel => 'Новый Баланс';
@@ -500,6 +531,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get requestMoney => 'Запросить деньги';
 
   @override
+  String get requestMoneyTooltip => 'Запросить деньги через UPI';
+
+  @override
   String get generateQr => 'Создать платежный QR-код';
 
   @override
@@ -533,7 +567,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String settleBalanceDesc(String amount) {
-    return 'Это добавит транзакцию на сумму ₹$amount чтобы свести баланс к нулю. Продолжать?';
+    return 'Это добавит транзакцию на сумму $amount чтобы свести баланс к нулю. Продолжать?';
   }
 
   @override
@@ -775,4 +809,638 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get exportPdfDesc => 'Создание отчетов в формате PDF';
+
+  @override
+  String get biometricNotSupported =>
+      'Биометрическая аутентификация не поддерживается на этом устройстве';
+
+  @override
+  String get noBiometricMethods =>
+      'Нет доступных методов биометрической аутентификации';
+
+  @override
+  String get authenticateReason =>
+      'Пройдите аутентификацию, чтобы включить блокировку приложения';
+
+  @override
+  String get authFailedAppLockNotEnabled =>
+      'Аутентификация не удалась. Блокировка приложения не включена.';
+
+  @override
+  String get appLockEnabledSuccess => 'Блокировка приложения успешно включена';
+
+  @override
+  String get appLockDisabledSuccess =>
+      'Блокировка приложения успешно отключена';
+
+  @override
+  String get failedToEnableAppLock =>
+      'Не удалось включить блокировку приложения';
+
+  @override
+  String get failedToDisableAppLock =>
+      'Не удалось отключить блокировку приложения';
+
+  @override
+  String get pickAppColor => 'Выберите цвет приложения';
+
+  @override
+  String get reset => 'Сбросить';
+
+  @override
+  String get selectAction => 'Выбрать';
+
+  @override
+  String get appColorResetDefault => 'Цвет приложения сброшен на стандартный!';
+
+  @override
+  String get deviceNotSupportBiometricsOrAuth =>
+      'Устройство не поддерживает биометрию или аутентификацию устройства.';
+
+  @override
+  String get appLockEnabledDot => 'Блокировка приложения включена.';
+
+  @override
+  String get appLockDisabledDot => 'Блокировка приложения отключена.';
+
+  @override
+  String get cautionToUse => 'Используйте с осторожностью';
+
+  @override
+  String get autoDetectCautionDesc =>
+      'Эта функция не идеальна на 100%, но может работать. Все данные SMS и уведомлений обрабатываются на 100% локально на вашем устройстве для полной конфиденциальности.';
+
+  @override
+  String get autoDetectSettingSubtitle =>
+      'Автоматически определять транзакции из уведомлений';
+
+  @override
+  String get permissionsRequiredNoAccess =>
+      'Требуются разрешения: доступ к уведомлениям или SMS не предоставлен. Автоопределение включить нельзя.';
+
+  @override
+  String get noteNotificationAccessMissing =>
+      'Примечание: нет доступа к уведомлениям. Будет работать только определение по SMS.';
+
+  @override
+  String get noteSmsPermissionMissing =>
+      'Примечание: нет разрешения на SMS. Будет работать только определение по уведомлениям.';
+
+  @override
+  String get autoDetectionEnabledExclaim => 'Автоопределение включено!';
+
+  @override
+  String get autoDetectionDisabledExclaim => 'Автоопределение отключено!';
+
+  @override
+  String get processRecentDataTitle => 'Обработать последние данные';
+
+  @override
+  String get processRecentDataSubtitle =>
+      'Сканировать недавние уведомления на предмет транзакций';
+
+  @override
+  String get recentDataProcessed => 'Последние данные успешно обработаны!';
+
+  @override
+  String get errorProcessingData => 'Ошибка обработки данных';
+
+  @override
+  String get testDetectionLogicTitle => 'Тест логики обнаружения';
+
+  @override
+  String get testDetectionLogicSubtitle =>
+      'Смоделируйте уведомление, чтобы проверить разбор';
+
+  @override
+  String get showDetectionHistoryTitle => 'Показать историю обнаружения';
+
+  @override
+  String get showDetectionHistorySubtitle =>
+      'Просмотр подробных журналов обнаруженных транзакций';
+
+  @override
+  String get autoDeleteUndetectedTitle => 'Автоудаление необнаруженной истории';
+
+  @override
+  String get autoDeleteUndetectedSubtitle =>
+      'Удалять необнаруженные записи через 12 часов';
+
+  @override
+  String get testParserDiagnosticTitle => 'Диагностика тестового парсера';
+
+  @override
+  String get testParserDiagnosticDesc =>
+      'Введите пример текста уведомления, чтобы увидеть, как его обрабатывает наш парсер.';
+
+  @override
+  String get pasteNotificationHint => 'Вставьте текст уведомления сюда...';
+
+  @override
+  String get statusBalanceSync => 'Синхронизация баланса';
+
+  @override
+  String get statusNoActionDetected => 'Действие не обнаружено';
+
+  @override
+  String get transactionType => 'Тип';
+
+  @override
+  String get resultLabelMerchant => 'Продавец';
+
+  @override
+  String get resultLabelBank => 'Банк';
+
+  @override
+  String get balanceLabel => 'Баланс';
+
+  @override
+  String get resultLabelConfidence => 'Уверенность';
+
+  @override
+  String get unknown => 'Неизвестно';
+
+  @override
+  String get general => 'Общее';
+
+  @override
+  String get notAvailable => 'Н/Д';
+
+  @override
+  String get close => 'Закрыть';
+
+  @override
+  String get parseText => 'Разобрать текст';
+
+  @override
+  String get deleteAllDataTitle => 'Удалить все данные';
+
+  @override
+  String get deleteAllDataWarningSubtitle =>
+      '⚠️ Это действие невозможно отменить';
+
+  @override
+  String get resetIntroTitle => 'Сбросить вступление';
+
+  @override
+  String get resetIntroSubtitle => 'Показать вступительные экраны снова';
+
+  @override
+  String get incomeCategories => 'Категории доходов';
+
+  @override
+  String get incomeCategoriesDesc => 'Управление категориями доходов';
+
+  @override
+  String get expenseCategories => 'Категории расходов';
+
+  @override
+  String get expenseCategoriesDesc => 'Управление категориями расходов';
+
+  @override
+  String get accountsTitle => 'Счета';
+
+  @override
+  String get accountsDesc => 'Управление вашими счетами';
+
+  @override
+  String get enterNamePlaceholder => 'Введите имя...';
+
+  @override
+  String get aboutAppSubtitle =>
+      'Разработчик, конфиденциальность, поддержка и многое другое';
+
+  @override
+  String get setMonthlySpendingLimit => 'Установите месячный лимит расходов';
+
+  @override
+  String get joinPreviousMonthBalanceTitle =>
+      'Учитывать баланс предыдущего месяца';
+
+  @override
+  String get joinPreviousMonthBalanceDesc =>
+      'Включить баланс предыдущего месяца в текущий итог';
+
+  @override
+  String get setMonthlyBudgetTitle => 'Установить месячный бюджет';
+
+  @override
+  String get budgetAmountLabel => 'Сумма бюджета';
+
+  @override
+  String get budgetUpdated => 'Бюджет обновлён!';
+
+  @override
+  String get confirmDeleteTitle => 'Подтвердите удаление';
+
+  @override
+  String get confirmDeleteAllDesc =>
+      'Вы уверены, что хотите удалить все транзакции и сбросить баланс? Это действие невозможно отменить.';
+
+  @override
+  String get deleteAllButton => 'Удалить всё';
+
+  @override
+  String get failedDeleteAllData =>
+      'Не удалось удалить все данные. Попробуйте снова.';
+
+  @override
+  String get resetIntroConfirmDesc =>
+      'Вступительные экраны появятся снова при следующем открытии приложения. Ваши данные останутся без изменений.';
+
+  @override
+  String editFieldTitle(String field) {
+    return 'Изменить $field';
+  }
+
+  @override
+  String enterFieldHint(String field) {
+    return 'Введите $field';
+  }
+
+  @override
+  String statusLabel(String status) {
+    return 'Статус: $status';
+  }
+
+  @override
+  String manageItemsTitle(String type) {
+    return 'Управление: $type';
+  }
+
+  @override
+  String noItemsFound(String type) {
+    return '$type не найдено.';
+  }
+
+  @override
+  String addItemButton(String type) {
+    return 'Добавить $type';
+  }
+
+  @override
+  String editItemTitle(String type) {
+    return 'Изменить $type';
+  }
+
+  @override
+  String itemNameLabel(String type) {
+    return 'Название: $type';
+  }
+
+  @override
+  String monthlyLimitSubtitle(String budget) {
+    return 'Месячный лимит: $budget';
+  }
+
+  @override
+  String failedResetIntro(String error) {
+    return 'Не удалось сбросить вступление. Попробуйте снова.\\n$error';
+  }
+
+  @override
+  String get failedUpdateAutoDetection => 'Не удалось обновить автоопределение';
+
+  @override
+  String get actionCannotBeUndone => 'Это действие невозможно отменить.';
+
+  @override
+  String deleteTransactionsCountTitle(int count) {
+    return 'Удалить $count транзакций?';
+  }
+
+  @override
+  String deletedTransactionsCount(int count) {
+    return 'Удалено $count транзакций';
+  }
+
+  @override
+  String get transactionHistoryTitle => 'История транзакций';
+
+  @override
+  String get upiIdMissingTitle => 'Отсутствует UPI ID';
+
+  @override
+  String get upiIdMissingDesc =>
+      'Укажите UPI ID в настройках, чтобы запрашивать деньги через QR-код.';
+
+  @override
+  String get openSettings => 'Открыть настройки';
+
+  @override
+  String get recipientFallback => 'Получатель';
+
+  @override
+  String get paymentLinkCopied => 'Ссылка на оплату скопирована!';
+
+  @override
+  String get linkButton => 'Ссылка';
+
+  @override
+  String get shareQr => 'Поделиться QR-кодом';
+
+  @override
+  String get upiPaymentLinkSubject => 'Ссылка на оплату UPI';
+
+  @override
+  String requestingFrom(String name) {
+    return 'Запрос от $name';
+  }
+
+  @override
+  String upiIdColonValue(String id) {
+    return 'Идентификатор UPI: $id';
+  }
+
+  @override
+  String failedShareQr(String error) {
+    return 'Не удалось поделиться изображением QR: $error';
+  }
+
+  @override
+  String payViaUpiQrFor(String name) {
+    return 'Оплата через UPI QR для $name';
+  }
+
+  @override
+  String get pleaseSelectPerson => 'Пожалуйста, выберите человека';
+
+  @override
+  String get amountInInr => 'Сумма в INR';
+
+  @override
+  String get currency => 'Валюта';
+
+  @override
+  String get selectCurrency => 'Выбрать валюту';
+
+  @override
+  String get searchCurrency => 'Поиск валюты';
+
+  @override
+  String get autoDetectCurrency => 'Автоопределение валюты';
+
+  @override
+  String get autoDetectCurrencyDesc =>
+      'Автоматически соответствует региону вашего устройства';
+
+  @override
+  String get popularCurrencies => 'Популярные';
+
+  @override
+  String get allCurrencies => 'Все валюты';
+
+  @override
+  String get noCurrencyFound => 'Валюта не найдена';
+
+  @override
+  String get requiredField => 'Обязательно';
+
+  @override
+  String get quickCategories => 'Быстрые категории';
+
+  @override
+  String get saveToPerson => 'Сохранить у человека';
+
+  @override
+  String get noPeopleCreateHint =>
+      'Люди ещё не добавлены. Создайте людей в разделе «Люди».';
+
+  @override
+  String get selectPersonLabel => 'Выберите человека';
+
+  @override
+  String get selectCategoryTitle => 'Выберите категорию';
+
+  @override
+  String get updateTransactionButton => 'Обновить транзакцию';
+
+  @override
+  String get saveTransactionButton => 'Сохранить транзакцию';
+
+  @override
+  String linkedToRecord(String name) {
+    return 'Связано с записью $name';
+  }
+
+  @override
+  String selectItemTitle(String type) {
+    return 'Выберите $type';
+  }
+
+  @override
+  String get personSingular => 'Человек';
+
+  @override
+  String get error => 'Ошибка';
+
+  @override
+  String get retry => 'Повторить';
+
+  @override
+  String get setupFailedRetry =>
+      'Не удалось завершить настройку. Попробуйте снова.';
+
+  @override
+  String get backButton => 'Назад';
+
+  @override
+  String get voiceInputExampleHint =>
+      'Скажите что-то вроде «Потратил 500 на ужин»';
+
+  @override
+  String get autoDetectionEnabledSuccess => 'Автоопределение успешно включено!';
+
+  @override
+  String openingRequestQrFor(String name) {
+    return 'Открытие QR-запроса для $name';
+  }
+
+  @override
+  String get add => 'Добавить';
+
+  @override
+  String get uncategorized => 'Без категории';
+
+  @override
+  String get timeLabel => 'Время';
+
+  @override
+  String get statusColumnLabel => 'Статус';
+
+  @override
+  String get completedLabel => 'Завершено';
+
+  @override
+  String get notes => 'Заметки';
+
+  @override
+  String get serviceLabel => 'Сервис';
+
+  @override
+  String get refIdLabel => 'ID ссылки';
+
+  @override
+  String get detectedViaLabel => 'Обнаружено через';
+
+  @override
+  String get attachmentsLabel => 'Вложения';
+
+  @override
+  String get originalLogLabel => 'Исходный журнал';
+
+  @override
+  String get noNoteProvided => 'Заметка не указана';
+
+  @override
+  String get tapToUnlock => 'Нажмите, чтобы разблокировать';
+
+  @override
+  String get addPeopleEmptyDesc =>
+      'Добавьте людей, чтобы отслеживать транзакции с ними';
+
+  @override
+  String get noPeopleMatchSearch => 'Нет людей, соответствующих вашему запросу';
+
+  @override
+  String get okay => 'Хорошо';
+
+  @override
+  String get confirm => 'Подтвердить';
+
+  @override
+  String get ok => 'ОК';
+
+  @override
+  String get unexpectedErrorOccurred => 'Произошла непредвиденная ошибка';
+
+  @override
+  String get autoDetectionActive => 'Автоопределение активно';
+
+  @override
+  String get unknownSource => 'Неизвестный источник';
+
+  @override
+  String get noMessageContentAvailable => 'Содержимое сообщения недоступно';
+
+  @override
+  String get addManually => 'Добавить вручную';
+
+  @override
+  String get detectedAsIncome => 'Определено как доход';
+
+  @override
+  String get detectedAsExpense => 'Определено как расход';
+
+  @override
+  String sourceColonValue(String source) {
+    return 'Источник: $source';
+  }
+
+  @override
+  String get sourceNotification => 'Уведомление';
+
+  @override
+  String get sourceSms => 'SMS';
+
+  @override
+  String get sourceRecheckHistory => 'Повторная проверка истории';
+
+  @override
+  String get sourceManualAddHistory => 'Добавлено вручную (из истории)';
+
+  @override
+  String get recentLabel => 'Недавние';
+
+  @override
+  String get oldestLabel => 'Старые';
+
+  @override
+  String get highestLabel => 'Наибольшая';
+
+  @override
+  String get lowestLabel => 'Наименьшая';
+
+  @override
+  String get glassBlurEffectsTitle => 'Эффекты размытия стекла';
+
+  @override
+  String get glassBlurEffectsSubtitle =>
+      'Мягкое размытие на стеклянных панелях и в диалоговых окнах — требует больше вычислительной мощности. Отключите на старых устройствах для более плавной работы.';
+
+  @override
+  String get tourBalanceCardTitle => 'Your Balance';
+
+  @override
+  String get tourBalanceCardDesc =>
+      'Tap for income & expense details. Long-press to edit your starting balance.';
+
+  @override
+  String get tourAddIncomeTitle => 'Add Income';
+
+  @override
+  String get tourAddIncomeDesc => 'Log money you\'ve received.';
+
+  @override
+  String get tourMicTitle => 'Record by Voice';
+
+  @override
+  String get tourMicDesc =>
+      'Press and hold, say the amount and what it was for, then release — it\'s saved automatically.';
+
+  @override
+  String get tourAddExpenseTitle => 'Add Expense';
+
+  @override
+  String get tourAddExpenseDesc => 'Log money you\'ve spent.';
+
+  @override
+  String get tourAddPersonTitle => 'Add a Person';
+
+  @override
+  String get tourAddPersonDesc => 'Track what you owe each other over time.';
+
+  @override
+  String get tourPersonCardTitle => 'Open Their Ledger';
+
+  @override
+  String get tourPersonCardDesc =>
+      'Tap a card to see the full history with this person and settle up.';
+
+  @override
+  String get tourPayNowTitle => 'Settle Up';
+
+  @override
+  String get tourPayNowDesc => 'Pay what you owe them directly via UPI.';
+
+  @override
+  String get tourEditPersonTitle => 'Edit Person';
+
+  @override
+  String get tourEditPersonDesc => 'Change their name or photo.';
+
+  @override
+  String get tourDeletePersonTitle => 'Careful — Long-Press Deletes';
+
+  @override
+  String get tourDeletePersonDesc =>
+      'Long-pressing this header permanently deletes this person and their history. You\'ll be asked to confirm first.';
+
+  @override
+  String get tourDeleteTxTitle => 'Long-Press to Delete';
+
+  @override
+  String get tourDeleteTxDesc =>
+      'Tap a transaction to edit it, or long-press to delete it.';
+
+  @override
+  String get replayTipsTitle => 'Show Tips Again';
+
+  @override
+  String get replayTipsSubtitle =>
+      'Replay the pointer-hint tours on Home, People, and Person Details.';
+
+  @override
+  String get replayTipsDone =>
+      'Tips will show again next time you open those screens.';
 }

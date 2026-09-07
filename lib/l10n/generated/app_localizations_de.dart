@@ -123,14 +123,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get microPermissionDenied => 'Mikrofonberechtigung verweigert';
 
   @override
-  String get microPermissionTitle => 'Microphone Access Required';
+  String get microPermissionTitle => 'Mikrofonzugriff erforderlich';
 
   @override
   String get microPermissionDesc =>
-      'Aspends requires microphone access to let you input transaction details via voice commands. Your voice inputs are parsed completely offline on your device and are never uploaded or shared.';
+      'Aspends benötigt Mikrofonzugriff, damit Sie Transaktionsdetails per Sprachbefehl eingeben können. Ihre Spracheingaben werden vollständig offline auf Ihrem Gerät verarbeitet und niemals hochgeladen oder geteilt.';
 
   @override
-  String get microPermissionGrant => 'Enable Voice';
+  String get microPermissionGrant => 'Sprache aktivieren';
 
   @override
   String get appearance => 'Aussehen';
@@ -204,7 +204,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String savedAmount(String amount, String category) {
-    return '₹$amount für $category gespart';
+    return '$amount für $category gespart';
   }
 
   @override
@@ -256,10 +256,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get openSourceDesc => 'Stolz Open Source auf GitHub';
 
   @override
+  String get licenses => 'Open-Source-Lizenzen';
+
+  @override
+  String get licensesDesc =>
+      'Lizenzen von Drittanbietern in dieser App anzeigen';
+
+  @override
   String get rateApp => 'Bewerten Sie Aspends';
 
   @override
   String get rateAppDesc => 'Unterstützen Sie uns mit einer 5-Sterne-Bewertung';
+
+  @override
+  String get couldNotLaunchUrl => 'Link konnte nicht geöffnet werden';
+
+  @override
+  String errorWithDetails(String error) {
+    return 'Fehler: $error';
+  }
+
+  @override
+  String get madeWithLove => 'Mit ❤️ für bessere Finanzen gemacht';
 
   @override
   String get howAspendWorks => 'WIE ASPEND FUNKTIONIERT';
@@ -329,10 +347,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get budget => 'Budget';
 
   @override
+  String overBudgetBy(String amount) {
+    return '⚠️ Um $amount überschritten';
+  }
+
+  @override
   String get balanceDetailsTitle => 'Kontostanddetails';
 
   @override
   String get editBalanceTitle => 'Kontostand bearbeiten';
+
+  @override
+  String get tapHoldToEditBalance => 'Zum Bearbeiten des Kontostands halten';
+
+  @override
+  String get longPressBalanceCardHint =>
+      'Halten Sie die Kontostandkarte auf dem Startbildschirm gedrückt';
 
   @override
   String get newBalanceLabel => 'Neue Balance';
@@ -501,6 +531,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get requestMoney => 'Geld anfordern';
 
   @override
+  String get requestMoneyTooltip => 'Geld über UPI anfordern';
+
+  @override
   String get generateQr => 'Zahlungs-QR generieren';
 
   @override
@@ -535,7 +568,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String settleBalanceDesc(String amount) {
-    return 'Dadurch wird eine Transaktion von ₹$amount hinzugefügt, um den Saldo auf Null zu bringen. Weitermachen?';
+    return 'Dadurch wird eine Transaktion von $amount hinzugefügt, um den Saldo auf Null zu bringen. Weitermachen?';
   }
 
   @override
@@ -776,4 +809,642 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get exportPdfDesc => 'PDF-Berichte erstellen';
+
+  @override
+  String get biometricNotSupported =>
+      'Biometrische Authentifizierung wird auf diesem Gerät nicht unterstützt';
+
+  @override
+  String get noBiometricMethods =>
+      'Keine biometrischen Authentifizierungsmethoden verfügbar';
+
+  @override
+  String get authenticateReason =>
+      'Authentifizieren Sie sich, um die App-Sperre zu aktivieren';
+
+  @override
+  String get authFailedAppLockNotEnabled =>
+      'Authentifizierung fehlgeschlagen. App-Sperre nicht aktiviert.';
+
+  @override
+  String get appLockEnabledSuccess => 'App-Sperre erfolgreich aktiviert';
+
+  @override
+  String get appLockDisabledSuccess => 'App-Sperre erfolgreich deaktiviert';
+
+  @override
+  String get failedToEnableAppLock =>
+      'App-Sperre konnte nicht aktiviert werden';
+
+  @override
+  String get failedToDisableAppLock =>
+      'App-Sperre konnte nicht deaktiviert werden';
+
+  @override
+  String get pickAppColor => 'App-Farbe auswählen';
+
+  @override
+  String get reset => 'Zurücksetzen';
+
+  @override
+  String get selectAction => 'Auswählen';
+
+  @override
+  String get appColorResetDefault => 'App-Farbe auf Standard zurückgesetzt!';
+
+  @override
+  String get deviceNotSupportBiometricsOrAuth =>
+      'Gerät unterstützt keine Biometrie oder Geräteauthentifizierung.';
+
+  @override
+  String get appLockEnabledDot => 'App-Sperre aktiviert.';
+
+  @override
+  String get appLockDisabledDot => 'App-Sperre deaktiviert.';
+
+  @override
+  String get cautionToUse => 'Vorsicht bei der Nutzung';
+
+  @override
+  String get autoDetectCautionDesc =>
+      'Diese Funktion ist nicht zu 100 % perfekt, könnte aber funktionieren. Alle SMS- und Benachrichtigungsdaten werden zu 100 % lokal auf Ihrem Gerät verarbeitet, für absolute Privatsphäre.';
+
+  @override
+  String get autoDetectSettingSubtitle =>
+      'Transaktionen automatisch aus Benachrichtigungen erkennen';
+
+  @override
+  String get permissionsRequiredNoAccess =>
+      'Berechtigungen erforderlich: Kein Zugriff auf Benachrichtigungen oder SMS gewährt. Automatische Erkennung kann nicht aktiviert werden.';
+
+  @override
+  String get noteNotificationAccessMissing =>
+      'Hinweis: Benachrichtigungszugriff fehlt. Nur die SMS-Erkennung funktioniert.';
+
+  @override
+  String get noteSmsPermissionMissing =>
+      'Hinweis: SMS-Berechtigung fehlt. Nur die Benachrichtigungserkennung funktioniert.';
+
+  @override
+  String get autoDetectionEnabledExclaim => 'Automatische Erkennung aktiviert!';
+
+  @override
+  String get autoDetectionDisabledExclaim =>
+      'Automatische Erkennung deaktiviert!';
+
+  @override
+  String get processRecentDataTitle => 'Aktuelle Daten verarbeiten';
+
+  @override
+  String get processRecentDataSubtitle =>
+      'Aktuelle Benachrichtigungen nach Transaktionen durchsuchen';
+
+  @override
+  String get recentDataProcessed => 'Aktuelle Daten erfolgreich verarbeitet!';
+
+  @override
+  String get errorProcessingData => 'Fehler bei der Datenverarbeitung';
+
+  @override
+  String get testDetectionLogicTitle => 'Erkennungslogik testen';
+
+  @override
+  String get testDetectionLogicSubtitle =>
+      'Eine Benachrichtigung simulieren, um das Parsing zu überprüfen';
+
+  @override
+  String get showDetectionHistoryTitle => 'Erkennungsverlauf anzeigen';
+
+  @override
+  String get showDetectionHistorySubtitle =>
+      'Detaillierte Protokolle erkannter Transaktionen anzeigen';
+
+  @override
+  String get autoDeleteUndetectedTitle =>
+      'Nicht erkannten Verlauf automatisch löschen';
+
+  @override
+  String get autoDeleteUndetectedSubtitle =>
+      'Nicht erkannte Einträge nach 12 Stunden löschen';
+
+  @override
+  String get testParserDiagnosticTitle => 'Parser-Diagnosetest';
+
+  @override
+  String get testParserDiagnosticDesc =>
+      'Geben Sie eine Beispielbenachrichtigung ein, um zu sehen, wie unser Parser sie verarbeitet.';
+
+  @override
+  String get pasteNotificationHint => 'Benachrichtigungstext hier einfügen...';
+
+  @override
+  String get statusBalanceSync => 'Kontostandabgleich';
+
+  @override
+  String get statusNoActionDetected => 'Keine Aktion erkannt';
+
+  @override
+  String get transactionType => 'Typ';
+
+  @override
+  String get resultLabelMerchant => 'Händler';
+
+  @override
+  String get resultLabelBank => 'Bank';
+
+  @override
+  String get balanceLabel => 'Kontostand';
+
+  @override
+  String get resultLabelConfidence => 'Konfidenz';
+
+  @override
+  String get unknown => 'Unbekannt';
+
+  @override
+  String get general => 'Allgemein';
+
+  @override
+  String get notAvailable => 'N/V';
+
+  @override
+  String get close => 'Schließen';
+
+  @override
+  String get parseText => 'Text analysieren';
+
+  @override
+  String get deleteAllDataTitle => 'Alle Daten löschen';
+
+  @override
+  String get deleteAllDataWarningSubtitle =>
+      '⚠️ Diese Aktion kann nicht rückgängig gemacht werden';
+
+  @override
+  String get resetIntroTitle => 'Einführung zurücksetzen';
+
+  @override
+  String get resetIntroSubtitle => 'Einführungsbildschirme erneut anzeigen';
+
+  @override
+  String get incomeCategories => 'Einnahmekategorien';
+
+  @override
+  String get incomeCategoriesDesc => 'Kategorien für Einnahmen verwalten';
+
+  @override
+  String get expenseCategories => 'Ausgabenkategorien';
+
+  @override
+  String get expenseCategoriesDesc => 'Kategorien für Ausgaben verwalten';
+
+  @override
+  String get accountsTitle => 'Konten';
+
+  @override
+  String get accountsDesc => 'Verwalten Sie Ihre Konten';
+
+  @override
+  String get enterNamePlaceholder => 'Namen eingeben...';
+
+  @override
+  String get aboutAppSubtitle => 'Entwickler, Datenschutz, Support & mehr';
+
+  @override
+  String get setMonthlySpendingLimit =>
+      'Ein monatliches Ausgabenlimit festlegen';
+
+  @override
+  String get joinPreviousMonthBalanceTitle => 'Saldo des Vormonats einbeziehen';
+
+  @override
+  String get joinPreviousMonthBalanceDesc =>
+      'Saldo des Vormonats in die aktuelle Summe einbeziehen';
+
+  @override
+  String get setMonthlyBudgetTitle => 'Monatsbudget festlegen';
+
+  @override
+  String get budgetAmountLabel => 'Budgetbetrag';
+
+  @override
+  String get budgetUpdated => 'Budget aktualisiert!';
+
+  @override
+  String get confirmDeleteTitle => 'Löschen bestätigen';
+
+  @override
+  String get confirmDeleteAllDesc =>
+      'Sind Sie sicher, dass Sie alle Transaktionen löschen und Ihren Kontostand zurücksetzen möchten? Diese Aktion kann nicht rückgängig gemacht werden.';
+
+  @override
+  String get deleteAllButton => 'Alles löschen';
+
+  @override
+  String get failedDeleteAllData =>
+      'Alle Daten konnten nicht gelöscht werden. Bitte versuchen Sie es erneut.';
+
+  @override
+  String get resetIntroConfirmDesc =>
+      'Dadurch werden die Einführungsbildschirme beim nächsten Öffnen der App erneut angezeigt. Ihre Daten bleiben unverändert.';
+
+  @override
+  String editFieldTitle(String field) {
+    return '$field bearbeiten';
+  }
+
+  @override
+  String enterFieldHint(String field) {
+    return '$field eingeben';
+  }
+
+  @override
+  String statusLabel(String status) {
+    return 'Status: $status';
+  }
+
+  @override
+  String manageItemsTitle(String type) {
+    return '$type verwalten';
+  }
+
+  @override
+  String noItemsFound(String type) {
+    return 'Keine $type gefunden.';
+  }
+
+  @override
+  String addItemButton(String type) {
+    return '$type hinzufügen';
+  }
+
+  @override
+  String editItemTitle(String type) {
+    return '$type bearbeiten';
+  }
+
+  @override
+  String itemNameLabel(String type) {
+    return '$type-Name';
+  }
+
+  @override
+  String monthlyLimitSubtitle(String budget) {
+    return 'Monatslimit: $budget';
+  }
+
+  @override
+  String failedResetIntro(String error) {
+    return 'Einführung konnte nicht zurückgesetzt werden. Bitte versuchen Sie es erneut.\\n$error';
+  }
+
+  @override
+  String get failedUpdateAutoDetection =>
+      'Automatische Erkennung konnte nicht aktualisiert werden';
+
+  @override
+  String get actionCannotBeUndone =>
+      'Diese Aktion kann nicht rückgängig gemacht werden.';
+
+  @override
+  String deleteTransactionsCountTitle(int count) {
+    return '$count Transaktionen löschen?';
+  }
+
+  @override
+  String deletedTransactionsCount(int count) {
+    return '$count Transaktionen gelöscht';
+  }
+
+  @override
+  String get transactionHistoryTitle => 'Transaktionsverlauf';
+
+  @override
+  String get upiIdMissingTitle => 'UPI-ID fehlt';
+
+  @override
+  String get upiIdMissingDesc =>
+      'Bitte legen Sie Ihre UPI-ID in den Einstellungen fest, um Geld per QR-Code anzufordern.';
+
+  @override
+  String get openSettings => 'Einstellungen öffnen';
+
+  @override
+  String get recipientFallback => 'Empfänger';
+
+  @override
+  String get paymentLinkCopied => 'Zahlungslink kopiert!';
+
+  @override
+  String get linkButton => 'Link';
+
+  @override
+  String get shareQr => 'QR-Code teilen';
+
+  @override
+  String get upiPaymentLinkSubject => 'UPI-Zahlungslink';
+
+  @override
+  String requestingFrom(String name) {
+    return 'Anfrage an $name';
+  }
+
+  @override
+  String upiIdColonValue(String id) {
+    return 'UPI-ID: $id';
+  }
+
+  @override
+  String failedShareQr(String error) {
+    return 'QR-Bild konnte nicht geteilt werden: $error';
+  }
+
+  @override
+  String payViaUpiQrFor(String name) {
+    return 'Über UPI-QR-Code bezahlen für $name';
+  }
+
+  @override
+  String get pleaseSelectPerson => 'Bitte wählen Sie eine Person aus';
+
+  @override
+  String get amountInInr => 'Betrag in INR';
+
+  @override
+  String get currency => 'Währung';
+
+  @override
+  String get selectCurrency => 'Währung auswählen';
+
+  @override
+  String get searchCurrency => 'Währung suchen';
+
+  @override
+  String get autoDetectCurrency => 'Währung automatisch erkennen';
+
+  @override
+  String get autoDetectCurrencyDesc =>
+      'Automatisch an die Region deines Geräts anpassen';
+
+  @override
+  String get popularCurrencies => 'Beliebt';
+
+  @override
+  String get allCurrencies => 'Alle Währungen';
+
+  @override
+  String get noCurrencyFound => 'Keine Währung gefunden';
+
+  @override
+  String get requiredField => 'Erforderlich';
+
+  @override
+  String get quickCategories => 'Schnellkategorien';
+
+  @override
+  String get saveToPerson => 'Bei Person speichern';
+
+  @override
+  String get noPeopleCreateHint =>
+      'Es wurden noch keine Personen hinzugefügt. Erstellen Sie Personen im Bereich „Personen“.';
+
+  @override
+  String get selectPersonLabel => 'Person auswählen';
+
+  @override
+  String get selectCategoryTitle => 'Kategorie auswählen';
+
+  @override
+  String get updateTransactionButton => 'Transaktion aktualisieren';
+
+  @override
+  String get saveTransactionButton => 'Transaktion speichern';
+
+  @override
+  String linkedToRecord(String name) {
+    return 'Mit dem Eintrag von $name verknüpft';
+  }
+
+  @override
+  String selectItemTitle(String type) {
+    return '$type auswählen';
+  }
+
+  @override
+  String get personSingular => 'Person';
+
+  @override
+  String get error => 'Fehler';
+
+  @override
+  String get retry => 'Erneut versuchen';
+
+  @override
+  String get setupFailedRetry =>
+      'Einrichtung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.';
+
+  @override
+  String get backButton => 'Zurück';
+
+  @override
+  String get voiceInputExampleHint =>
+      'Sagen Sie zum Beispiel „500 für Abendessen ausgegeben“';
+
+  @override
+  String get autoDetectionEnabledSuccess =>
+      'Automatische Erkennung erfolgreich aktiviert!';
+
+  @override
+  String openingRequestQrFor(String name) {
+    return 'Öffne Anfrage-QR für $name';
+  }
+
+  @override
+  String get add => 'Hinzufügen';
+
+  @override
+  String get uncategorized => 'Nicht kategorisiert';
+
+  @override
+  String get timeLabel => 'Uhrzeit';
+
+  @override
+  String get statusColumnLabel => 'Status';
+
+  @override
+  String get completedLabel => 'Abgeschlossen';
+
+  @override
+  String get notes => 'Notizen';
+
+  @override
+  String get serviceLabel => 'Dienst';
+
+  @override
+  String get refIdLabel => 'Referenz-ID';
+
+  @override
+  String get detectedViaLabel => 'Erkannt über';
+
+  @override
+  String get attachmentsLabel => 'Anhänge';
+
+  @override
+  String get originalLogLabel => 'Originalprotokoll';
+
+  @override
+  String get noNoteProvided => 'Keine Notiz angegeben';
+
+  @override
+  String get tapToUnlock => 'Zum Entsperren tippen';
+
+  @override
+  String get addPeopleEmptyDesc =>
+      'Fügen Sie Personen hinzu, um Transaktionen mit ihnen zu verfolgen';
+
+  @override
+  String get noPeopleMatchSearch => 'Keine Personen entsprechen Ihrer Suche';
+
+  @override
+  String get okay => 'Okay';
+
+  @override
+  String get confirm => 'Bestätigen';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get unexpectedErrorOccurred =>
+      'Ein unerwarteter Fehler ist aufgetreten';
+
+  @override
+  String get autoDetectionActive => 'Automatische Erkennung aktiv';
+
+  @override
+  String get unknownSource => 'Unbekannte Quelle';
+
+  @override
+  String get noMessageContentAvailable => 'Kein Nachrichteninhalt verfügbar';
+
+  @override
+  String get addManually => 'Manuell hinzufügen';
+
+  @override
+  String get detectedAsIncome => 'Als Einnahme erkannt';
+
+  @override
+  String get detectedAsExpense => 'Als Ausgabe erkannt';
+
+  @override
+  String sourceColonValue(String source) {
+    return 'Quelle: $source';
+  }
+
+  @override
+  String get sourceNotification => 'Benachrichtigung';
+
+  @override
+  String get sourceSms => 'SMS';
+
+  @override
+  String get sourceRecheckHistory => 'Verlauf erneut geprüft';
+
+  @override
+  String get sourceManualAddHistory => 'Manuell hinzugefügt (Verlauf)';
+
+  @override
+  String get recentLabel => 'Neueste';
+
+  @override
+  String get oldestLabel => 'Älteste';
+
+  @override
+  String get highestLabel => 'Höchste';
+
+  @override
+  String get lowestLabel => 'Niedrigste';
+
+  @override
+  String get glassBlurEffectsTitle => 'Glas-Weichzeichner-Effekte';
+
+  @override
+  String get glassBlurEffectsSubtitle =>
+      'Sanfter Weichzeichner auf Glaspanelen und Dialogen – verbraucht mehr Rechenleistung. Auf älteren Geräten für flüssigere Leistung deaktivieren.';
+
+  @override
+  String get tourBalanceCardTitle => 'Your Balance';
+
+  @override
+  String get tourBalanceCardDesc =>
+      'Tap for income & expense details. Long-press to edit your starting balance.';
+
+  @override
+  String get tourAddIncomeTitle => 'Add Income';
+
+  @override
+  String get tourAddIncomeDesc => 'Log money you\'ve received.';
+
+  @override
+  String get tourMicTitle => 'Record by Voice';
+
+  @override
+  String get tourMicDesc =>
+      'Press and hold, say the amount and what it was for, then release — it\'s saved automatically.';
+
+  @override
+  String get tourAddExpenseTitle => 'Add Expense';
+
+  @override
+  String get tourAddExpenseDesc => 'Log money you\'ve spent.';
+
+  @override
+  String get tourAddPersonTitle => 'Add a Person';
+
+  @override
+  String get tourAddPersonDesc => 'Track what you owe each other over time.';
+
+  @override
+  String get tourPersonCardTitle => 'Open Their Ledger';
+
+  @override
+  String get tourPersonCardDesc =>
+      'Tap a card to see the full history with this person and settle up.';
+
+  @override
+  String get tourPayNowTitle => 'Settle Up';
+
+  @override
+  String get tourPayNowDesc => 'Pay what you owe them directly via UPI.';
+
+  @override
+  String get tourEditPersonTitle => 'Edit Person';
+
+  @override
+  String get tourEditPersonDesc => 'Change their name or photo.';
+
+  @override
+  String get tourDeletePersonTitle => 'Careful — Long-Press Deletes';
+
+  @override
+  String get tourDeletePersonDesc =>
+      'Long-pressing this header permanently deletes this person and their history. You\'ll be asked to confirm first.';
+
+  @override
+  String get tourDeleteTxTitle => 'Long-Press to Delete';
+
+  @override
+  String get tourDeleteTxDesc =>
+      'Tap a transaction to edit it, or long-press to delete it.';
+
+  @override
+  String get replayTipsTitle => 'Show Tips Again';
+
+  @override
+  String get replayTipsSubtitle =>
+      'Replay the pointer-hint tours on Home, People, and Person Details.';
+
+  @override
+  String get replayTipsDone =>
+      'Tips will show again next time you open those screens.';
 }

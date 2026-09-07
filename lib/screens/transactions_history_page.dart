@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:aspends_tracker/core/utils/blur_utils.dart';
 import 'package:aspends_tracker/core/models/transaction.dart';
 
 import '../../widgets/history_search_bar.dart';
@@ -11,9 +12,12 @@ import '../core/view_models/theme_view_model.dart';
 import '../../widgets/range_selector.dart';
 import '../../widgets/transaction_tile.dart';
 import '../../widgets/glass_app_bar.dart';
+import '../../widgets/empty_state_view.dart';
+import '../../widgets/empty_state_illustrations.dart';
 import '../core/utils/transaction_utils.dart';
 import '../core/const/app_dimensions.dart';
 import '../core/const/app_typography.dart';
+import '../l10n/generated/app_localizations.dart';
 
 class TransactionsHistoryPage extends StatefulWidget {
   const TransactionsHistoryPage({super.key});
@@ -55,18 +59,20 @@ class _TransactionsHistoryPageState extends State<TransactionsHistoryPage> {
   }
 
   Future<void> _deleteSelected() async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Delete ${_selectedTransactions.length} transactions?'),
-        content: const Text('This action cannot be undone.'),
+        title: Text(
+            l10n.deleteTransactionsCountTitle(_selectedTransactions.length)),
+        content: Text(l10n.actionCannotBeUndone),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancel')),
+              child: Text(l10n.cancel)),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+            child: Text(l10n.delete, style: const TextStyle(color: Colors.red)),
           ),
         ],
       ),
@@ -80,7 +86,8 @@ class _TransactionsHistoryPageState extends State<TransactionsHistoryPage> {
           .deleteMultipleTransactions(txsToDelete);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Deleted ${txsToDelete.length} transactions')),
+          SnackBar(
+              content: Text(l10n.deletedTransactionsCount(txsToDelete.length))),
         );
       }
     }
@@ -89,6 +96,7 @@ class _TransactionsHistoryPageState extends State<TransactionsHistoryPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final viewModel = context.watch<TransactionViewModel>();
 
     final grouped = viewModel.groupedFilteredTransactions;
@@ -99,8 +107,8 @@ class _TransactionsHistoryPageState extends State<TransactionsHistoryPage> {
         slivers: [
           GlassAppBar(
             title: _isSelectionMode
-                ? '${_selectedTransactions.length} Selected'
-                : 'Transaction History',
+                ? l10n.selectedCount(_selectedTransactions.length)
+                : l10n.transactionHistoryTitle,
             centerTitle: true,
             leading: GestureDetector(
               onTap: () {
@@ -166,8 +174,13 @@ class _TransactionsHistoryPageState extends State<TransactionsHistoryPage> {
             child: _buildRangeSelector(context),
           ),
           if (!hasTransactions)
-            const SliverFillRemaining(
-              child: Center(child: Text('No transactions found')),
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: EmptyStateView(
+                illustration:
+                    ReceiptEmptyIllustration(color: theme.colorScheme.primary),
+                title: l10n.noTransactions,
+              ),
             )
           else
             SliverPadding(
@@ -228,11 +241,19 @@ class _TransactionsHistoryPageState extends State<TransactionsHistoryPage> {
   }
 
   Widget _buildRangeSelector(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final selectedRange =
         context.select<TransactionViewModel, String>((vm) => vm.selectedRange);
     return RangeSelector(
       ranges: const ['All', 'Day', 'Week', 'Month', 'Year'],
       selectedRange: selectedRange,
+      labels: {
+        'All': l10n.rangeAll,
+        'Day': l10n.rangeDay,
+        'Week': l10n.rangeWeek,
+        'Month': l10n.rangeMonth,
+        'Year': l10n.rangeYear,
+      },
       onRangeSelected: (range) {
         context.read<TransactionViewModel>().setSelectedRange(range);
       },
@@ -241,12 +262,14 @@ class _TransactionsHistoryPageState extends State<TransactionsHistoryPage> {
 
   void _showSortDialog(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       barrierColor: Colors.black.withValues(alpha: 0.3),
-      builder: (context) => BackdropFilter(
+      builder: (context) => ConditionalBackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        isRouteBarrier: true,
         child: Container(
           decoration: BoxDecoration(
             color: theme.colorScheme.surface,
@@ -270,20 +293,22 @@ class _TransactionsHistoryPageState extends State<TransactionsHistoryPage> {
               ),
               const SizedBox(height: 24),
               Text(
-                'Sort By',
+                l10n.sortBy,
                 style: GoogleFonts.dmSans(
                   fontSize: AppTypography.fontSizeLarge,
                   fontWeight: AppTypography.fontWeightBold,
                 ),
               ),
               const SizedBox(height: 16),
-              _buildSortOption(context, 'Date (Newest)', SortOption.dateNewest),
-              _buildSortOption(context, 'Date (Oldest)', SortOption.dateOldest),
               _buildSortOption(
-                  context, 'Amount (Highest)', SortOption.amountHighest),
+                  context, l10n.sortByDateRecent, SortOption.dateNewest),
               _buildSortOption(
-                  context, 'Amount (Lowest)', SortOption.amountLowest),
-              _buildSortOption(context, 'Category', SortOption.category),
+                  context, l10n.sortByDateOldest, SortOption.dateOldest),
+              _buildSortOption(
+                  context, l10n.sortByAmountHighest, SortOption.amountHighest),
+              _buildSortOption(
+                  context, l10n.sortByAmountLowest, SortOption.amountLowest),
+              _buildSortOption(context, l10n.category, SortOption.category),
               const SizedBox(height: 16),
             ],
           ),

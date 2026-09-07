@@ -243,4 +243,41 @@ class SettingsRepository {
   Future<void> setLastActiveTime(int timestamp) async {
     await _settingsBox.put('lastActiveTime', timestamp);
   }
+
+  /// Stored ISO 4217 currency code (e.g. 'INR', 'USD'). Null means no
+  /// explicit choice has been made/persisted yet.
+  String? getCurrencyCode() {
+    return _settingsBox.get(AppConstants.currencyCodeKey);
+  }
+
+  Future<void> setCurrencyCode(String? code) async {
+    if (code == null) {
+      await _settingsBox.delete(AppConstants.currencyCodeKey);
+    } else {
+      await _settingsBox.put(AppConstants.currencyCodeKey, code);
+    }
+  }
+
+  /// Whether the currency should follow the device's region automatically.
+  /// Defaults to true so fresh installs pick a sensible currency on their own.
+  bool getCurrencyAutoDetect() {
+    return _settingsBox.get(AppConstants.currencyAutoDetectKey,
+        defaultValue: true);
+  }
+
+  Future<void> setCurrencyAutoDetect(bool value) async {
+    await _settingsBox.put(AppConstants.currencyAutoDetectKey, value);
+  }
+
+  /// Whether glass/blur (BackdropFilter) effects are applied across the app.
+  /// Defaults to false on a fresh install — blur is the more expensive
+  /// option, so people opt into it from Settings rather than opt out.
+  bool getEnableBlurEffects() {
+    return _settingsBox.get(AppConstants.enableBlurEffectsKey,
+        defaultValue: false);
+  }
+
+  Future<void> setEnableBlurEffects(bool value) async {
+    await _settingsBox.put(AppConstants.enableBlurEffectsKey, value);
+  }
 }

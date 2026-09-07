@@ -1,5 +1,8 @@
 import 'dart:ui';
+import 'package:aspends_tracker/core/utils/blur_utils.dart';
 import 'package:flutter/material.dart';
+import '../core/const/app_colors.dart';
+import '../l10n/generated/app_localizations.dart';
 
 class FloatingActionBar extends StatelessWidget {
   final VoidCallback onSettle;
@@ -15,29 +18,30 @@ class FloatingActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // 🔵 Settle Balance Pill Button
+          // 🟢 Settle Balance Pill Button
           _glassContainer(
-            color: Colors.greenAccent,
+            color: AppColors.accentGreen,
             child: InkWell(
               onTap: onSettle,
               borderRadius: BorderRadius.circular(40),
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.account_balance_wallet_outlined,
-                      color: Colors.greenAccent, size: 20),
-                  SizedBox(width: 8),
+                  const Icon(Icons.account_balance_wallet_outlined,
+                      color: AppColors.accentGreen, size: 20),
+                  const SizedBox(width: 8),
                   Text(
-                    "Settle Balance",
-                    style: TextStyle(
+                    l10n.settleBalance,
+                    style: const TextStyle(
                       fontWeight: FontWeight.w600,
-                      color: Colors.greenAccent,
+                      color: AppColors.accentGreen,
                     ),
                   ),
                 ],
@@ -50,7 +54,7 @@ class FloatingActionBar extends StatelessWidget {
           // 🔴 Minus Button
           _circleButton(
             icon: Icons.remove,
-            color: Colors.redAccent,
+            color: AppColors.accentRed,
             onTap: onMinus,
           ),
 
@@ -59,7 +63,7 @@ class FloatingActionBar extends StatelessWidget {
           // 🟢 Plus Button
           _circleButton(
             icon: Icons.add,
-            color: Colors.greenAccent,
+            color: AppColors.accentGreen,
             onTap: onPlus,
           ),
         ],
@@ -74,25 +78,20 @@ class FloatingActionBar extends StatelessWidget {
   }) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(40),
-      child: BackdropFilter(
+      child: ConditionalBackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-      child: Container(
-        height: 65,
-        width: 215,
-        decoration: BoxDecoration(
-            // color: AppColors.accentGreen.withOpacity(0.06),
-          borderRadius: BorderRadius.circular(40),
-            // border: Border.all(
-            //   color: AppColors.accentGreen.withOpacity(0.15),
-            // ),
+        child: Container(
+          height: 65,
+          width: 215,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(40),
             color: color.withValues(alpha: 0.15),
-
-          border: Border.all(
-            color: color.withValues(alpha: 0.5),
+            border: Border.all(
+              color: color.withValues(alpha: 0.5),
+            ),
           ),
+          child: child,
         ),
-        child: child,
-      ),
       ),
     );
   }
@@ -105,24 +104,24 @@ class FloatingActionBar extends StatelessWidget {
   }) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(50),
-      child: BackdropFilter(
+      child: ConditionalBackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(50),
-        child: Container(
-          height: 65,
-          width: 65,
-          decoration: BoxDecoration(
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(50),
+          child: Container(
+            height: 65,
+            width: 65,
+            decoration: BoxDecoration(
               color: color.withValues(alpha: 0.15),
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: color.withValues(alpha: 0.5),
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: color.withValues(alpha: 0.5),
+              ),
             ),
+            child: Icon(icon, color: color),
           ),
-          child: Icon(icon, color: color),
         ),
-      ),
       ),
     );
   }

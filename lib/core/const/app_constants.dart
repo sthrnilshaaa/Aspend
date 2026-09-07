@@ -23,6 +23,9 @@ class AppConstants {
   static const String upiIdKey = 'upiId';
   static const String upiNameKey = 'upiName';
   static const String localeKey = 'locale';
+  static const String currencyCodeKey = 'currencyCode';
+  static const String currencyAutoDetectKey = 'currencyAutoDetect';
+  static const String enableBlurEffectsKey = 'enableBlurEffects';
 
   // Animation Durations
   static const Duration splashEntryDuration = Duration(milliseconds: 1000);
@@ -31,10 +34,7 @@ class AppConstants {
   static const Duration widgetWaitDuration = Duration(milliseconds: 500);
   static const Duration homeArrivalDelay = Duration(milliseconds: 1500);
 
-  // External URLs
-  static const String supportTelegramUrl = 'https://t.me/+W7iMso5YsO1lZDM1';
-  static const String privacyPolicyUrl =
-      'https://github.com/SthrNilshaaa/Aspend/blob/main/PRIVACY_POLICY.md';
+  // External URLs live in AppLinks (see app_links.dart)
 
   // Default Monitored Packages (Common Payment & SMS apps)
   static const List<String> defaultMonitoredPackages = [

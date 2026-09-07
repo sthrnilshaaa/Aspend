@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:aspends_tracker/core/utils/blur_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter/services.dart';
@@ -29,7 +30,7 @@ class GlassActionButton extends StatelessWidget {
         onTap();
       },
       child: ClipRRect(
-        child: BackdropFilter(
+        child: ConditionalBackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: Container(
             width: 60,

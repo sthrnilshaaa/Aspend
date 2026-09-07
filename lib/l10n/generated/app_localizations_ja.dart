@@ -9,7 +9,7 @@ class AppLocalizationsJa extends AppLocalizations {
   AppLocalizationsJa([String locale = 'ja']) : super(locale);
 
   @override
-  String get appName => 'アスペンド';
+  String get appName => 'Aspends';
 
   @override
   String get appTagline => '賢い支出をシンプルに。';
@@ -123,14 +123,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get microPermissionDenied => 'マイクの許可が拒否されました';
 
   @override
-  String get microPermissionTitle => 'Microphone Access Required';
+  String get microPermissionTitle => 'マイクへのアクセスが必要です';
 
   @override
   String get microPermissionDesc =>
-      'Aspends requires microphone access to let you input transaction details via voice commands. Your voice inputs are parsed completely offline on your device and are never uploaded or shared.';
+      'Aspendsでは、音声コマンドで取引の詳細を入力できるようにするためにマイクへのアクセスが必要です。音声入力はすべて端末上でオフラインで解析され、アップロードや共有は一切行われません。';
 
   @override
-  String get microPermissionGrant => 'Enable Voice';
+  String get microPermissionGrant => '音声を有効にする';
 
   @override
   String get appearance => '外観';
@@ -200,7 +200,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String savedAmount(String amount, String category) {
-    return '$category で ₹$amount を節約しました';
+    return '$category で $amount を節約しました';
   }
 
   @override
@@ -250,10 +250,27 @@ class AppLocalizationsJa extends AppLocalizations {
   String get openSourceDesc => 'GitHub で堂々とオープンソース';
 
   @override
+  String get licenses => 'オープンソースライセンス';
+
+  @override
+  String get licensesDesc => 'このアプリで使用されているサードパーティライセンスを表示します';
+
+  @override
   String get rateApp => 'レートの上昇';
 
   @override
   String get rateAppDesc => '5 つ星の評価でサポートしてください';
+
+  @override
+  String get couldNotLaunchUrl => 'リンクを開けませんでした';
+
+  @override
+  String errorWithDetails(String error) {
+    return 'エラー: $error';
+  }
+
+  @override
+  String get madeWithLove => 'より良い家計管理のために❤️を込めて作りました';
 
   @override
   String get howAspendWorks => 'アスペンドの仕組み';
@@ -312,7 +329,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get grant => '付与';
 
   @override
-  String get appNameShort => 'アスペンド';
+  String get appNameShort => 'Aspends';
 
   @override
   String get splashTagline => 'スマートなお金の管理';
@@ -321,10 +338,21 @@ class AppLocalizationsJa extends AppLocalizations {
   String get budget => '予算';
 
   @override
+  String overBudgetBy(String amount) {
+    return '⚠️ $amount オーバーしています';
+  }
+
+  @override
   String get balanceDetailsTitle => '残高詳細';
 
   @override
   String get editBalanceTitle => '残高の編集';
+
+  @override
+  String get tapHoldToEditBalance => '長押しで残高を編集';
+
+  @override
+  String get longPressBalanceCardHint => 'ホーム画面の残高カードを長押ししてください';
 
   @override
   String get newBalanceLabel => 'ニューバランス';
@@ -486,6 +514,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get requestMoney => 'お金を要求する';
 
   @override
+  String get requestMoneyTooltip => 'UPI経由で送金をリクエスト';
+
+  @override
   String get generateQr => '支払いQRの生成';
 
   @override
@@ -517,7 +548,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String settleBalanceDesc(String amount) {
-    return 'これにより、₹$amount のトランザクションが追加され、残高がゼロになります。続く？';
+    return 'これにより、$amount のトランザクションが追加され、残高がゼロになります。続く？';
   }
 
   @override
@@ -752,4 +783,614 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get exportPdfDesc => 'PDF レポートを生成する';
+
+  @override
+  String get biometricNotSupported => 'このデバイスは生体認証に対応していません';
+
+  @override
+  String get noBiometricMethods => '利用可能な生体認証方式がありません';
+
+  @override
+  String get authenticateReason => 'アプリロックを有効にするには認証してください';
+
+  @override
+  String get authFailedAppLockNotEnabled => '認証に失敗しました。アプリロックは有効になりませんでした。';
+
+  @override
+  String get appLockEnabledSuccess => 'アプリロックが正常に有効になりました';
+
+  @override
+  String get appLockDisabledSuccess => 'アプリロックが正常に無効になりました';
+
+  @override
+  String get failedToEnableAppLock => 'アプリロックを有効にできませんでした';
+
+  @override
+  String get failedToDisableAppLock => 'アプリロックを無効にできませんでした';
+
+  @override
+  String get pickAppColor => 'アプリの色を選択';
+
+  @override
+  String get reset => 'リセット';
+
+  @override
+  String get selectAction => '選択';
+
+  @override
+  String get appColorResetDefault => 'アプリの色をデフォルトにリセットしました！';
+
+  @override
+  String get deviceNotSupportBiometricsOrAuth =>
+      'このデバイスは生体認証またはデバイス認証に対応していません。';
+
+  @override
+  String get appLockEnabledDot => 'アプリロックを有効にしました。';
+
+  @override
+  String get appLockDisabledDot => 'アプリロックを無効にしました。';
+
+  @override
+  String get cautionToUse => '使用上の注意';
+
+  @override
+  String get autoDetectCautionDesc =>
+      'この機能は100%完璧ではありませんが、動作する可能性があります。すべてのSMSと通知データは、完全なプライバシーのためにデバイス上で100%ローカルに処理されます。';
+
+  @override
+  String get autoDetectSettingSubtitle => '通知から取引を自動的に検出します';
+
+  @override
+  String get permissionsRequiredNoAccess =>
+      '権限が必要です：通知またはSMSへのアクセスが許可されていません。自動検出を有効にできません。';
+
+  @override
+  String get noteNotificationAccessMissing =>
+      '注意：通知へのアクセスがありません。SMS検出のみが機能します。';
+
+  @override
+  String get noteSmsPermissionMissing => '注意：SMSの権限がありません。通知検出のみが機能します。';
+
+  @override
+  String get autoDetectionEnabledExclaim => '自動検出が有効になりました！';
+
+  @override
+  String get autoDetectionDisabledExclaim => '自動検出が無効になりました！';
+
+  @override
+  String get processRecentDataTitle => '最近のデータを処理';
+
+  @override
+  String get processRecentDataSubtitle => '最近の通知から取引をスキャンします';
+
+  @override
+  String get recentDataProcessed => '最近のデータが正常に処理されました！';
+
+  @override
+  String get errorProcessingData => 'データの処理中にエラーが発生しました';
+
+  @override
+  String get testDetectionLogicTitle => '検出ロジックをテスト';
+
+  @override
+  String get testDetectionLogicSubtitle => '通知をシミュレートして解析を確認します';
+
+  @override
+  String get showDetectionHistoryTitle => '検出履歴を表示';
+
+  @override
+  String get showDetectionHistorySubtitle => '検出された取引の詳細ログを表示します';
+
+  @override
+  String get autoDeleteUndetectedTitle => '未検出の履歴を自動削除';
+
+  @override
+  String get autoDeleteUndetectedSubtitle => '未検出の項目を12時間後に削除します';
+
+  @override
+  String get testParserDiagnosticTitle => 'パーサー診断テスト';
+
+  @override
+  String get testParserDiagnosticDesc =>
+      'サンプルの通知メッセージを入力して、パーサーがどのように処理するかを確認してください。';
+
+  @override
+  String get pasteNotificationHint => 'ここに通知テキストを貼り付けてください...';
+
+  @override
+  String get statusBalanceSync => '残高同期';
+
+  @override
+  String get statusNoActionDetected => 'アクションは検出されませんでした';
+
+  @override
+  String get transactionType => '種類';
+
+  @override
+  String get resultLabelMerchant => '販売店';
+
+  @override
+  String get resultLabelBank => '銀行';
+
+  @override
+  String get balanceLabel => '残高';
+
+  @override
+  String get resultLabelConfidence => '信頼度';
+
+  @override
+  String get unknown => '不明';
+
+  @override
+  String get general => '一般';
+
+  @override
+  String get notAvailable => '該当なし';
+
+  @override
+  String get close => '閉じる';
+
+  @override
+  String get parseText => 'テキストを解析';
+
+  @override
+  String get deleteAllDataTitle => 'すべてのデータを削除';
+
+  @override
+  String get deleteAllDataWarningSubtitle => '⚠️ この操作は元に戻せません';
+
+  @override
+  String get resetIntroTitle => 'イントロをリセット';
+
+  @override
+  String get resetIntroSubtitle => 'イントロ画面を再度表示します';
+
+  @override
+  String get incomeCategories => '収入カテゴリー';
+
+  @override
+  String get incomeCategoriesDesc => '収入のカテゴリーを管理します';
+
+  @override
+  String get expenseCategories => '支出カテゴリー';
+
+  @override
+  String get expenseCategoriesDesc => '支出のカテゴリーを管理します';
+
+  @override
+  String get accountsTitle => 'アカウント';
+
+  @override
+  String get accountsDesc => 'アカウントを管理します';
+
+  @override
+  String get enterNamePlaceholder => '名前を入力...';
+
+  @override
+  String get aboutAppSubtitle => '開発者、プライバシー、サポートなど';
+
+  @override
+  String get setMonthlySpendingLimit => '月々の支出上限を設定します';
+
+  @override
+  String get joinPreviousMonthBalanceTitle => '前月の残高を合算する';
+
+  @override
+  String get joinPreviousMonthBalanceDesc => '現在の合計に前月の残高を含めます';
+
+  @override
+  String get setMonthlyBudgetTitle => '月間予算を設定';
+
+  @override
+  String get budgetAmountLabel => '予算金額';
+
+  @override
+  String get budgetUpdated => '予算を更新しました！';
+
+  @override
+  String get confirmDeleteTitle => '削除の確認';
+
+  @override
+  String get confirmDeleteAllDesc =>
+      'すべての取引を削除し、残高をリセットしてもよろしいですか？この操作は元に戻せません。';
+
+  @override
+  String get deleteAllButton => 'すべて削除';
+
+  @override
+  String get failedDeleteAllData => 'すべてのデータを削除できませんでした。もう一度お試しください。';
+
+  @override
+  String get resetIntroConfirmDesc =>
+      'これにより、次回アプリを開いたときに再びイントロ画面が表示されます。データは変更されません。';
+
+  @override
+  String editFieldTitle(String field) {
+    return '$fieldを編集';
+  }
+
+  @override
+  String enterFieldHint(String field) {
+    return '$fieldを入力';
+  }
+
+  @override
+  String statusLabel(String status) {
+    return 'ステータス: $status';
+  }
+
+  @override
+  String manageItemsTitle(String type) {
+    return '$typeを管理';
+  }
+
+  @override
+  String noItemsFound(String type) {
+    return '$typeが見つかりません。';
+  }
+
+  @override
+  String addItemButton(String type) {
+    return '$typeを追加';
+  }
+
+  @override
+  String editItemTitle(String type) {
+    return '$typeを編集';
+  }
+
+  @override
+  String itemNameLabel(String type) {
+    return '$type名';
+  }
+
+  @override
+  String monthlyLimitSubtitle(String budget) {
+    return '月間上限: $budget';
+  }
+
+  @override
+  String failedResetIntro(String error) {
+    return 'イントロをリセットできませんでした。もう一度お試しください。\\n$error';
+  }
+
+  @override
+  String get failedUpdateAutoDetection => '自動検出を更新できませんでした';
+
+  @override
+  String get actionCannotBeUndone => 'この操作は元に戻せません。';
+
+  @override
+  String deleteTransactionsCountTitle(int count) {
+    return '$count件の取引を削除しますか？';
+  }
+
+  @override
+  String deletedTransactionsCount(int count) {
+    return '$count件の取引を削除しました';
+  }
+
+  @override
+  String get transactionHistoryTitle => '取引履歴';
+
+  @override
+  String get upiIdMissingTitle => 'UPI IDがありません';
+
+  @override
+  String get upiIdMissingDesc => 'QRコードで送金をリクエストするには、設定でUPI IDを設定してください。';
+
+  @override
+  String get openSettings => '設定を開く';
+
+  @override
+  String get recipientFallback => '受取人';
+
+  @override
+  String get paymentLinkCopied => '支払いリンクをコピーしました！';
+
+  @override
+  String get linkButton => 'リンク';
+
+  @override
+  String get shareQr => 'QRを共有';
+
+  @override
+  String get upiPaymentLinkSubject => 'UPI支払いリンク';
+
+  @override
+  String requestingFrom(String name) {
+    return '$nameにリクエスト中';
+  }
+
+  @override
+  String upiIdColonValue(String id) {
+    return 'UPI ID: $id';
+  }
+
+  @override
+  String failedShareQr(String error) {
+    return 'QR画像を共有できませんでした: $error';
+  }
+
+  @override
+  String payViaUpiQrFor(String name) {
+    return '$nameへのUPI QRでの支払い';
+  }
+
+  @override
+  String get pleaseSelectPerson => '人物を選択してください';
+
+  @override
+  String get amountInInr => '金額（INR）';
+
+  @override
+  String get currency => '通貨';
+
+  @override
+  String get selectCurrency => '通貨を選択';
+
+  @override
+  String get searchCurrency => '通貨を検索';
+
+  @override
+  String get autoDetectCurrency => '通貨を自動検出';
+
+  @override
+  String get autoDetectCurrencyDesc => 'デバイスの地域に自動的に合わせます';
+
+  @override
+  String get popularCurrencies => '人気';
+
+  @override
+  String get allCurrencies => 'すべての通貨';
+
+  @override
+  String get noCurrencyFound => '通貨が見つかりません';
+
+  @override
+  String get requiredField => '必須';
+
+  @override
+  String get quickCategories => 'クイックカテゴリー';
+
+  @override
+  String get saveToPerson => '人物に保存';
+
+  @override
+  String get noPeopleCreateHint => 'まだ人物が追加されていません。「People」セクションで人物を作成してください。';
+
+  @override
+  String get selectPersonLabel => '人物を選択';
+
+  @override
+  String get selectCategoryTitle => 'カテゴリーを選択';
+
+  @override
+  String get updateTransactionButton => '取引を更新';
+
+  @override
+  String get saveTransactionButton => '取引を保存';
+
+  @override
+  String linkedToRecord(String name) {
+    return '$nameの記録にリンクしました';
+  }
+
+  @override
+  String selectItemTitle(String type) {
+    return '$typeを選択';
+  }
+
+  @override
+  String get personSingular => '人物';
+
+  @override
+  String get error => 'エラー';
+
+  @override
+  String get retry => '再試行';
+
+  @override
+  String get setupFailedRetry => 'セットアップを完了できませんでした。もう一度お試しください。';
+
+  @override
+  String get backButton => '戻る';
+
+  @override
+  String get voiceInputExampleHint => '「夕食に500円使った」のように話してください';
+
+  @override
+  String get autoDetectionEnabledSuccess => '自動検出が正常に有効になりました！';
+
+  @override
+  String openingRequestQrFor(String name) {
+    return '$nameのリクエストQRを開いています';
+  }
+
+  @override
+  String get add => '追加';
+
+  @override
+  String get uncategorized => '未分類';
+
+  @override
+  String get timeLabel => '時刻';
+
+  @override
+  String get statusColumnLabel => 'ステータス';
+
+  @override
+  String get completedLabel => '完了';
+
+  @override
+  String get notes => 'メモ';
+
+  @override
+  String get serviceLabel => 'サービス';
+
+  @override
+  String get refIdLabel => '参照ID';
+
+  @override
+  String get detectedViaLabel => '検出元';
+
+  @override
+  String get attachmentsLabel => '添付ファイル';
+
+  @override
+  String get originalLogLabel => '元のログ';
+
+  @override
+  String get noNoteProvided => 'メモはありません';
+
+  @override
+  String get tapToUnlock => 'タップしてロック解除';
+
+  @override
+  String get addPeopleEmptyDesc => '人物を追加して取引を記録しましょう';
+
+  @override
+  String get noPeopleMatchSearch => '検索に一致する人はいません';
+
+  @override
+  String get okay => 'OK';
+
+  @override
+  String get confirm => '確認';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get unexpectedErrorOccurred => '予期しないエラーが発生しました';
+
+  @override
+  String get autoDetectionActive => '自動検出が有効';
+
+  @override
+  String get unknownSource => '不明な送信元';
+
+  @override
+  String get noMessageContentAvailable => 'メッセージ内容がありません';
+
+  @override
+  String get addManually => '手動で追加';
+
+  @override
+  String get detectedAsIncome => '収入として検出されました';
+
+  @override
+  String get detectedAsExpense => '支出として検出されました';
+
+  @override
+  String sourceColonValue(String source) {
+    return '送信元: $source';
+  }
+
+  @override
+  String get sourceNotification => '通知';
+
+  @override
+  String get sourceSms => 'SMS';
+
+  @override
+  String get sourceRecheckHistory => '履歴の再チェック';
+
+  @override
+  String get sourceManualAddHistory => '手動追加（履歴から）';
+
+  @override
+  String get recentLabel => '最近';
+
+  @override
+  String get oldestLabel => '最も古い';
+
+  @override
+  String get highestLabel => '最高';
+
+  @override
+  String get lowestLabel => '最低';
+
+  @override
+  String get glassBlurEffectsTitle => 'グラスブラー効果';
+
+  @override
+  String get glassBlurEffectsSubtitle =>
+      'ガラスパネルやダイアログに柔らかなぼかし効果を追加します。処理能力を多く使用するため、古いデバイスではオフにするとスムーズに動作します。';
+
+  @override
+  String get tourBalanceCardTitle => 'Your Balance';
+
+  @override
+  String get tourBalanceCardDesc =>
+      'Tap for income & expense details. Long-press to edit your starting balance.';
+
+  @override
+  String get tourAddIncomeTitle => 'Add Income';
+
+  @override
+  String get tourAddIncomeDesc => 'Log money you\'ve received.';
+
+  @override
+  String get tourMicTitle => 'Record by Voice';
+
+  @override
+  String get tourMicDesc =>
+      'Press and hold, say the amount and what it was for, then release — it\'s saved automatically.';
+
+  @override
+  String get tourAddExpenseTitle => 'Add Expense';
+
+  @override
+  String get tourAddExpenseDesc => 'Log money you\'ve spent.';
+
+  @override
+  String get tourAddPersonTitle => 'Add a Person';
+
+  @override
+  String get tourAddPersonDesc => 'Track what you owe each other over time.';
+
+  @override
+  String get tourPersonCardTitle => 'Open Their Ledger';
+
+  @override
+  String get tourPersonCardDesc =>
+      'Tap a card to see the full history with this person and settle up.';
+
+  @override
+  String get tourPayNowTitle => 'Settle Up';
+
+  @override
+  String get tourPayNowDesc => 'Pay what you owe them directly via UPI.';
+
+  @override
+  String get tourEditPersonTitle => 'Edit Person';
+
+  @override
+  String get tourEditPersonDesc => 'Change their name or photo.';
+
+  @override
+  String get tourDeletePersonTitle => 'Careful — Long-Press Deletes';
+
+  @override
+  String get tourDeletePersonDesc =>
+      'Long-pressing this header permanently deletes this person and their history. You\'ll be asked to confirm first.';
+
+  @override
+  String get tourDeleteTxTitle => 'Long-Press to Delete';
+
+  @override
+  String get tourDeleteTxDesc =>
+      'Tap a transaction to edit it, or long-press to delete it.';
+
+  @override
+  String get replayTipsTitle => 'Show Tips Again';
+
+  @override
+  String get replayTipsSubtitle =>
+      'Replay the pointer-hint tours on Home, People, and Person Details.';
+
+  @override
+  String get replayTipsDone =>
+      'Tips will show again next time you open those screens.';
 }

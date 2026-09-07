@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:aspends_tracker/core/utils/blur_utils.dart';
 
 import 'package:flutter/material.dart';
 
@@ -39,7 +40,7 @@ class GradientBlurContainer extends StatelessWidget {
                 ).createShader(rect);
               },
               blendMode: BlendMode.dstIn,
-              child: BackdropFilter(
+              child: ConditionalBackdropFilter(
                 filter: ImageFilter.blur(
                     sigmaX: blurStrength, sigmaY: blurStrength),
                 child: Container(

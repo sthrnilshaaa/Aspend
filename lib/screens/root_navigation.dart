@@ -1,8 +1,7 @@
 import 'dart:ui';
-import 'package:aspends_tracker/core/const/app_colors.dart';
+import 'package:aspends_tracker/core/utils/blur_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:aspends_tracker/l10n/generated/app_localizations.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
@@ -14,11 +13,11 @@ import 'people_page.dart';
 import 'chart_page.dart';
 import 'settings_page.dart';
 import '../core/utils/responsive_utils.dart';
-import '../core/const/app_dimensions.dart';
 import '../shared/widgets/native_glass_navbar.dart';
 import '../core/view_models/liquid_navbar_view_model.dart';
 import 'package:hive/hive.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:showcaseview/showcaseview.dart';
 import '../core/const/app_constants.dart';
 import '../core/const/app_typography.dart';
 
@@ -51,10 +50,13 @@ class _RootNavigationState extends State<RootNavigation>
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _selectedIndex);
+    // Not started here: this ticks every frame, and RootNavigation lives for
+    // the whole app session, so it only runs while the lock overlay is
+    // actually shown (see the _isLocked toggles below).
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
-    )..repeat(reverse: true);
+    );
 
     _uiEventSubscription = NativeBridge.uiEvents.listen((event) {
       if (event == 'SHOW_ADD_INCOME' || event == 'SHOW_ADD_EXPENSE') {
@@ -63,6 +65,17 @@ class _RootNavigationState extends State<RootNavigation>
     });
 
     WidgetsBinding.instance.addObserver(this);
+
+    // One registration for the whole app session: RootNavigation is the
+    // single long-lived ancestor of every tab (they live in a PageView that
+    // never disposes them), and Person Details' pointer-hint tour also uses
+    // this same default scope, so it must already be registered by the time
+    // any of them wants to start a showcase.
+    // skipIfTargetNotPresent guards the tour steps that point at the first
+    // row of a lazily-built list (People's first card, a person's first
+    // transaction) — if that row somehow isn't attached yet when its turn
+    // comes up, the tour skips it and carries on instead of stopping early.
+    ShowcaseView.register(skipIfTargetNotPresent: true);
   }
 
   @override
@@ -71,13 +84,15 @@ class _RootNavigationState extends State<RootNavigation>
     _pageController.dispose();
     _pulseController.dispose();
     WidgetsBinding.instance.removeObserver(this);
+    ShowcaseView.get().unregister();
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     final settingsBox = Hive.box(AppConstants.settingsBox);
-    final appLockEnabled = settingsBox.get('appLockEnabled', defaultValue: false);
+    final appLockEnabled =
+        settingsBox.get('appLockEnabled', defaultValue: false);
 
     if (!appLockEnabled) return;
 
@@ -90,6 +105,7 @@ class _RootNavigationState extends State<RootNavigation>
           setState(() {
             _isLocked = true;
           });
+          _pulseController.repeat(reverse: true);
           _authenticate();
         }
       }
@@ -113,11 +129,13 @@ class _RootNavigationState extends State<RootNavigation>
           setState(() {
             _isLocked = false;
           });
+          _pulseController.stop();
         }
       } else {
         setState(() {
           _isLocked = false;
         });
+        _pulseController.stop();
       }
     } catch (e) {
       debugPrint('RootNavigation: Authentication error: $e');
@@ -147,6 +165,13 @@ class _RootNavigationState extends State<RootNavigation>
     Widget mainContent = ChangeNotifierProvider(
       create: (_) => LiquidNavbarViewModel(),
       child: Scaffold(
+        // The nav bar is Positioned(bottom: 0) inside this Scaffold's own
+        // body — left at the default `true`, the keyboard opening (e.g. a
+        // search field on Home/People) shrinks the body and drags the bar
+        // up with it. false keeps the whole shell, nav bar included, fixed
+        // in place; the search fields' own scroll views already handle
+        // scrolling themselves into view.
+        resizeToAvoidBottomInset: false,
         body: Row(
           children: [
             if (isLargeScreen)
@@ -226,11 +251,10 @@ class _RootNavigationState extends State<RootNavigation>
                       height: 100,
                       child: Container(
                         decoration: BoxDecoration(
-                           gradient: LinearGradient(
+                          gradient: LinearGradient(
                             colors: [
                               isDark
-                                  ? Colors.black.withValues(
-                                      alpha: 0.05)
+                                  ? Colors.black.withValues(alpha: 0.05)
                                   : Colors.white.withValues(alpha: 0.05),
                               Colors.transparent,
                             ],
@@ -286,7 +310,7 @@ class _RootNavigationState extends State<RootNavigation>
         children: [
           mainContent,
           Positioned.fill(
-            child: BackdropFilter(
+            child: ConditionalBackdropFilter(
               filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
               child: Container(
                 color: theme.scaffoldBackgroundColor.withValues(alpha: 0.9),
@@ -295,14 +319,17 @@ class _RootNavigationState extends State<RootNavigation>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ScaleTransition(
-                        scale: Tween(begin: 1.0, end: 1.1).animate(_pulseController),
+                        scale: Tween(begin: 1.0, end: 1.1)
+                            .animate(_pulseController),
                         child: Container(
                           padding: const EdgeInsets.all(24),
                           decoration: BoxDecoration(
-                            color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                            color: theme.colorScheme.primary
+                                .withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: theme.colorScheme.primary.withValues(alpha: 0.3),
+                              color: theme.colorScheme.primary
+                                  .withValues(alpha: 0.3),
                               width: 2,
                             ),
                           ),
@@ -328,7 +355,8 @@ class _RootNavigationState extends State<RootNavigation>
                         l10n.appLockDesc,
                         style: GoogleFonts.dmSans(
                           fontSize: AppTypography.fontSizeSmall,
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.6),
                           decoration: TextDecoration.none,
                         ),
                       ),
@@ -336,7 +364,8 @@ class _RootNavigationState extends State<RootNavigation>
                       ZoomTapAnimation(
                         onTap: _authenticate,
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 12),
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
@@ -347,7 +376,7 @@ class _RootNavigationState extends State<RootNavigation>
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
-                            'Tap to Unlock',
+                            l10n.tapToUnlock,
                             style: GoogleFonts.dmSans(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

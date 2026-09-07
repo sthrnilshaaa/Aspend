@@ -1,7 +1,7 @@
 import 'package:aspends_tracker/core/const/app_dimensions.dart';
-import 'package:aspends_tracker/core/const/app_strings.dart';
 import 'package:aspends_tracker/core/const/app_typography.dart';
 import 'package:aspends_tracker/core/view_models/theme_view_model.dart';
+import 'package:aspends_tracker/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -69,7 +69,7 @@ class SearchFilterBar extends StatelessWidget {
                     child: TextField(
                       onChanged: onSearchChanged,
                       decoration: InputDecoration(
-                        hintText: AppStrings.searchHint,
+                        hintText: AppLocalizations.of(context)!.searchHint,
                         hintStyle: GoogleFonts.dmSans(
                           fontSize: AppTypography.fontSizeSmall,
                           color: theme.colorScheme.onSurface

@@ -6,7 +6,7 @@ class AppDimensions {
   static const double borderRadiusMedium = 20.0; // Standard softer card
   static const double borderRadiusRegular = 18.0;
   static const double borderRadiusSmall = 14.0; // Input fields
-  static const double borderRadiusXLarge = 40.0; // Bottom sheets
+  static const double borderRadiusXLarge = 30.0; // Bottom sheets
   static const double borderRadiusStandard = 16.0;
   static const double borderRadiusFull = 100.0;
   static const double borderRadiusTiny = 4.0;
@@ -23,6 +23,7 @@ class AppDimensions {
 
   static const double iconSizeSmall = 18.0;
   static const double iconSizeXSmall = 14.0;
+  static const double iconSizeXXSmall = 10.0;
   static const double iconSizeMedium = 20.0;
   static const double iconSizeLarge = 24.0;
   static const double iconSizeXLarge = 28.0;
@@ -59,6 +60,7 @@ class AppDimensions {
   static const double splashLogoOffsetDesktop = 140.0;
 
   static const double avatarSizeStandard = 40.0;
+   static const double avatar3SizeStandard = 35.0;
   static const double avatar2SizeStandard = 30.0;
 
   static const EdgeInsets horizontalPadding16 =

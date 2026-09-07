@@ -1,7 +1,9 @@
 import 'dart:ui';
+import 'package:aspends_tracker/core/utils/blur_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/const/app_typography.dart';
+import '../l10n/generated/app_localizations.dart';
 
 class RecordingHUD extends StatelessWidget {
   final String text;
@@ -15,12 +17,13 @@ class RecordingHUD extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 70.0),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(24),
-          child: BackdropFilter(
+          child: ConditionalBackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -40,7 +43,7 @@ class RecordingHUD extends StatelessWidget {
                       _PulsingMicIcon(),
                       const SizedBox(width: 12),
                       Text(
-                        "Listening...",
+                        l10n.listeningHint,
                         style: GoogleFonts.dmSans(
                           fontSize: AppTypography.fontSizeSmall,
                           fontWeight: FontWeight.bold,
@@ -51,7 +54,7 @@ class RecordingHUD extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    text.isEmpty ? "Say something like 'Spent 500 on dinner'" : text,
+                    text.isEmpty ? l10n.voiceInputExampleHint : text,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.dmSans(
                       fontSize: AppTypography.fontSizeMedium,

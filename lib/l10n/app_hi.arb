@@ -1,5 +1,5 @@
 {
-  "appName": "निर्भर करता है",
+  "appName": "Aspends",
   "appTagline": "स्मार्ट खर्च, सरलीकृत।",
   "totalBalance": "कुल शेष",
   "income": "आय",
@@ -37,6 +37,9 @@
   "voiceInput": "ध्वनि इनपुट",
   "speechUnavailable": "वाक् पहचान अनुपलब्ध",
   "microPermissionDenied": "माइक्रोफ़ोन की अनुमति अस्वीकृत",
+  "microPermissionTitle": "माइक्रोफ़ोन एक्सेस आवश्यक है",
+  "microPermissionDesc": "Aspends को आपको वॉइस कमांड के ज़रिए लेन-देन का विवरण दर्ज करने देने के लिए माइक्रोफ़ोन एक्सेस की आवश्यकता है। आपकी वॉइस इनपुट पूरी तरह से आपके डिवाइस पर ऑफ़लाइन प्रोसेस की जाती है और इन्हें कभी भी अपलोड या साझा नहीं किया जाता।",
+  "microPermissionGrant": "वॉइस सक्षम करें",
   "appearance": "उपस्थिति",
   "security": "सुरक्षा",
   "autoDetection": "ऑटो लेनदेन का पता लगाना",
@@ -59,7 +62,7 @@
   "sortBy": "इसके अनुसार क्रमबद्ध करें",
   "holdToRecord": "लेन-देन रिकॉर्ड करने के लिए होल्ड करें",
   "couldNotFindAmount": "राशि नहीं मिल सकी. आज़माएँ: 'भोजन पर 500 खर्च किए'",
-  "savedAmount": "₹{amount} को {category} के लिए सहेजा गया",
+  "savedAmount": "{amount} को {category} के लिए सहेजा गया",
   "@savedAmount": {
     "placeholders": {
       "amount": {
@@ -98,8 +101,20 @@
   "projectInfo": "परियोजना की जानकारी",
   "openSource": "खुला स्त्रोत",
   "openSourceDesc": "GitHub पर गर्व से खुला स्रोत",
+  "licenses": "ओपन सोर्स लाइसेंस",
+  "licensesDesc": "इस ऐप में इस्तेमाल किए गए थर्ड-पार्टी लाइसेंस देखें",
   "rateApp": "दर निर्भर करती है",
   "rateAppDesc": "5-स्टार रेटिंग के साथ हमारा समर्थन करें",
+  "couldNotLaunchUrl": "लिंक नहीं खोला जा सका",
+  "errorWithDetails": "त्रुटि: {error}",
+  "@errorWithDetails": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "madeWithLove": "बेहतर वित्त के लिए ❤️ से बनाया गया",
   "howAspendWorks": "एस्पेंड कैसे काम करता है",
   "howItWorksTitle1": "1. बुद्धिमान अवरोधन",
   "howItWorksDesc1": "एक सुरक्षित, बैटरी-अनुकूलित पृष्ठभूमि सेवा आने वाले एसएमएस और बैंकिंग सूचनाओं को सुनती है।",
@@ -117,11 +132,21 @@
   "smsPermissionDesc": "आपके बैंक से लेनदेन एसएमएस पढ़ने में सक्षम बनाता है।",
   "finishSetup": "सेटअप समाप्त करें",
   "grant": "अनुदान",
-  "appNameShort": "निर्भर करता है",
+  "appNameShort": "Aspends",
   "splashTagline": "स्मार्ट मनी मैनेजमेंट",
   "budget": "बजट",
+  "overBudgetBy": "⚠️ {amount} अधिक खर्च हो गया",
+  "@overBudgetBy": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "balanceDetailsTitle": "शेष विवरण",
   "editBalanceTitle": "संतुलन संपादित करें",
+  "tapHoldToEditBalance": "बैलेंस संपादित करने के लिए दबाकर रखें",
+  "longPressBalanceCardHint": "होम स्क्रीन पर बैलेंस कार्ड को देर तक दबाएं",
   "newBalanceLabel": "नया शेष",
   "viewAll": "सभी को देखें",
   "searchHint": "श्रेणियाँ या नोट्स खोजें...",
@@ -174,6 +199,7 @@
   "next": "अगला",
   "getStarted": "शुरू हो जाओ",
   "requestMoney": "पैसे का अनुरोध",
+  "requestMoneyTooltip": "UPI के ज़रिए पैसे मांगें",
   "generateQr": "भुगतान क्यूआर उत्पन्न करें",
   "sortByNameAZ": "नाम (ए-जेड)",
   "sortByNameZA": "नाम (जेड-ए)",
@@ -184,7 +210,7 @@
   "noTransactionsYet": "अभी तक कोई लेन-देन नहीं",
   "addFirstTransaction": "उस व्यक्ति के साथ अपना पहला लेन-देन जोड़ें",
   "settleBalance": "संतुलन व्यवस्थित करें",
-  "settleBalanceDesc": "इससे शेष राशि को शून्य पर लाने के लिए ₹{amount} का लेनदेन जोड़ा जाएगा। जारी रखना?",
+  "settleBalanceDesc": "इससे शेष राशि को शून्य पर लाने के लिए {amount} का लेनदेन जोड़ा जाएगा। जारी रखना?",
   "@settleBalanceDesc": {
     "placeholders": {
       "amount": {
@@ -319,5 +345,330 @@
   "exportPeopleTitle": "लोगों का डेटा निर्यात करें",
   "exportPeopleDesc": "बैकअप लोगों के लेनदेन",
   "exportPdfTitle": "पीडीएफ के रूप में निर्यात करें",
-  "exportPdfDesc": "पीडीएफ रिपोर्ट तैयार करें"
+  "exportPdfDesc": "पीडीएफ रिपोर्ट तैयार करें",
+  "biometricNotSupported": "इस डिवाइस पर बायोमेट्रिक प्रमाणीकरण समर्थित नहीं है",
+  "noBiometricMethods": "कोई बायोमेट्रिक प्रमाणीकरण विधि उपलब्ध नहीं है",
+  "authenticateReason": "ऐप लॉक सक्षम करने के लिए प्रमाणित करें",
+  "authFailedAppLockNotEnabled": "प्रमाणीकरण विफल रहा। ऐप लॉक सक्षम नहीं हुआ।",
+  "appLockEnabledSuccess": "ऐप लॉक सफलतापूर्वक सक्षम किया गया",
+  "appLockDisabledSuccess": "ऐप लॉक सफलतापूर्वक अक्षम किया गया",
+  "failedToEnableAppLock": "ऐप लॉक सक्षम करने में विफल",
+  "failedToDisableAppLock": "ऐप लॉक अक्षम करने में विफल",
+  "pickAppColor": "ऐप का रंग चुनें",
+  "reset": "रीसेट करें",
+  "selectAction": "चुनें",
+  "appColorResetDefault": "ऐप का रंग डिफ़ॉल्ट पर रीसेट कर दिया गया!",
+  "deviceNotSupportBiometricsOrAuth": "डिवाइस बायोमेट्रिक्स या डिवाइस प्रमाणीकरण का समर्थन नहीं करता।",
+  "appLockEnabledDot": "ऐप लॉक सक्षम किया गया।",
+  "appLockDisabledDot": "ऐप लॉक अक्षम किया गया।",
+  "cautionToUse": "उपयोग में सावधानी बरतें",
+  "autoDetectCautionDesc": "यह सुविधा 100% सटीक नहीं है लेकिन काम कर सकती है। पूर्ण गोपनीयता के लिए सभी SMS और नोटिफिकेशन डेटा पूरी तरह से आपके डिवाइस पर स्थानीय रूप से प्रोसेस किया जाता है।",
+  "autoDetectSettingSubtitle": "नोटिफिकेशन से लेन-देन स्वचालित रूप से पहचानें",
+  "permissionsRequiredNoAccess": "अनुमतियाँ आवश्यक हैं: कोई नोटिफिकेशन या SMS एक्सेस नहीं दी गई। ऑटो-डिटेक्शन सक्षम नहीं किया जा सकता।",
+  "noteNotificationAccessMissing": "नोट: नोटिफिकेशन एक्सेस गायब है। केवल SMS डिटेक्शन काम करेगा।",
+  "noteSmsPermissionMissing": "नोट: SMS अनुमति गायब है। केवल नोटिफिकेशन डिटेक्शन काम करेगा।",
+  "autoDetectionEnabledExclaim": "ऑटो-डिटेक्शन सक्षम किया गया!",
+  "autoDetectionDisabledExclaim": "ऑटो-डिटेक्शन अक्षम किया गया!",
+  "processRecentDataTitle": "हाल का डेटा प्रोसेस करें",
+  "processRecentDataSubtitle": "लेन-देन के लिए हाल की नोटिफिकेशन स्कैन करें",
+  "recentDataProcessed": "हाल का डेटा सफलतापूर्वक प्रोसेस किया गया!",
+  "errorProcessingData": "डेटा प्रोसेस करने में त्रुटि",
+  "testDetectionLogicTitle": "डिटेक्शन लॉजिक परखें",
+  "testDetectionLogicSubtitle": "पार्सिंग जांचने के लिए एक नोटिफिकेशन सिम्युलेट करें",
+  "showDetectionHistoryTitle": "डिटेक्शन इतिहास दिखाएं",
+  "showDetectionHistorySubtitle": "पहचानी गई लेन-देन के विस्तृत लॉग देखें",
+  "autoDeleteUndetectedTitle": "अनडिटेक्टेड इतिहास स्वतः हटाएं",
+  "autoDeleteUndetectedSubtitle": "12 घंटे बाद अनडिटेक्टेड आइटम हटाएं",
+  "testParserDiagnosticTitle": "पार्सर डायग्नोस्टिक टेस्ट",
+  "testParserDiagnosticDesc": "यह देखने के लिए एक नमूना नोटिफिकेशन संदेश दर्ज करें कि हमारा पार्सर इसे कैसे संभालता है।",
+  "pasteNotificationHint": "यहां नोटिफिकेशन टेक्स्ट पेस्ट करें...",
+  "statusBalanceSync": "बैलेंस सिंक",
+  "statusNoActionDetected": "कोई कार्रवाई नहीं पाई गई",
+  "transactionType": "प्रकार",
+  "resultLabelMerchant": "व्यापारी",
+  "resultLabelBank": "बैंक",
+  "balanceLabel": "बैलेंस",
+  "resultLabelConfidence": "विश्वसनीयता",
+  "unknown": "अज्ञात",
+  "general": "सामान्य",
+  "notAvailable": "उपलब्ध नहीं",
+  "close": "बंद करें",
+  "parseText": "टेक्स्ट पार्स करें",
+  "deleteAllDataTitle": "सभी डेटा हटाएं",
+  "deleteAllDataWarningSubtitle": "⚠️ इस कार्रवाई को पूर्ववत नहीं किया जा सकता",
+  "resetIntroTitle": "इंट्रो रीसेट करें",
+  "resetIntroSubtitle": "इंट्रो स्क्रीन फिर से दिखाएं",
+  "incomeCategories": "आय श्रेणियाँ",
+  "incomeCategoriesDesc": "आय के लिए श्रेणियाँ प्रबंधित करें",
+  "expenseCategories": "व्यय श्रेणियाँ",
+  "expenseCategoriesDesc": "व्यय के लिए श्रेणियाँ प्रबंधित करें",
+  "accountsTitle": "खाते",
+  "accountsDesc": "अपने खातों को प्रबंधित करें",
+  "enterNamePlaceholder": "नाम दर्ज करें...",
+  "aboutAppSubtitle": "डेवलपर, गोपनीयता, सहायता और अधिक",
+  "setMonthlySpendingLimit": "मासिक खर्च की सीमा निर्धारित करें",
+  "joinPreviousMonthBalanceTitle": "पिछले महीने का बैलेंस जोड़ें",
+  "joinPreviousMonthBalanceDesc": "वर्तमान कुल में पिछले महीने का बैलेंस शामिल करें",
+  "setMonthlyBudgetTitle": "मासिक बजट निर्धारित करें",
+  "budgetAmountLabel": "बजट राशि",
+  "budgetUpdated": "बजट अपडेट किया गया!",
+  "confirmDeleteTitle": "हटाने की पुष्टि करें",
+  "confirmDeleteAllDesc": "क्या आप वाकई सभी लेन-देन हटाना और अपना बैलेंस रीसेट करना चाहते हैं? इस कार्रवाई को पूर्ववत नहीं किया जा सकता।",
+  "deleteAllButton": "सभी हटाएं",
+  "failedDeleteAllData": "सभी डेटा हटाने में विफल। कृपया पुनः प्रयास करें।",
+  "resetIntroConfirmDesc": "इससे अगली बार ऐप खोलने पर इंट्रो स्क्रीन फिर से दिखेंगी। आपका डेटा अपरिवर्तित रहेगा।",
+  "editFieldTitle": "{field} संपादित करें",
+  "@editFieldTitle": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "enterFieldHint": "{field} दर्ज करें",
+  "@enterFieldHint": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "statusLabel": "स्थिति: {status}",
+  "@statusLabel": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "manageItemsTitle": "{type} प्रबंधित करें",
+  "@manageItemsTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "noItemsFound": "कोई {type} नहीं मिला।",
+  "@noItemsFound": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "addItemButton": "{type} जोड़ें",
+  "@addItemButton": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "editItemTitle": "{type} संपादित करें",
+  "@editItemTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "itemNameLabel": "{type} नाम",
+  "@itemNameLabel": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "monthlyLimitSubtitle": "मासिक सीमा: {budget}",
+  "@monthlyLimitSubtitle": {
+    "placeholders": {
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "failedResetIntro": "इंट्रो रीसेट करने में विफल। कृपया पुनः प्रयास करें।\\n{error}",
+  "@failedResetIntro": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedUpdateAutoDetection": "ऑटो-डिटेक्शन अपडेट करने में विफल",
+  "actionCannotBeUndone": "इस कार्रवाई को पूर्ववत नहीं किया जा सकता।",
+  "deleteTransactionsCountTitle": "{count} लेन-देन हटाएं?",
+  "@deleteTransactionsCountTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deletedTransactionsCount": "{count} लेन-देन हटाए गए",
+  "@deletedTransactionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "transactionHistoryTitle": "लेन-देन इतिहास",
+  "upiIdMissingTitle": "UPI ID गायब है",
+  "upiIdMissingDesc": "QR कोड के ज़रिए पैसे मांगने के लिए कृपया सेटिंग्स में अपनी UPI ID सेट करें।",
+  "openSettings": "सेटिंग्स खोलें",
+  "recipientFallback": "प्राप्तकर्ता",
+  "paymentLinkCopied": "भुगतान लिंक कॉपी हो गया!",
+  "linkButton": "लिंक",
+  "shareQr": "QR शेयर करें",
+  "upiPaymentLinkSubject": "UPI भुगतान लिंक",
+  "requestingFrom": "{name} से अनुरोध किया जा रहा है",
+  "@requestingFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "upiIdColonValue": "यूपीआई आईडी: {id}",
+  "@upiIdColonValue": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "failedShareQr": "QR छवि साझा करने में विफल: {error}",
+  "@failedShareQr": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "payViaUpiQrFor": "{name} के लिए UPI QR से भुगतान करें",
+  "@payViaUpiQrFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectPerson": "कृपया एक व्यक्ति चुनें",
+  "amountInInr": "राशि (INR में)",
+  "currency": "मुद्रा",
+  "selectCurrency": "मुद्रा चुनें",
+  "searchCurrency": "मुद्रा खोजें",
+  "autoDetectCurrency": "मुद्रा स्वतः पहचानें",
+  "autoDetectCurrencyDesc": "आपके डिवाइस के क्षेत्र के अनुसार स्वतः सेट करें",
+  "popularCurrencies": "लोकप्रिय",
+  "allCurrencies": "सभी मुद्राएं",
+  "noCurrencyFound": "कोई मुद्रा नहीं मिली",
+  "requiredField": "आवश्यक",
+  "quickCategories": "त्वरित श्रेणियाँ",
+  "saveToPerson": "व्यक्ति में सहेजें",
+  "noPeopleCreateHint": "अभी तक कोई व्यक्ति नहीं जोड़ा गया। लोग अनुभाग में व्यक्ति बनाएं।",
+  "selectPersonLabel": "व्यक्ति चुनें",
+  "selectCategoryTitle": "श्रेणी चुनें",
+  "updateTransactionButton": "लेन-देन अपडेट करें",
+  "saveTransactionButton": "लेन-देन सहेजें",
+  "linkedToRecord": "{name} के रिकॉर्ड से जोड़ा गया",
+  "@linkedToRecord": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "selectItemTitle": "{type} चुनें",
+  "@selectItemTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "personSingular": "व्यक्ति",
+  "error": "त्रुटि",
+  "retry": "पुनः प्रयास करें",
+  "setupFailedRetry": "सेटअप पूरा करने में विफल। कृपया पुनः प्रयास करें।",
+  "backButton": "वापस",
+  "voiceInputExampleHint": "कुछ ऐसा कहें जैसे 'डिनर पर 500 खर्च किए'",
+  "autoDetectionEnabledSuccess": "ऑटो-डिटेक्शन सफलतापूर्वक सक्षम किया गया!",
+  "openingRequestQrFor": "{name} के लिए अनुरोध QR खोला जा रहा है",
+  "@openingRequestQrFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "add": "जोड़ें",
+  "uncategorized": "अवर्गीकृत",
+  "timeLabel": "समय",
+  "statusColumnLabel": "स्थिति",
+  "completedLabel": "पूर्ण",
+  "notes": "टिप्पणियाँ",
+  "serviceLabel": "सेवा",
+  "refIdLabel": "संदर्भ आईडी",
+  "detectedViaLabel": "इसके ज़रिए पहचाना गया",
+  "attachmentsLabel": "अनुलग्नक",
+  "originalLogLabel": "मूल लॉग",
+  "noNoteProvided": "कोई टिप्पणी नहीं दी गई",
+  "tapToUnlock": "अनलॉक करने के लिए टैप करें",
+  "addPeopleEmptyDesc": "उनके साथ लेन-देन ट्रैक करने के लिए लोगों को जोड़ें",
+  "noPeopleMatchSearch": "कोई भी व्यक्ति आपकी खोज से मेल नहीं खाता",
+  "okay": "ठीक है",
+  "confirm": "पुष्टि करें",
+  "ok": "ठीक है",
+  "unexpectedErrorOccurred": "एक अप्रत्याशित त्रुटि हुई",
+  "autoDetectionActive": "ऑटो-डिटेक्शन सक्रिय है",
+  "unknownSource": "अज्ञात स्रोत",
+  "noMessageContentAvailable": "कोई संदेश सामग्री उपलब्ध नहीं है",
+  "addManually": "मैन्युअल रूप से जोड़ें",
+  "detectedAsIncome": "आय के रूप में पहचाना गया",
+  "detectedAsExpense": "व्यय के रूप में पहचाना गया",
+  "sourceColonValue": "स्रोत: {source}",
+  "@sourceColonValue": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "sourceNotification": "सूचना",
+  "sourceSms": "एसएमएस",
+  "sourceRecheckHistory": "पुनः जांचा गया इतिहास",
+  "sourceManualAddHistory": "मैन्युअल जोड़ (इतिहास से)",
+  "recentLabel": "हाल का",
+  "oldestLabel": "सबसे पुराना",
+  "highestLabel": "सबसे अधिक",
+  "lowestLabel": "सबसे कम",
+  "glassBlurEffectsTitle": "ग्लास ब्लर इफ़ेक्ट",
+  "glassBlurEffectsSubtitle": "ग्लास पैनल और डायलॉग पर हल्का ब्लर प्रभाव — इसमें अधिक प्रोसेसिंग पावर लगती है, पुराने डिवाइस पर बेहतर प्रदर्शन के लिए इसे बंद करें।",
+  "tourBalanceCardTitle": "Your Balance",
+  "tourBalanceCardDesc": "Tap for income & expense details. Long-press to edit your starting balance.",
+  "tourAddIncomeTitle": "Add Income",
+  "tourAddIncomeDesc": "Log money you've received.",
+  "tourMicTitle": "Record by Voice",
+  "tourMicDesc": "Press and hold, say the amount and what it was for, then release — it's saved automatically.",
+  "tourAddExpenseTitle": "Add Expense",
+  "tourAddExpenseDesc": "Log money you've spent.",
+  "tourAddPersonTitle": "Add a Person",
+  "tourAddPersonDesc": "Track what you owe each other over time.",
+  "tourPersonCardTitle": "Open Their Ledger",
+  "tourPersonCardDesc": "Tap a card to see the full history with this person and settle up.",
+  "tourPayNowTitle": "Settle Up",
+  "tourPayNowDesc": "Pay what you owe them directly via UPI.",
+  "tourEditPersonTitle": "Edit Person",
+  "tourEditPersonDesc": "Change their name or photo.",
+  "tourDeletePersonTitle": "Careful — Long-Press Deletes",
+  "tourDeletePersonDesc": "Long-pressing this header permanently deletes this person and their history. You'll be asked to confirm first.",
+  "tourDeleteTxTitle": "Long-Press to Delete",
+  "tourDeleteTxDesc": "Tap a transaction to edit it, or long-press to delete it.",
+  "replayTipsTitle": "Show Tips Again",
+  "replayTipsSubtitle": "Replay the pointer-hint tours on Home, People, and Person Details.",
+  "replayTipsDone": "Tips will show again next time you open those screens."
 }

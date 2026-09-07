@@ -5,7 +5,7 @@ import 'package:aspends_tracker/core/models/transaction.dart';
 import 'package:aspends_tracker/core/utils/transaction_parser.dart';
 import 'package:aspends_tracker/core/repositories/transaction_repository.dart';
 import 'package:aspends_tracker/core/repositories/settings_repository.dart';
-import 'package:flutter/foundation.dart';
+import 'package:aspends_tracker/core/services/currency_service.dart';
 import 'package:flutter/widgets.dart';
 
 import 'native_bridge.dart';
@@ -285,7 +285,8 @@ class TransactionDetectionService {
       if ((currentBal - balance).abs() < 0.01) return; // No change
 
       await _transactionRepo.updateBalance(balance);
-      debugPrint('Auto-synced balance from $source: ₹$balance');
+      debugPrint(
+          'Auto-synced balance from $source: ${CurrencyService.resolveCurrency(_settingsRepo).symbol}$balance');
       NativeBridge.notifyTransactionDetected();
     } catch (e) {
       debugPrint('Error syncing balance: $e');
@@ -337,7 +338,8 @@ class TransactionDetectionService {
       final newBal = transaction.isIncome ? currentBal + transaction.amount : currentBal - transaction.amount;
       await _transactionRepo.updateBalance(newBal);
 
-      debugPrint('Auto-detected transaction added: ₹${transaction.amount} from $source');
+      debugPrint(
+          'Auto-detected transaction added: ${CurrencyService.resolveCurrency(_settingsRepo).symbol}${transaction.amount} from $source');
       NativeBridge.notifyTransactionDetected();
       await _showTransactionNotification(transaction, source);
     } catch (e) {
@@ -347,7 +349,8 @@ class TransactionDetectionService {
 
   static Future<void> _showTransactionNotification(Transaction transaction, String source) async {
     // Platform specific notification implementation could go here
-    debugPrint('New transaction: ₹${transaction.amount} via $source');
+    debugPrint(
+        'New transaction: ${CurrencyService.resolveCurrency(_settingsRepo).symbol}${transaction.amount} via $source');
   }
 
   static Future<bool> isEnabled() async {

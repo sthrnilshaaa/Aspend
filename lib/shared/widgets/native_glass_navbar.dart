@@ -1,8 +1,9 @@
 import 'dart:ui';
+import 'package:aspends_tracker/core/utils/blur_utils.dart';
+import 'package:aspends_tracker/core/const/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../core/utils/responsive_utils.dart';
 import '../../core/view_models/liquid_navbar_view_model.dart';
@@ -199,13 +200,12 @@ class _NativeGlassNavBarState extends State<NativeGlassNavBar> {
             const SizedBox(width: 12),
             ZoomTapAnimation(
               onTap: widget.actionButton!.onTap,
-              child: LiquidGlassLayer(
-                settings: const LiquidGlassSettings(thickness: 10, blur: 2),
-                child: LiquidGlass(
-                  shape: LiquidRoundedSuperellipse(borderRadius: 32),
+              child: ClipOval(
+                child: ConditionalBackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
                   child: Container(
-                    width: 64,
-                    height: 64,
+                    width: 32,
+                    height: 32,
                     decoration: BoxDecoration(
                       color: isDark ? Colors.white10 : Colors.black12,
                       shape: BoxShape.circle,
@@ -300,9 +300,9 @@ class _IconsLiquidLayer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                _getIconData(item.symbol),
+                _getIconData(item.symbol),  
                 color: isSelected
-                    ? (isDark ? Colors.white : Colors.black)
+                    ? (isDark ? AppColors.accentGreen: Colors.black)
                     : (isDark ? Colors.white38 : Colors.black38),
                 size: isSelected ? 24 : 22,
               ),
@@ -311,7 +311,7 @@ class _IconsLiquidLayer extends StatelessWidget {
                 item.label,
                 style: TextStyle(
                   color: isSelected
-                      ? (isDark ? Colors.white : Colors.black)
+                      ? (isDark ? AppColors.accentGreen: Colors.black)
                       : (isDark ? Colors.white38 : Colors.black38),
                   fontSize: 10,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
@@ -326,17 +326,9 @@ class _IconsLiquidLayer extends StatelessWidget {
               color: Colors.transparent,
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: active && swellFactor > 0.1
-                  ? LiquidGlassLayer(
-                      settings: LiquidGlassSettings(
-                        lightIntensity: 1.0 + (swellFactor * 2.0),
-                        thickness: 10,
-                        blur: 0.1,
-                      ),
-                      child: LiquidStretch(
-                        stretch: 0.6 * swellFactor,
-                        interactionScale: 1.0 + (0.5 * swellFactor),
-                        child: iconContent,
-                      ),
+                  ? Transform.scale(
+                      scale: 1.0 + (0.15 * swellFactor),
+                      child: iconContent,
                     )
                   : iconContent,
             ),
@@ -373,37 +365,23 @@ class _BackgroundGlass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shape = LiquidRoundedSuperellipse(borderRadius: 40);
     final decoration = BoxDecoration(
-      color: isDark
-          ? Colors.white.withValues(alpha: 0.05)
-          : Colors.black.withValues(alpha: 0.04),
-      borderRadius: BorderRadius.circular(40),
+      color: isDark 
+        ? Colors.black.withValues(alpha: 0.04)
+        : Colors.white.withValues(alpha: 0.05),
+      borderRadius: BorderRadius.circular(36),
       border: Border.all(
         color: isDark
             ? Colors.white.withValues(alpha: 0.15)
             : Colors.black.withValues(alpha: 0.08),
-        width: 0.8,
+        width: 0.9,
       ),
     );
 
-    if (active) {
-      return LiquidGlassLayer(
-        settings: const LiquidGlassSettings(thickness: 22, blur: 3),
-        child: LiquidGlass(
-          shape: shape,
-          child: Container(
-            decoration: decoration,
-            child: _MeasureHelper(navBarKey: navBarKey, iconKeys: iconKeys),
-          ),
-        ),
-      );
-    }
-
     return ClipRRect(
-      borderRadius: BorderRadius.circular(40),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+      borderRadius: BorderRadius.circular(36),
+      child: ConditionalBackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: Container(
           decoration: decoration,
           child: _MeasureHelper(navBarKey: navBarKey, iconKeys: iconKeys),
@@ -458,8 +436,8 @@ class _LiquidIndicator extends StatelessWidget {
     final double displayHeight = active ? parentBarHeight - 12 : 60; 
     
     final Color displayColor = active 
-        ? tintColor.withValues(alpha: 0.1) 
-        : tintColor.withValues(alpha: 0.2); 
+        ? tintColor.withValues(alpha: 0.3) 
+        : tintColor.withValues(alpha: 0.1); 
 
     return AnimatedPositioned(
       duration: isDragging ? Duration.zero : const Duration(milliseconds: 600),
@@ -469,36 +447,16 @@ class _LiquidIndicator extends StatelessWidget {
       width: displayWidth,
       height: displayHeight,
       child: IgnorePointer(
-        child: active 
-          ? LiquidGlassLayer(
-              settings: const LiquidGlassSettings(
-                lightIntensity: 4.0,
-                thickness: 50,
-                blur: 0.2,
-              ),
-              child: LiquidStretch(
-                stretch: 1.0,
-                interactionScale: 1.6,
-                child: LiquidGlass(
-                  glassContainsChild: true,
-                  shape: LiquidRoundedSuperellipse(borderRadius: 55),
-                  child: GlassGlow(
-                    child: Container(
-                      decoration: _indicatorDecoration(displayColor, 55),
-                    ),
-                  ),
-                ),
-              ),
-            )
-          : ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-                child: Container(
-                  decoration: _indicatorDecoration(displayColor, 30),
-                ),
-              ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(active ? 55 : 30),
+          child: ConditionalBackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              decoration: _indicatorDecoration(displayColor, active ? 55 : 30),
             ),
+          ),
+        ),
       ),
     );
   }
@@ -508,7 +466,7 @@ class _LiquidIndicator extends StatelessWidget {
       color: color,
       borderRadius: BorderRadius.circular(radius),
       border: Border.all(
-        color: Colors.white.withValues(alpha: 0.25),
+        color: Colors.white.withValues(alpha: 0.05),
         width: 0.8,
       ),
     );

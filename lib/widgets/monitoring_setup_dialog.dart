@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:aspends_tracker/core/utils/blur_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
@@ -62,8 +63,8 @@ class _MonitoringSetupDialogState extends State<MonitoringSetupDialog>
       backgroundColor: Colors.transparent,
       insetPadding: const EdgeInsets.symmetric(horizontal: 20),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusLarge),
-        child: BackdropFilter(
+        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMinLarge),
+        child: ConditionalBackdropFilter(
           filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
           child: Container(
             padding: const EdgeInsets.all(AppDimensions.paddingLarge),
@@ -71,11 +72,12 @@ class _MonitoringSetupDialogState extends State<MonitoringSetupDialog>
               color: isDark
                   ? Colors.black.withValues(alpha: 0.65)
                   : Colors.white.withValues(alpha: 0.8),
-              borderRadius: BorderRadius.circular(AppDimensions.borderRadiusLarge),
+              borderRadius:
+                  BorderRadius.circular(AppDimensions.borderRadiusMinLarge),
               border: Border.all(
                 color: isDark
-                    ? Colors.white.withValues(alpha: 0.08)
-                    : Colors.black.withValues(alpha: 0.06),
+                    ? Colors.white.withValues(alpha: 0.14)
+                    : Colors.black.withValues(alpha: 0.1),
                 width: 1.5,
               ),
               boxShadow: [
@@ -97,7 +99,8 @@ class _MonitoringSetupDialogState extends State<MonitoringSetupDialog>
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: theme.colorScheme.primary.withValues(alpha: 0.15),
+                        color:
+                            theme.colorScheme.primary.withValues(alpha: 0.15),
                         blurRadius: 15,
                         spreadRadius: 2,
                       ),
@@ -109,27 +112,84 @@ class _MonitoringSetupDialogState extends State<MonitoringSetupDialog>
                     color: theme.colorScheme.primary,
                   ),
                 ),
-                const SizedBox(height: 18),
+                const SizedBox(height: 16),
                 Text(
                   l10n.autoDetectionSetup,
                   style: GoogleFonts.dmSans(
-                    fontSize: AppTypography.fontSizeXLarge,
+                    fontSize: AppTypography.fontSizeLarge,
                     fontWeight: AppTypography.fontWeightBold,
                     color: theme.colorScheme.onSurface,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 6),
                 Text(
                   l10n.autoDetectionSetupDesc,
                   style: GoogleFonts.dmSans(
-                    fontSize: AppTypography.fontSizeSmall + 1,
+                    fontSize: AppTypography.fontSizeSmall,
                     color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                    height: 1.4,
+                    height: 1.35,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 16),
+
+                // Caution: what this permission grants access to, stated up
+                // front rather than left implicit — same wording/styling as
+                // the caution box in Settings > Auto Detection.
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.amber.withValues(alpha: isDark ? 0.15 : 0.1),
+                    borderRadius: BorderRadius.circular(
+                        AppDimensions.borderRadiusStandard),
+                    border: Border.all(
+                      color: Colors.amber.withValues(alpha: isDark ? 0.3 : 0.4),
+                      width: 1,
+                    ),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.warning_amber_rounded,
+                        color: isDark ? Colors.amber[300] : Colors.amber[800],
+                        size: 18,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              l10n.cautionToUse,
+                              style: GoogleFonts.dmSans(
+                                fontWeight: FontWeight.bold,
+                                fontSize: AppTypography.fontSizeXSmall,
+                                color: isDark
+                                    ? Colors.amber[200]
+                                    : Colors.amber[900],
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              l10n.autoDetectCautionDesc,
+                              style: GoogleFonts.dmSans(
+                                fontSize: AppTypography.fontSizeXSmall - 1,
+                                color: isDark
+                                    ? Colors.amber[100]?.withValues(alpha: 0.8)
+                                    : Colors.amber[900]?.withValues(alpha: 0.9),
+                                height: 1.3,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
 
                 // Step 1: Notification Access Card
                 _buildPermissionStep(
@@ -167,14 +227,16 @@ class _MonitoringSetupDialogState extends State<MonitoringSetupDialog>
                 Column(
                   children: [
                     ZoomTapAnimation(
-                      onTap: (_isNotificationPermissionGranted || _isSmsPermissionGranted)
+                      onTap: (_isNotificationPermissionGranted ||
+                              _isSmsPermissionGranted)
                           ? () => Navigator.pop(context, true)
                           : null,
                       child: Container(
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         decoration: BoxDecoration(
-                          gradient: (_isNotificationPermissionGranted || _isSmsPermissionGranted)
+                          gradient: (_isNotificationPermissionGranted ||
+                                  _isSmsPermissionGranted)
                               ? LinearGradient(
                                   colors: [
                                     theme.colorScheme.primary,
@@ -182,16 +244,20 @@ class _MonitoringSetupDialogState extends State<MonitoringSetupDialog>
                                   ],
                                 )
                               : null,
-                          color: (_isNotificationPermissionGranted || _isSmsPermissionGranted)
+                          color: (_isNotificationPermissionGranted ||
+                                  _isSmsPermissionGranted)
                               ? null
                               : (isDark
                                   ? Colors.white.withValues(alpha: 0.08)
                                   : Colors.black.withValues(alpha: 0.05)),
-                          borderRadius: BorderRadius.circular(AppDimensions.borderRadiusSmall),
-                          boxShadow: (_isNotificationPermissionGranted || _isSmsPermissionGranted)
+                          borderRadius: BorderRadius.circular(
+                              AppDimensions.borderRadiusSmall),
+                          boxShadow: (_isNotificationPermissionGranted ||
+                                  _isSmsPermissionGranted)
                               ? [
                                   BoxShadow(
-                                    color: theme.colorScheme.primary.withValues(alpha: 0.3),
+                                    color: theme.colorScheme.primary
+                                        .withValues(alpha: 0.3),
                                     blurRadius: 8,
                                     offset: const Offset(0, 4),
                                   ),
@@ -202,9 +268,10 @@ class _MonitoringSetupDialogState extends State<MonitoringSetupDialog>
                         child: Text(
                           l10n.finishSetup.toUpperCase(),
                           style: GoogleFonts.dmSans(
-                            fontSize: AppTypography.fontSizeSmall + 1,
+                            fontSize: AppTypography.fontSizeSmall,
                             fontWeight: AppTypography.fontWeightBold,
-                            color: (_isNotificationPermissionGranted || _isSmsPermissionGranted)
+                            color: (_isNotificationPermissionGranted ||
+                                    _isSmsPermissionGranted)
                                 ? Colors.white
                                 : (isDark ? Colors.white38 : Colors.black38),
                             letterSpacing: 0.8,
@@ -222,9 +289,10 @@ class _MonitoringSetupDialogState extends State<MonitoringSetupDialog>
                         child: Text(
                           l10n.cancel.toUpperCase(),
                           style: GoogleFonts.dmSans(
-                            fontSize: AppTypography.fontSizeSmall,
+                            fontSize: AppTypography.fontSizeXSmall,
                             fontWeight: AppTypography.fontWeightBold,
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.5),
                             letterSpacing: 0.5,
                           ),
                         ),
@@ -253,36 +321,44 @@ class _MonitoringSetupDialogState extends State<MonitoringSetupDialog>
     final l10n = AppLocalizations.of(context)!;
 
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: isDark
             ? Colors.white.withValues(alpha: 0.04)
             : Colors.black.withValues(alpha: 0.02),
         borderRadius: BorderRadius.circular(AppDimensions.borderRadiusStandard),
+        // A visibly-drawn border on every card (not just the granted one)
+        // so each permission reads as its own bounded, tappable unit.
         border: Border.all(
           color: isGranted
-              ? AppColors.primaryGreen.withValues(alpha: 0.3)
-              : (isDark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.04)),
+              ? AppColors.primaryGreen.withValues(alpha: 0.35)
+              : (isDark
+                  ? Colors.white.withValues(alpha: 0.14)
+                  : Colors.black.withValues(alpha: 0.1)),
           width: 1.5,
         ),
       ),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(9),
             decoration: BoxDecoration(
               color: isGranted
                   ? AppColors.primaryGreen.withValues(alpha: 0.12)
-                  : (isDark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.04)),
+                  : (isDark
+                      ? Colors.white.withValues(alpha: 0.06)
+                      : Colors.black.withValues(alpha: 0.04)),
               shape: BoxShape.circle,
             ),
             child: Icon(
               icon,
-              size: 20,
-              color: isGranted ? AppColors.accentGreen : (isDark ? Colors.white70 : Colors.black87),
+              size: 18,
+              color: isGranted
+                  ? AppColors.accentGreen
+                  : (isDark ? Colors.white70 : Colors.black87),
             ),
           ),
-          const SizedBox(width: 14),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -291,15 +367,15 @@ class _MonitoringSetupDialogState extends State<MonitoringSetupDialog>
                   title,
                   style: GoogleFonts.dmSans(
                     fontWeight: AppTypography.fontWeightBold,
-                    fontSize: AppTypography.fontSizeSmall + 1,
+                    fontSize: AppTypography.fontSizeSmall,
                     color: theme.colorScheme.onSurface,
                   ),
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: 2),
                 Text(
                   description,
                   style: GoogleFonts.dmSans(
-                    fontSize: AppTypography.fontSizeSmall - 1,
+                    fontSize: AppTypography.fontSizeXSmall,
                     color: theme.colorScheme.onSurface.withValues(alpha: 0.55),
                     height: 1.3,
                   ),
@@ -325,7 +401,8 @@ class _MonitoringSetupDialogState extends State<MonitoringSetupDialog>
             ZoomTapAnimation(
               onTap: onGrant,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -333,7 +410,8 @@ class _MonitoringSetupDialogState extends State<MonitoringSetupDialog>
                       theme.colorScheme.secondary,
                     ],
                   ),
-                  borderRadius: BorderRadius.circular(AppDimensions.borderRadiusSmall - 2),
+                  borderRadius: BorderRadius.circular(
+                      AppDimensions.borderRadiusSmall - 2),
                   boxShadow: [
                     BoxShadow(
                       color: theme.colorScheme.primary.withValues(alpha: 0.2),

@@ -13,7 +13,7 @@ class ModernCard extends StatelessWidget {
     super.key,
     required this.child,
     this.padding,
-    this.borderRadius = AppDimensions.borderRadiusLarge,
+    this.borderRadius = AppDimensions.borderRadiusMinLarge,
     this.color,
     this.boxShadow,
     this.border,

@@ -9,7 +9,7 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get appName => 'يصعد';
+  String get appName => 'Aspends';
 
   @override
   String get appTagline => 'الإنفاق الذكي، مبسط.';
@@ -123,14 +123,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get microPermissionDenied => 'تم رفض إذن الميكروفون';
 
   @override
-  String get microPermissionTitle => 'Microphone Access Required';
+  String get microPermissionTitle => 'يتطلب الوصول إلى الميكروفون';
 
   @override
   String get microPermissionDesc =>
-      'Aspends requires microphone access to let you input transaction details via voice commands. Your voice inputs are parsed completely offline on your device and are never uploaded or shared.';
+      'يحتاج Aspends إلى الوصول إلى الميكروفون للسماح لك بإدخال تفاصيل المعاملات عبر الأوامر الصوتية. تتم معالجة مدخلاتك الصوتية بالكامل دون اتصال بالإنترنت على جهازك ولا يتم رفعها أو مشاركتها أبدًا.';
 
   @override
-  String get microPermissionGrant => 'Enable Voice';
+  String get microPermissionGrant => 'تفعيل الصوت';
 
   @override
   String get appearance => 'مظهر';
@@ -251,10 +251,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get openSourceDesc => 'مصدر مفتوح بفخر على جيثب';
 
   @override
+  String get licenses => 'تراخيص المصادر المفتوحة';
+
+  @override
+  String get licensesDesc =>
+      'عرض تراخيص الجهات الخارجية المستخدمة في هذا التطبيق';
+
+  @override
   String get rateApp => 'معدل تصاعدي';
 
   @override
   String get rateAppDesc => 'ادعمنا بتقييم 5 نجوم';
+
+  @override
+  String get couldNotLaunchUrl => 'تعذر فتح الرابط';
+
+  @override
+  String errorWithDetails(String error) {
+    return 'خطأ: $error';
+  }
+
+  @override
+  String get madeWithLove => 'صُنع بـ ❤️ من أجل مالية أفضل';
 
   @override
   String get howAspendWorks => 'كيف يعمل أسبيند';
@@ -315,7 +333,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get grant => 'منحة';
 
   @override
-  String get appNameShort => 'يصعد';
+  String get appNameShort => 'Aspends';
 
   @override
   String get splashTagline => 'إدارة الأموال الذكية';
@@ -324,10 +342,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get budget => 'ميزانية';
 
   @override
+  String overBudgetBy(String amount) {
+    return '⚠️ تجاوزت الميزانية بمقدار $amount';
+  }
+
+  @override
   String get balanceDetailsTitle => 'تفاصيل الرصيد';
 
   @override
   String get editBalanceTitle => 'تحرير الرصيد';
+
+  @override
+  String get tapHoldToEditBalance => 'انقر مع الاستمرار لتعديل الرصيد';
+
+  @override
+  String get longPressBalanceCardHint =>
+      'اضغط مطولاً على بطاقة الرصيد في الشاشة الرئيسية';
 
   @override
   String get newBalanceLabel => 'توازن جديد';
@@ -494,6 +524,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get requestMoney => 'طلب المال';
 
   @override
+  String get requestMoneyTooltip => 'طلب أموال عبر UPI';
+
+  @override
   String get generateQr => 'إنشاء QR للدفع';
 
   @override
@@ -526,7 +559,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String settleBalanceDesc(String amount) {
-    return 'سيؤدي هذا إلى إضافة معاملة بقيمة ₹$amount ليصل الرصيد إلى الصفر. يكمل؟';
+    return 'سيؤدي هذا إلى إضافة معاملة بقيمة $amount ليصل الرصيد إلى الصفر. يكمل؟';
   }
 
   @override
@@ -764,4 +797,628 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get exportPdfDesc => 'إنشاء تقارير PDF';
+
+  @override
+  String get biometricNotSupported =>
+      'المصادقة البيومترية غير مدعومة على هذا الجهاز';
+
+  @override
+  String get noBiometricMethods => 'لا توجد طرق مصادقة بيومترية متاحة';
+
+  @override
+  String get authenticateReason => 'تحقق من هويتك لتفعيل قفل التطبيق';
+
+  @override
+  String get authFailedAppLockNotEnabled =>
+      'فشلت المصادقة. لم يتم تفعيل قفل التطبيق.';
+
+  @override
+  String get appLockEnabledSuccess => 'تم تفعيل قفل التطبيق بنجاح';
+
+  @override
+  String get appLockDisabledSuccess => 'تم إلغاء تفعيل قفل التطبيق بنجاح';
+
+  @override
+  String get failedToEnableAppLock => 'فشل تفعيل قفل التطبيق';
+
+  @override
+  String get failedToDisableAppLock => 'فشل إلغاء تفعيل قفل التطبيق';
+
+  @override
+  String get pickAppColor => 'اختر لون التطبيق';
+
+  @override
+  String get reset => 'إعادة تعيين';
+
+  @override
+  String get selectAction => 'اختيار';
+
+  @override
+  String get appColorResetDefault =>
+      'تمت إعادة تعيين لون التطبيق إلى الافتراضي!';
+
+  @override
+  String get deviceNotSupportBiometricsOrAuth =>
+      'لا يدعم الجهاز البصمة الحيوية أو مصادقة الجهاز.';
+
+  @override
+  String get appLockEnabledDot => 'تم تفعيل قفل التطبيق.';
+
+  @override
+  String get appLockDisabledDot => 'تم إلغاء تفعيل قفل التطبيق.';
+
+  @override
+  String get cautionToUse => 'احذر عند الاستخدام';
+
+  @override
+  String get autoDetectCautionDesc =>
+      'هذه الميزة ليست دقيقة بنسبة 100% ولكنها قد تعمل. تتم معالجة جميع بيانات الرسائل النصية والإشعارات محليًا بالكامل على جهازك لضمان خصوصية تامة.';
+
+  @override
+  String get autoDetectSettingSubtitle =>
+      'اكتشاف المعاملات تلقائيًا من الإشعارات';
+
+  @override
+  String get permissionsRequiredNoAccess =>
+      'الأذونات مطلوبة: لم يتم منح إذن الوصول إلى الإشعارات أو الرسائل النصية. لا يمكن تفعيل الاكتشاف التلقائي.';
+
+  @override
+  String get noteNotificationAccessMissing =>
+      'ملاحظة: إذن الوصول إلى الإشعارات مفقود. سيعمل اكتشاف الرسائل النصية فقط.';
+
+  @override
+  String get noteSmsPermissionMissing =>
+      'ملاحظة: إذن الرسائل النصية مفقود. سيعمل اكتشاف الإشعارات فقط.';
+
+  @override
+  String get autoDetectionEnabledExclaim => 'تم تفعيل الاكتشاف التلقائي!';
+
+  @override
+  String get autoDetectionDisabledExclaim =>
+      'تم إلغاء تفعيل الاكتشاف التلقائي!';
+
+  @override
+  String get processRecentDataTitle => 'معالجة البيانات الأخيرة';
+
+  @override
+  String get processRecentDataSubtitle =>
+      'فحص الإشعارات الأخيرة بحثًا عن معاملات';
+
+  @override
+  String get recentDataProcessed => 'تمت معالجة البيانات الأخيرة بنجاح!';
+
+  @override
+  String get errorProcessingData => 'خطأ في معالجة البيانات';
+
+  @override
+  String get testDetectionLogicTitle => 'اختبار منطق الاكتشاف';
+
+  @override
+  String get testDetectionLogicSubtitle => 'محاكاة إشعار للتحقق من دقة التحليل';
+
+  @override
+  String get showDetectionHistoryTitle => 'عرض سجل الاكتشاف';
+
+  @override
+  String get showDetectionHistorySubtitle =>
+      'عرض سجلات تفصيلية للمعاملات المكتشفة';
+
+  @override
+  String get autoDeleteUndetectedTitle => 'الحذف التلقائي للسجل غير المكتشف';
+
+  @override
+  String get autoDeleteUndetectedSubtitle =>
+      'حذف العناصر غير المكتشفة بعد 12 ساعة';
+
+  @override
+  String get testParserDiagnosticTitle => 'تشخيص اختبار المحلل';
+
+  @override
+  String get testParserDiagnosticDesc =>
+      'أدخل نص إشعار كعينة لترى كيف يتعامل المحلل معه.';
+
+  @override
+  String get pasteNotificationHint => 'الصق نص الإشعار هنا...';
+
+  @override
+  String get statusBalanceSync => 'مزامنة الرصيد';
+
+  @override
+  String get statusNoActionDetected => 'لم يتم اكتشاف أي إجراء';
+
+  @override
+  String get transactionType => 'النوع';
+
+  @override
+  String get resultLabelMerchant => 'التاجر';
+
+  @override
+  String get resultLabelBank => 'البنك';
+
+  @override
+  String get balanceLabel => 'الرصيد';
+
+  @override
+  String get resultLabelConfidence => 'مستوى الثقة';
+
+  @override
+  String get unknown => 'غير معروف';
+
+  @override
+  String get general => 'عام';
+
+  @override
+  String get notAvailable => 'غير متاح';
+
+  @override
+  String get close => 'إغلاق';
+
+  @override
+  String get parseText => 'تحليل النص';
+
+  @override
+  String get deleteAllDataTitle => 'حذف جميع البيانات';
+
+  @override
+  String get deleteAllDataWarningSubtitle =>
+      '⚠️ لا يمكن التراجع عن هذا الإجراء';
+
+  @override
+  String get resetIntroTitle => 'إعادة تعيين المقدمة';
+
+  @override
+  String get resetIntroSubtitle => 'إظهار شاشات المقدمة مرة أخرى';
+
+  @override
+  String get incomeCategories => 'فئات الدخل';
+
+  @override
+  String get incomeCategoriesDesc => 'إدارة فئات الدخل';
+
+  @override
+  String get expenseCategories => 'فئات المصروفات';
+
+  @override
+  String get expenseCategoriesDesc => 'إدارة فئات المصروفات';
+
+  @override
+  String get accountsTitle => 'الحسابات';
+
+  @override
+  String get accountsDesc => 'إدارة حساباتك';
+
+  @override
+  String get enterNamePlaceholder => 'أدخل الاسم...';
+
+  @override
+  String get aboutAppSubtitle => 'المطور، الخصوصية، الدعم والمزيد';
+
+  @override
+  String get setMonthlySpendingLimit => 'حدد حدًا أقصى للإنفاق الشهري';
+
+  @override
+  String get joinPreviousMonthBalanceTitle => 'ضم رصيد الشهر السابق';
+
+  @override
+  String get joinPreviousMonthBalanceDesc =>
+      'تضمين رصيد الشهر السابق في الإجمالي الحالي';
+
+  @override
+  String get setMonthlyBudgetTitle => 'تحديد الميزانية الشهرية';
+
+  @override
+  String get budgetAmountLabel => 'مبلغ الميزانية';
+
+  @override
+  String get budgetUpdated => 'تم تحديث الميزانية!';
+
+  @override
+  String get confirmDeleteTitle => 'تأكيد الحذف';
+
+  @override
+  String get confirmDeleteAllDesc =>
+      'هل أنت متأكد أنك تريد حذف جميع المعاملات وإعادة تعيين رصيدك؟ لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get deleteAllButton => 'حذف الكل';
+
+  @override
+  String get failedDeleteAllData =>
+      'فشل حذف جميع البيانات. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get resetIntroConfirmDesc =>
+      'سيؤدي هذا إلى إظهار شاشات المقدمة مرة أخرى في المرة القادمة التي تفتح فيها التطبيق. ستظل بياناتك دون تغيير.';
+
+  @override
+  String editFieldTitle(String field) {
+    return 'تعديل $field';
+  }
+
+  @override
+  String enterFieldHint(String field) {
+    return 'أدخل $field';
+  }
+
+  @override
+  String statusLabel(String status) {
+    return 'الحالة: $status';
+  }
+
+  @override
+  String manageItemsTitle(String type) {
+    return 'إدارة $type';
+  }
+
+  @override
+  String noItemsFound(String type) {
+    return 'لم يتم العثور على $type.';
+  }
+
+  @override
+  String addItemButton(String type) {
+    return 'إضافة $type';
+  }
+
+  @override
+  String editItemTitle(String type) {
+    return 'تعديل $type';
+  }
+
+  @override
+  String itemNameLabel(String type) {
+    return 'اسم $type';
+  }
+
+  @override
+  String monthlyLimitSubtitle(String budget) {
+    return 'الحد الشهري: $budget';
+  }
+
+  @override
+  String failedResetIntro(String error) {
+    return 'فشلت إعادة تعيين المقدمة. يرجى المحاولة مرة أخرى.\\n$error';
+  }
+
+  @override
+  String get failedUpdateAutoDetection => 'فشل تحديث الاكتشاف التلقائي';
+
+  @override
+  String get actionCannotBeUndone => 'لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String deleteTransactionsCountTitle(int count) {
+    return 'حذف $count معاملة؟';
+  }
+
+  @override
+  String deletedTransactionsCount(int count) {
+    return 'تم حذف $count معاملة';
+  }
+
+  @override
+  String get transactionHistoryTitle => 'سجل المعاملات';
+
+  @override
+  String get upiIdMissingTitle => 'معرف UPI مفقود';
+
+  @override
+  String get upiIdMissingDesc =>
+      'يرجى تعيين معرف UPI الخاص بك في الإعدادات لطلب الأموال عبر رمز الاستجابة السريعة.';
+
+  @override
+  String get openSettings => 'فتح الإعدادات';
+
+  @override
+  String get recipientFallback => 'المستلم';
+
+  @override
+  String get paymentLinkCopied => 'تم نسخ رابط الدفع!';
+
+  @override
+  String get linkButton => 'الرابط';
+
+  @override
+  String get shareQr => 'مشاركة رمز الاستجابة السريعة';
+
+  @override
+  String get upiPaymentLinkSubject => 'رابط دفع UPI';
+
+  @override
+  String requestingFrom(String name) {
+    return 'طلب من $name';
+  }
+
+  @override
+  String upiIdColonValue(String id) {
+    return 'معرف UPI: $id';
+  }
+
+  @override
+  String failedShareQr(String error) {
+    return 'فشلت مشاركة صورة رمز الاستجابة السريعة: $error';
+  }
+
+  @override
+  String payViaUpiQrFor(String name) {
+    return 'الدفع عبر رمز UPI QR لـ $name';
+  }
+
+  @override
+  String get pleaseSelectPerson => 'يرجى اختيار شخص';
+
+  @override
+  String get amountInInr => 'المبلغ بالروبية الهندية (INR)';
+
+  @override
+  String get currency => 'العملة';
+
+  @override
+  String get selectCurrency => 'اختر العملة';
+
+  @override
+  String get searchCurrency => 'ابحث عن عملة';
+
+  @override
+  String get autoDetectCurrency => 'الكشف التلقائي عن العملة';
+
+  @override
+  String get autoDetectCurrencyDesc => 'المطابقة التلقائية مع منطقة جهازك';
+
+  @override
+  String get popularCurrencies => 'شائعة';
+
+  @override
+  String get allCurrencies => 'جميع العملات';
+
+  @override
+  String get noCurrencyFound => 'لم يتم العثور على عملة';
+
+  @override
+  String get requiredField => 'مطلوب';
+
+  @override
+  String get quickCategories => 'فئات سريعة';
+
+  @override
+  String get saveToPerson => 'الحفظ لدى شخص';
+
+  @override
+  String get noPeopleCreateHint =>
+      'لم تتم إضافة أي أشخاص بعد. أنشئ أشخاصًا ضمن قسم الأشخاص.';
+
+  @override
+  String get selectPersonLabel => 'اختر شخصًا';
+
+  @override
+  String get selectCategoryTitle => 'اختر الفئة';
+
+  @override
+  String get updateTransactionButton => 'تحديث المعاملة';
+
+  @override
+  String get saveTransactionButton => 'حفظ المعاملة';
+
+  @override
+  String linkedToRecord(String name) {
+    return 'تم الربط بسجل $name';
+  }
+
+  @override
+  String selectItemTitle(String type) {
+    return 'اختر $type';
+  }
+
+  @override
+  String get personSingular => 'شخص';
+
+  @override
+  String get error => 'خطأ';
+
+  @override
+  String get retry => 'إعادة المحاولة';
+
+  @override
+  String get setupFailedRetry => 'فشل إكمال الإعداد. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get backButton => 'رجوع';
+
+  @override
+  String get voiceInputExampleHint => 'قل شيئًا مثل \"أنفقت 500 على العشاء\"';
+
+  @override
+  String get autoDetectionEnabledSuccess => 'تم تفعيل الاكتشاف التلقائي بنجاح!';
+
+  @override
+  String openingRequestQrFor(String name) {
+    return 'فتح رمز طلب الأموال لـ $name';
+  }
+
+  @override
+  String get add => 'إضافة';
+
+  @override
+  String get uncategorized => 'غير مصنف';
+
+  @override
+  String get timeLabel => 'الوقت';
+
+  @override
+  String get statusColumnLabel => 'الحالة';
+
+  @override
+  String get completedLabel => 'مكتمل';
+
+  @override
+  String get notes => 'ملاحظات';
+
+  @override
+  String get serviceLabel => 'الخدمة';
+
+  @override
+  String get refIdLabel => 'معرف المرجع';
+
+  @override
+  String get detectedViaLabel => 'تم الاكتشاف عبر';
+
+  @override
+  String get attachmentsLabel => 'المرفقات';
+
+  @override
+  String get originalLogLabel => 'السجل الأصلي';
+
+  @override
+  String get noNoteProvided => 'لم يتم تقديم أي ملاحظة';
+
+  @override
+  String get tapToUnlock => 'اضغط لفتح القفل';
+
+  @override
+  String get addPeopleEmptyDesc => 'أضف أشخاصًا لتتبع المعاملات معهم';
+
+  @override
+  String get noPeopleMatchSearch => 'لا يوجد أشخاص يطابقون بحثك';
+
+  @override
+  String get okay => 'حسنًا';
+
+  @override
+  String get confirm => 'تأكيد';
+
+  @override
+  String get ok => 'موافق';
+
+  @override
+  String get unexpectedErrorOccurred => 'حدث خطأ غير متوقع';
+
+  @override
+  String get autoDetectionActive => 'الاكتشاف التلقائي نشط';
+
+  @override
+  String get unknownSource => 'مصدر غير معروف';
+
+  @override
+  String get noMessageContentAvailable => 'لا يوجد محتوى رسالة متاح';
+
+  @override
+  String get addManually => 'إضافة يدويًا';
+
+  @override
+  String get detectedAsIncome => 'تم اكتشافه كدخل';
+
+  @override
+  String get detectedAsExpense => 'تم اكتشافه كمصروف';
+
+  @override
+  String sourceColonValue(String source) {
+    return 'المصدر: $source';
+  }
+
+  @override
+  String get sourceNotification => 'إشعار';
+
+  @override
+  String get sourceSms => 'رسالة نصية';
+
+  @override
+  String get sourceRecheckHistory => 'إعادة فحص السجل';
+
+  @override
+  String get sourceManualAddHistory => 'إضافة يدوية (من السجل)';
+
+  @override
+  String get recentLabel => 'الأحدث';
+
+  @override
+  String get oldestLabel => 'الأقدم';
+
+  @override
+  String get highestLabel => 'الأعلى';
+
+  @override
+  String get lowestLabel => 'الأدنى';
+
+  @override
+  String get glassBlurEffectsTitle => 'تأثيرات الضبابية الزجاجية';
+
+  @override
+  String get glassBlurEffectsSubtitle =>
+      'تأثير ضبابي ناعم على اللوحات الزجاجية ومربعات الحوار — يستهلك المزيد من قدرة المعالجة، لذا أوقفه على الأجهزة القديمة لأداء أكثر سلاسة.';
+
+  @override
+  String get tourBalanceCardTitle => 'Your Balance';
+
+  @override
+  String get tourBalanceCardDesc =>
+      'Tap for income & expense details. Long-press to edit your starting balance.';
+
+  @override
+  String get tourAddIncomeTitle => 'Add Income';
+
+  @override
+  String get tourAddIncomeDesc => 'Log money you\'ve received.';
+
+  @override
+  String get tourMicTitle => 'Record by Voice';
+
+  @override
+  String get tourMicDesc =>
+      'Press and hold, say the amount and what it was for, then release — it\'s saved automatically.';
+
+  @override
+  String get tourAddExpenseTitle => 'Add Expense';
+
+  @override
+  String get tourAddExpenseDesc => 'Log money you\'ve spent.';
+
+  @override
+  String get tourAddPersonTitle => 'Add a Person';
+
+  @override
+  String get tourAddPersonDesc => 'Track what you owe each other over time.';
+
+  @override
+  String get tourPersonCardTitle => 'Open Their Ledger';
+
+  @override
+  String get tourPersonCardDesc =>
+      'Tap a card to see the full history with this person and settle up.';
+
+  @override
+  String get tourPayNowTitle => 'Settle Up';
+
+  @override
+  String get tourPayNowDesc => 'Pay what you owe them directly via UPI.';
+
+  @override
+  String get tourEditPersonTitle => 'Edit Person';
+
+  @override
+  String get tourEditPersonDesc => 'Change their name or photo.';
+
+  @override
+  String get tourDeletePersonTitle => 'Careful — Long-Press Deletes';
+
+  @override
+  String get tourDeletePersonDesc =>
+      'Long-pressing this header permanently deletes this person and their history. You\'ll be asked to confirm first.';
+
+  @override
+  String get tourDeleteTxTitle => 'Long-Press to Delete';
+
+  @override
+  String get tourDeleteTxDesc =>
+      'Tap a transaction to edit it, or long-press to delete it.';
+
+  @override
+  String get replayTipsTitle => 'Show Tips Again';
+
+  @override
+  String get replayTipsSubtitle =>
+      'Replay the pointer-hint tours on Home, People, and Person Details.';
+
+  @override
+  String get replayTipsDone =>
+      'Tips will show again next time you open those screens.';
 }

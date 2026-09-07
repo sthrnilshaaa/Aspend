@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:aspends_tracker/core/utils/blur_utils.dart';
 import 'package:aspends_tracker/core/const/app_colors.dart';
 import 'package:aspends_tracker/core/const/app_dimensions.dart';
 import 'package:aspends_tracker/widgets/floating_action_button.dart';
@@ -13,15 +14,20 @@ import '../core/const/app_assets.dart';
 import '../core/models/person.dart';
 import '../core/models/person_transaction.dart';
 import '../core/view_models/person_view_model.dart';
+import '../core/view_models/theme_view_model.dart';
 import '../../widgets/header_delegate.dart';
 import '../../widgets/add_transaction_dialog.dart';
 import '../../widgets/glass_app_bar.dart';
 import '../../widgets/empty_state_view.dart';
+import '../../widgets/empty_state_illustrations.dart';
 import '../../widgets/person_transaction_item.dart';
 import '../../widgets/person_detail_header.dart';
 import '../core/const/app_typography.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:aspends_tracker/l10n/generated/app_localizations.dart';
+import 'package:showcaseview/showcaseview.dart';
+import '../core/services/tour_service.dart';
+import '../core/const/tour_style.dart';
 
 class PersonDetailPage extends StatefulWidget {
   final Person person;
@@ -43,9 +49,18 @@ class _PersonDetailPageState extends State<PersonDetailPage>
   PersonTransactionSortOption _sortOption =
       PersonTransactionSortOption.dateNewest;
 
+  // Pointer-hint tour — see the matching fields/comment in _HomePageState.
+  // This page is pushed fresh via Navigator each time (no shared PageView
+  // to worry about), so it can simply start once from initState.
+  final GlobalKey _tourHeaderKey = GlobalKey();
+  final GlobalKey _tourEditKey = GlobalKey();
+  final GlobalKey _tourPayNowKey = GlobalKey();
+  final GlobalKey _tourFirstTxKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
+    _maybeStartTour();
 
     _fadeController = AnimationController(
       duration: const Duration(milliseconds: 800),
@@ -82,6 +97,35 @@ class _PersonDetailPageState extends State<PersonDetailPage>
       if (shouldShowFab != _showFab) {
         setState(() => _showFab = shouldShowFab);
       }
+    });
+  }
+
+  /// Starts the Person Details pointer-hint tour once, the first time any
+  /// person's page is opened (not once per person) — waited past the
+  /// entrance fade/slide so the header and first row are actually settled
+  /// before anything gets pointed at.
+  void _maybeStartTour() {
+    TourService.hasSeenPersonDetails().then((seen) async {
+      if (seen || !mounted) return;
+      await Future.delayed(const Duration(milliseconds: 850));
+      if (!mounted) return;
+
+      final personViewModel = context.read<PersonViewModel>();
+      final hasTransactions =
+          personViewModel.transactionsFor(widget.person.name).isNotEmpty;
+      final isNegative =
+          personViewModel.getTotalForPerson(widget.person.name) < 0;
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        ShowcaseView.get().startShowCase([
+          _tourHeaderKey,
+          if (isNegative) _tourPayNowKey,
+          _tourEditKey,
+          if (hasTransactions) _tourFirstTxKey,
+        ]);
+        TourService.markPersonDetailsSeen();
+      });
     });
   }
 
@@ -164,8 +208,9 @@ class _PersonDetailPageState extends State<PersonDetailPage>
                 isScrollControlled: true,
                 backgroundColor: Colors.transparent,
                 barrierColor: Colors.black.withValues(alpha: 0.3),
-                builder: (context) => BackdropFilter(
+                builder: (context) => ConditionalBackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  isRouteBarrier: true,
                   child: AddTransactionDialog(
                     isIncome: false,
                     initialNote: widget.person.name,
@@ -179,8 +224,9 @@ class _PersonDetailPageState extends State<PersonDetailPage>
                 isScrollControlled: true,
                 backgroundColor: Colors.transparent,
                 barrierColor: Colors.black.withValues(alpha: 0.3),
-                builder: (context) => BackdropFilter(
+                builder: (context) => ConditionalBackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  isRouteBarrier: true,
                   child: AddTransactionDialog(
                     isIncome: true,
                     initialNote: widget.person.name,
@@ -230,24 +276,32 @@ class _PersonDetailPageState extends State<PersonDetailPage>
               if (!isPositive)
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: GestureDetector(
-                    onTap: () => _payNow(total, person),
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: AppColors.accentRed.withValues(alpha: 0.1),
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: AppColors.accentRed.withValues(alpha: 0.2),
-                          width: 1,
+                  child: Showcase(
+                    key: _tourPayNowKey,
+                    title: l10n.tourPayNowTitle,
+                    description: l10n.tourPayNowDesc,
+                    titleTextStyle: TourStyle.title(),
+                    descTextStyle: TourStyle.description(),
+                    targetShapeBorder: const CircleBorder(),
+                    child: GestureDetector(
+                      onTap: () => _payNow(total, person),
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: AppColors.accentRed.withValues(alpha: 0.1),
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: AppColors.accentRed.withValues(alpha: 0.2),
+                            width: 1,
+                          ),
                         ),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.payment_rounded,
-                          color: AppColors.accentRed,
-                          size: 20,
+                        child: const Center(
+                          child: Icon(
+                            Icons.payment_rounded,
+                            color: AppColors.accentRed,
+                            size: 20,
+                          ),
                         ),
                       ),
                     ),
@@ -255,32 +309,39 @@ class _PersonDetailPageState extends State<PersonDetailPage>
                 ),
               Padding(
                 padding: const EdgeInsets.only(right: 16.0),
-                child: GestureDetector(
-                  onTap: () {
-                    HapticFeedback.lightImpact();
-                    _showEditPersonDialog(context, person);
-                  },
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color:
-                          theme.colorScheme.surface.withValues(alpha: 0.1),
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: theme.dividerColor.withValues(alpha: 0.1),
-                        width: 1,
+                child: Showcase(
+                  key: _tourEditKey,
+                  title: l10n.tourEditPersonTitle,
+                  description: l10n.tourEditPersonDesc,
+                  titleTextStyle: TourStyle.title(),
+                  descTextStyle: TourStyle.description(),
+                  targetShapeBorder: const CircleBorder(),
+                  child: GestureDetector(
+                    onTap: () {
+                      HapticFeedback.lightImpact();
+                      _showEditPersonDialog(context, person);
+                    },
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.surface.withValues(alpha: 0.1),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: theme.dividerColor.withValues(alpha: 0.1),
+                          width: 1,
+                        ),
                       ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: SvgPicture.asset(
-                        SvgAppIcons.editIcon,
-                        colorFilter: ColorFilter.mode(
-                            isPositive
-                                ? AppColors.accentGreen
-                                : AppColors.accentRed,
-                            BlendMode.srcIn),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: SvgPicture.asset(
+                          SvgAppIcons.editIcon,
+                          colorFilter: ColorFilter.mode(
+                              isPositive
+                                  ? AppColors.accentGreen
+                                  : AppColors.accentRed,
+                              BlendMode.srcIn),
+                        ),
                       ),
                     ),
                   ),
@@ -293,22 +354,34 @@ class _PersonDetailPageState extends State<PersonDetailPage>
             delegate: HomeHeaderDelegate(
               height: 210,
               child: RepaintBoundary(
-                child: GestureDetector(
-                  onLongPress: () {
-                    HapticFeedback.lightImpact();
-                    _showDeleteConfirmation(context, person);
-                  },
-                  child: PersonDetailHeader(
-                    person: person,
-                    total: total,
-                    txsCount: txsCount,
-                    fadeAnimation: _fadeAnimation,
-                    slideAnimation: _slideAnimation,
-                    currentSortOption: _sortOption,
-                    onShowSortOptions: () {
-                      HapticFeedback.selectionClick();
-                      _showSortOptions(context);
+                child: Showcase(
+                  key: _tourHeaderKey,
+                  title: l10n.tourDeletePersonTitle,
+                  description: l10n.tourDeletePersonDesc,
+                  // Tinted red and not the tour's default styling — this is
+                  // the one destructive, easy-to-trigger-by-accident gesture
+                  // in the whole tour, so it should visibly read as
+                  // "careful" rather than blend in with the rest.
+                  tooltipBackgroundColor: AppColors.accentRed,
+                  titleTextStyle: TourStyle.title(color: Colors.white),
+                  descTextStyle: TourStyle.description(color: Colors.white),
+                  child: GestureDetector(
+                    onLongPress: () {
+                      HapticFeedback.lightImpact();
+                      _showDeleteConfirmation(context, person);
                     },
+                    child: PersonDetailHeader(
+                      person: person,
+                      total: total,
+                      txsCount: txsCount,
+                      fadeAnimation: _fadeAnimation,
+                      slideAnimation: _slideAnimation,
+                      currentSortOption: _sortOption,
+                      onShowSortOptions: () {
+                        HapticFeedback.selectionClick();
+                        _showSortOptions(context);
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -318,7 +391,8 @@ class _PersonDetailPageState extends State<PersonDetailPage>
             SliverFillRemaining(
               hasScrollBody: false,
               child: EmptyStateView(
-                icon: Icons.receipt_long_outlined,
+                illustration:
+                    ReceiptEmptyIllustration(color: theme.colorScheme.primary),
                 title: l10n.noTransactionsYet,
                 description: l10n.addFirstTransaction,
               ),
@@ -336,11 +410,17 @@ class _PersonDetailPageState extends State<PersonDetailPage>
 
   Widget _buildGroupedTransactionList(
       Map<String, List<PersonTransaction>> groupedTxs, ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     final flatList = [];
     groupedTxs.forEach((date, items) {
       flatList.add(date);
       flatList.addAll(items);
     });
+
+    // Only the very first transaction row gets the tour's pointer hint —
+    // tracked here rather than by list index since flatList interleaves
+    // date-header strings with the actual PersonTransaction rows.
+    var firstTxShowcased = false;
 
     return SliverToBoxAdapter(
       child: RepaintBoundary(
@@ -362,13 +442,26 @@ class _PersonDetailPageState extends State<PersonDetailPage>
             }
 
             final tx = item as PersonTransaction;
-            return PersonTransactionItem(
+            final tile = PersonTransactionItem(
               tx: tx,
               animation: _fadeAnimation,
               onLongPress: () {
                 HapticFeedback.lightImpact();
                 _showDeleteTransactionDialog(context, tx);
               },
+            );
+
+            if (firstTxShowcased) return tile;
+            firstTxShowcased = true;
+            return Showcase(
+              key: _tourFirstTxKey,
+              title: l10n.tourDeleteTxTitle,
+              description: l10n.tourDeleteTxDesc,
+              titleTextStyle: TourStyle.title(),
+              descTextStyle: TourStyle.description(),
+              targetBorderRadius:
+                  BorderRadius.circular(AppDimensions.borderRadiusXLarge),
+              child: tile,
             );
           }).toList(),
         ),
@@ -380,16 +473,19 @@ class _PersonDetailPageState extends State<PersonDetailPage>
       BuildContext context, double currentTotal, Person currentPerson) {
     if (currentTotal == 0) return;
     final l10n = AppLocalizations.of(context)!;
+    final currencySymbol = context.read<ThemeViewModel>().currencySymbol;
 
     showDialog(
       context: context,
-      builder: (ctx) => BackdropFilter(
+      builder: (ctx) => ConditionalBackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        isRouteBarrier: true,
         child: AlertDialog(
           title: Text(l10n.settleBalance,
               style: GoogleFonts.dmSans(fontWeight: FontWeight.bold)),
           content: Text(
-            l10n.settleBalanceDesc(currentTotal.abs().toStringAsFixed(2)),
+            l10n.settleBalanceDesc(
+                '$currencySymbol${currentTotal.abs().toStringAsFixed(2)}'),
             style: GoogleFonts.dmSans(),
           ),
           actions: [
@@ -405,8 +501,9 @@ class _PersonDetailPageState extends State<PersonDetailPage>
                   isScrollControlled: true,
                   backgroundColor: Colors.transparent,
                   barrierColor: Colors.black.withValues(alpha: 0.3),
-                  builder: (context) => BackdropFilter(
+                  builder: (context) => ConditionalBackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                    isRouteBarrier: true,
                     child: AddTransactionDialog(
                       isIncome: currentTotal < 0,
                       initialAmount: currentTotal.abs(),
@@ -428,8 +525,9 @@ class _PersonDetailPageState extends State<PersonDetailPage>
     final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
-      builder: (_) => BackdropFilter(
+      builder: (_) => ConditionalBackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        isRouteBarrier: true,
         child: AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -484,8 +582,9 @@ class _PersonDetailPageState extends State<PersonDetailPage>
     final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
-      builder: (_) => BackdropFilter(
+      builder: (_) => ConditionalBackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        isRouteBarrier: true,
         child: AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -543,8 +642,9 @@ class _PersonDetailPageState extends State<PersonDetailPage>
 
     showDialog(
       context: context,
-      builder: (_) => BackdropFilter(
+      builder: (_) => ConditionalBackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        isRouteBarrier: true,
         child: StatefulBuilder(
           builder: (context, setStateDialog) => AlertDialog(
             shape:
@@ -725,13 +825,14 @@ class _PersonDetailPageState extends State<PersonDetailPage>
       context: context,
       backgroundColor: Colors.transparent,
       barrierColor: Colors.black.withValues(alpha: 0.3),
-      builder: (context) => BackdropFilter(
+      builder: (context) => ConditionalBackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        isRouteBarrier: true,
         child: Container(
           decoration: BoxDecoration(
             color: theme.colorScheme.surface,
             borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(AppDimensions.borderRadiusXLarge)),
+                top: Radius.circular(AppDimensions.borderRadiusLarge)),
           ),
           padding: const EdgeInsets.all(AppDimensions.paddingLarge),
           child: Column(

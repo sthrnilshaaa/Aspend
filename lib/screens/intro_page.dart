@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
+import 'package:aspends_tracker/core/utils/blur_utils.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import '../core/view_models/theme_view_model.dart';
-import '../core/services/transaction_detection_service.dart';
-import '../core/services/native_bridge.dart';
 import '../core/const/app_constants.dart';
 import 'package:aspends_tracker/l10n/generated/app_localizations.dart';
-import '../widgets/monitoring_setup_dialog.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
@@ -110,8 +108,8 @@ class _IntroPageState extends State<IntroPage> with TickerProviderStateMixin {
 
   void _completeIntro() async {
     HapticFeedback.lightImpact();
+    final l10n = AppLocalizations.of(context)!;
     try {
-      final l10n = AppLocalizations.of(context)!;
       // Show loading indicator
       showDialog(
         context: context,
@@ -156,10 +154,13 @@ class _IntroPageState extends State<IntroPage> with TickerProviderStateMixin {
       await box.put(AppConstants.introCompletedKey, true);
       await box.put('introCompletedAt', DateTime.now().millisecondsSinceEpoch);
 
-      // Show auto-detection setup dialog
+      // Intro is done — go straight to the app. Auto-detection stays off
+      // until the person turns it on themselves from Settings or the Home
+      // empty state, where its (redesigned) setup dialog lives; we no
+      // longer force it on people right as they finish onboarding.
       if (mounted) {
         Navigator.of(context).pop(); // Close loading dialog
-        await _showAutoDetectionSetup(context);
+        _navigateToMainApp();
       }
     } catch (e) {
       // Close loading dialog if there's an error
@@ -174,13 +175,13 @@ class _IntroPageState extends State<IntroPage> with TickerProviderStateMixin {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text(
-                'Error',
+                l10n.error,
                 style: GoogleFonts.dmSans(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               content: Text(
-                'Failed to complete setup. Please try again.',
+                l10n.setupFailedRetry,
                 style: GoogleFonts.dmSans(),
               ),
               actions: [
@@ -190,7 +191,7 @@ class _IntroPageState extends State<IntroPage> with TickerProviderStateMixin {
                     _completeIntro(); // Retry
                   },
                   child: Text(
-                    'Retry',
+                    l10n.retry,
                     style: GoogleFonts.dmSans(
                       fontWeight: FontWeight.w600,
                     ),
@@ -202,19 +203,6 @@ class _IntroPageState extends State<IntroPage> with TickerProviderStateMixin {
         );
       }
     }
-  }
-
-  Future<void> _showAutoDetectionSetup(BuildContext context) async {
-    final result = await showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const MonitoringSetupDialog(),
-    );
-
-    if (result == true) {
-      await TransactionDetectionService.setEnabled(true);
-    }
-    _navigateToMainApp();
   }
 
   void _navigateToMainApp() {
@@ -315,7 +303,7 @@ class _IntroPageState extends State<IntroPage> with TickerProviderStateMixin {
                             );
                           },
                           child: Text(
-                            'Back',
+                            l10n.backButton,
                             style: GoogleFonts.dmSans(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -396,7 +384,7 @@ class _IntroPageState extends State<IntroPage> with TickerProviderStateMixin {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(58),
-              child: BackdropFilter(
+              child: ConditionalBackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                 child: Container(
                   decoration: BoxDecoration(

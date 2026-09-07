@@ -1,13 +1,13 @@
 import 'dart:ui';
+import 'package:aspends_tracker/core/utils/blur_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../core/const/app_colors.dart';
-import '../core/const/app_constants.dart';
 import '../core/const/app_dimensions.dart';
-import '../core/const/app_strings.dart';
+import '../core/const/app_links.dart';
 import '../core/view_models/theme_view_model.dart';
 import '../widgets/settings_widgets.dart';
 import 'package:aspends_tracker/l10n/generated/app_localizations.dart';
@@ -48,7 +48,7 @@ class AboutPage extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   ClipRRect(
-                    child: BackdropFilter(
+                    child: ConditionalBackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                       child: Container(
                         decoration: BoxDecoration(
@@ -95,7 +95,7 @@ class AboutPage extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: isDark ? Colors.black26 : Colors.white,
                               borderRadius: BorderRadius.circular(
-                                  AppDimensions.borderRadiusLarge),
+                                  AppDimensions.borderRadiusMinLarge),
                               boxShadow: [
                                 BoxShadow(
                                   color: primaryColor.withValues(alpha: 0.15),
@@ -152,15 +152,13 @@ class AboutPage extends StatelessWidget {
                   icon: Icons.description_outlined,
                   title: l10n.privacyPolicy,
                   subtitle: l10n.privacyPolicyDesc,
-                  onTap: () =>
-                      _launchUrl(context, AppConstants.privacyPolicyUrl),
+                  onTap: () => _launchUrl(context, AppLinks.privacyPolicy),
                 ),
                 SettingTile(
                   icon: Icons.help_outline_rounded,
                   title: l10n.helpSupport,
                   subtitle: l10n.telegramSupportDesc,
-                  onTap: () =>
-                      _launchUrl(context, AppConstants.supportTelegramUrl),
+                  onTap: () => _launchUrl(context, AppLinks.telegramSupport),
                 ),
                 const SizedBox(height: 32),
                 _buildSectionHeader(context, l10n.projectInfo),
@@ -168,23 +166,29 @@ class AboutPage extends StatelessWidget {
                   icon: Icons.code_rounded,
                   title: l10n.openSource,
                   subtitle: l10n.openSourceDesc,
-                  onTap: () => _launchUrl(
-                      context, 'https://github.com/SthrNilshaaa/Aspend'),
+                  onTap: () => _launchUrl(context, AppLinks.githubRepo),
                 ),
                 SettingTile(
                   icon: Icons.star_outline_rounded,
                   title: l10n.rateApp,
                   subtitle: l10n.rateAppDesc,
-                  onTap: () {
-                    // Placeholder for store link
-                  },
+                  onTap: () => _launchStoreListing(context),
+                ),
+                SettingTile(
+                  icon: Icons.article_outlined,
+                  title: l10n.licenses,
+                  subtitle: l10n.licensesDesc,
+                  onTap: () => showLicensePage(
+                    context: context,
+                    applicationName: l10n.appNameShort,
+                  ),
                 ),
                 const SizedBox(height: 48),
                 Center(
                   child: Column(
                     children: [
                       Text(
-                        'Made with ❤️ for better finance',
+                        l10n.madeWithLove,
                         style: GoogleFonts.dmSans(
                           fontSize: 13,
                           color: isDark ? Colors.white38 : Colors.black38,
@@ -232,15 +236,15 @@ class AboutPage extends StatelessWidget {
     final primaryColor = Theme.of(context).colorScheme.primary;
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(AppDimensions.borderRadiusLarge),
-      child: BackdropFilter(
+      borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMinLarge),
+      child: ConditionalBackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: primaryColor.withValues(alpha: 0.04),
             borderRadius:
-                BorderRadius.circular(AppDimensions.borderRadiusLarge),
+                BorderRadius.circular(AppDimensions.borderRadiusMinLarge),
             border: Border.all(
               color: primaryColor.withValues(alpha: 0.08),
               width: 1.5,
@@ -315,22 +319,33 @@ class AboutPage extends StatelessWidget {
   }
 
   Future<void> _launchUrl(BuildContext context, String urlString) async {
+    final l10n = AppLocalizations.of(context)!;
     final url = Uri.parse(urlString);
     try {
       if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Could not launch URL')),
+            SnackBar(content: Text(l10n.couldNotLaunchUrl)),
           );
         }
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
+          SnackBar(content: Text(l10n.errorWithDetails(e.toString()))),
         );
       }
     }
+  }
+
+  /// Opens the Play Store listing directly in the Play Store app when it's
+  /// installed, falling back to the web listing otherwise.
+  Future<void> _launchStoreListing(BuildContext context) async {
+    final marketUri = Uri.parse(AppLinks.playStoreAppUri);
+    final canOpenStoreApp = await canLaunchUrl(marketUri);
+    if (!context.mounted) return;
+    await _launchUrl(
+        context, canOpenStoreApp ? AppLinks.playStoreAppUri : AppLinks.playStoreWebUrl);
   }
 
   Widget _buildHowItWorksSection(BuildContext context) {
@@ -366,7 +381,7 @@ class AboutPage extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: primaryColor.withValues(alpha: 0.03),
-        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusLarge),
+        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMinLarge),
         border: Border.all(
           color: primaryColor.withValues(alpha: 0.08),
           width: 1.5,

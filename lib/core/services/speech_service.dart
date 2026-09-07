@@ -38,9 +38,9 @@ class SpeechService {
         _lastWords = result.recognizedWords;
         onResult(_lastWords);
       },
-      listenFor: const Duration(seconds: 30),
-      pauseFor: const Duration(seconds: 5),
       listenOptions: SpeechListenOptions(
+        listenFor: const Duration(seconds: 30),
+        pauseFor: const Duration(seconds: 5),
         cancelOnError: true,
         listenMode: ListenMode.confirmation,
       ),

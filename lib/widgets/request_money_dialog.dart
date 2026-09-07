@@ -11,6 +11,7 @@ import 'package:share_plus/share_plus.dart';
 import '../core/view_models/theme_view_model.dart';
 import '../core/const/app_dimensions.dart';
 import '../core/const/app_colors.dart';
+import '../l10n/generated/app_localizations.dart';
 
 class RequestMoneyDialog extends StatelessWidget {
   final String personName;
@@ -25,28 +26,27 @@ class RequestMoneyDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final themeViewModel = context.watch<ThemeViewModel>();
     final upiId = themeViewModel.upiId;
-    final upiName = themeViewModel.upiName ?? 'Recipient';
+    final upiName = themeViewModel.upiName ?? l10n.recipientFallback;
     final theme = Theme.of(context);
 
     if (upiId == null || upiId.isEmpty) {
       return AlertDialog(
-        title: const Text('UPI ID Missing'),
-        content: const Text(
-          'Please set your UPI ID in Settings to request money via QR code.',
-        ),
+        title: Text(l10n.upiIdMissingTitle),
+        content: Text(l10n.upiIdMissingDesc),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
               // Navigation to settings is handled by the caller or we can use a callback
             },
-            child: const Text('Open Settings'),
+            child: Text(l10n.openSettings),
           ),
         ],
       );
@@ -76,7 +76,7 @@ class RequestMoneyDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Request Money',
+              l10n.requestMoney,
               style: GoogleFonts.dmSans(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class RequestMoneyDialog extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Requesting from $personName',
+              l10n.requestingFrom(personName),
               style: GoogleFonts.dmSans(
                 fontSize: 14,
                 color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
@@ -118,7 +118,7 @@ class RequestMoneyDialog extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'UPI ID: $upiId',
+              l10n.upiIdColonValue(upiId),
               style: GoogleFonts.dmSans(
                 fontSize: 12,
                 color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
@@ -132,11 +132,11 @@ class RequestMoneyDialog extends StatelessWidget {
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: upiUri));
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Payment link copied!')),
+                        SnackBar(content: Text(l10n.paymentLinkCopied)),
                       );
                     },
                     icon: const Icon(Icons.copy_rounded, size: 18),
-                    label: const Text('Link'),
+                    label: Text(l10n.linkButton),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
@@ -147,7 +147,7 @@ class RequestMoneyDialog extends StatelessWidget {
                   child: OutlinedButton.icon(
                     onPressed: () => _shareQrImage(context),
                     icon: const Icon(Icons.share_rounded, size: 18),
-                    label: const Text('Share QR'),
+                    label: Text(l10n.shareQr),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
@@ -163,7 +163,7 @@ class RequestMoneyDialog extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
-                child: const Text('Done'),
+                child: Text(l10n.done),
               ),
             ),
           ],
@@ -188,10 +188,12 @@ class RequestMoneyDialog extends StatelessWidget {
       final file = await File('${tempDir.path}/upi_qr_${DateTime.now().millisecondsSinceEpoch}.png').create();
       await file.writeAsBytes(pngBytes);
 
+      if (!context.mounted) return;
+      final l10n = AppLocalizations.of(context)!;
       final result = await SharePlus.instance.share(ShareParams(
         files: [XFile(file.path)],
-        text: 'Pay via UPI QR for $personName',
-        subject: 'UPI Payment Link',
+        text: l10n.payViaUpiQrFor(personName),
+        subject: l10n.upiPaymentLinkSubject,
       ));
 
       if (result.status == ShareResultStatus.success) {
@@ -200,8 +202,9 @@ class RequestMoneyDialog extends StatelessWidget {
     } catch (e) {
       debugPrint('Error sharing QR: $e');
       if (context.mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to share QR image: $e')),
+          SnackBar(content: Text(l10n.failedShareQr(e.toString()))),
         );
       }
     }

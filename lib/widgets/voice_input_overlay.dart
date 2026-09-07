@@ -18,7 +18,7 @@ class VoiceInputOverlay extends StatefulWidget {
 
 class _VoiceInputOverlayState extends State<VoiceInputOverlay> with SingleTickerProviderStateMixin {
   final SpeechService _speechService = SpeechService();
-  String _currentText = "";
+  String _currentText = '';
   late AnimationController _pulseController;
 
   @override
@@ -38,7 +38,7 @@ class _VoiceInputOverlayState extends State<VoiceInputOverlay> with SingleTicker
       _startRecording();
     } else {
       if (mounted) {
-        setState(() => _currentText = "speech_unavailable_flag");
+        setState(() => _currentText = 'speech_unavailable_flag');
       }
     }
   }
@@ -85,11 +85,11 @@ class _VoiceInputOverlayState extends State<VoiceInputOverlay> with SingleTicker
     String displayText = _currentText;
     if (displayText.isEmpty) {
       displayText = l10n.listeningHint;
-    } else if (displayText == "speech_unavailable_flag") {
+    } else if (displayText == 'speech_unavailable_flag') {
       displayText = l10n.speechUnavailable;
     }
 
-    return BackdropFilter(
+    return ConditionalBackdropFilter(
       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
       child: Container(
         padding: const EdgeInsets.all(24),

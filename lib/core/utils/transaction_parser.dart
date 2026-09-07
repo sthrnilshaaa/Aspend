@@ -1,4 +1,5 @@
 import 'package:aspends_tracker/core/models/transaction.dart';
+import 'package:aspends_tracker/core/const/app_currencies.dart';
 
 class ParsedTransaction {
   final double amount;
@@ -38,8 +39,31 @@ class ParsedTransaction {
 }
 
 class TransactionParser {
-  // Regex bits
-  static const _cur = r'(?:Rs\.?|INR|₹|\$|Amt|Amount)';
+  // Regex bits.
+  // The Indian Rupee fragment is hand-tuned (e.g. "Rs" with an optional
+  // trailing period) and kept exactly as before. Symbols/codes for every
+  // other supported currency (USD, EUR, GBP, ...) are appended dynamically
+  // so bank/payment notifications in other currencies are recognized too,
+  // not just Indian-Rupee-worded ones.
+  static const String _inrCur = r'Rs\.?|INR|₹|\$|Amt|Amount';
+
+  static final String _otherCurFragment = _buildOtherCurrencyFragment();
+
+  static String _buildOtherCurrencyFragment() {
+    final covered = {'inr', '₹', '\$', 'rs', 'amt', 'amount'};
+    final tokens = <String>{};
+    for (final currency in AppCurrencies.all) {
+      if (!covered.contains(currency.code.toLowerCase())) {
+        tokens.add(currency.code);
+      }
+      if (!covered.contains(currency.symbol.toLowerCase())) {
+        tokens.add(currency.symbol);
+      }
+    }
+    return tokens.map(RegExp.escape).join('|');
+  }
+
+  static final String _cur = '(?:$_inrCur|$_otherCurFragment)';
   static const _num = r'(\d+(?:,\d{3})*(?:\.\d{1,2})?)';
 
   static final _amtPatterns = [
@@ -56,16 +80,14 @@ class TransactionParser {
       caseSensitive: false);
   static final _balPattern = RegExp(
       r'(?:bal|balance|avl bal|available balance|bal is|balance|avl\.bal|available\.bal)[\s\w\/\.\:]*?'
-      r'(?:rs\.?|inr|₹|\$|amt|amount)[\s]*' +
-      _num,
+      '$_cur'
+      r'[\s]*'
+      '$_num',
       caseSensitive: false);
   static final _refPattern = RegExp(
       r'(?:ref|txn|id|pnr|upi ref|rrn|reference|ref\.no|utr)[:\s\#\-]+([a-z0-9]+)',
       caseSensitive: false);
-  static final _datePattern = RegExp(
-      r'(\d{1,2})[-/](0[1-9]|1[0-2]|[A-Z]{3})[-/](\d{2,4})',
-      caseSensitive: false);
-  static final _amountMarkerPattern = RegExp(r'rs|inr|₹|\$|amt|amount');
+  static final _amountMarkerPattern = RegExp(_cur, caseSensitive: false);
   static final _upiPattern = RegExp(
       r'(?:vpa|upi|to)\s*([a-zA-Z0-9\.\-_]+@[a-zA-Z0-9]+)',
       caseSensitive: false);
@@ -91,9 +113,6 @@ class TransactionParser {
     'cash added',
     'topup of',
     'sent to you',
-    'sent ₹ to you',
-    'sent ₹',
-
   ];
 
   static const _expenseKW = [
@@ -185,14 +204,21 @@ class TransactionParser {
     'monies',
     'available bal',
     'alert',
-    'spent ₹',
-    'paid ₹',
-    'received ₹',
-    'credited ₹',
-    'sent ₹',
     'sent to you',
-
   ];
+
+  // Verbs directly glued to a currency marker (e.g. "spent ₹500",
+  // "paid $50", "received €20") count as a hard marker too, for any
+  // supported currency — not just the Indian Rupee.
+  static const _hardMarkerVerbs = ['spent', 'paid', 'received', 'credited', 'sent'];
+  static final RegExp _verbCurrencyPattern = RegExp(
+      '(?:${_hardMarkerVerbs.join('|')})\\s*$_cur',
+      caseSensitive: false);
+
+  // "Sent <currency-amount> to you" (a P2P credit) marks the transaction as
+  // income, for any supported currency's symbol/code.
+  static final RegExp _sentCurrencyPattern =
+      RegExp('sent\\s*$_cur', caseSensitive: false);
 
   static const _bankMap = {
     'icici': 'ICICI Bank',
@@ -381,7 +407,8 @@ class TransactionParser {
     if (lower.contains('sent to') || lower.contains('paid to')) {
       isIncome = false;
     }
-    if (lower.contains('sent to you') || lower.contains('sent ₹') && lower.contains('to you')) {
+    if (lower.contains('sent to you') ||
+        (_sentCurrencyPattern.hasMatch(lower) && lower.contains('to you'))) {
       isIncome = true;
     }
 
@@ -411,7 +438,8 @@ class TransactionParser {
     if (!_isLikelyTransaction(lower)) return null;
 
     // 3. Marker Validation (Relaxed, but enforced strictly for empty senders)
-    final bool hasHardMarker = _hardMarkers.any((m) => lower.contains(m));
+    final bool hasHardMarker = _hardMarkers.any((m) => lower.contains(m)) ||
+        _verbCurrencyPattern.hasMatch(lower);
 
     // If it has a package/sender, we prefer a marker or strong action
     if (packageName != null) {
@@ -687,7 +715,7 @@ class TransactionParser {
       .toList();
 
   static final _merchantSplitPattern = RegExp(
-      r'\s+via\s+|\s+using\s+|\s+on\s+|\s+ref\s+|\s+bal\s+|\s+₹|\s+Rs|\s+INR|\s+at\s+|\(',
+      '\\s+via\\s+|\\s+using\\s+|\\s+on\\s+|\\s+ref\\s+|\\s+bal\\s+|\\s+$_cur|\\s+at\\s+|\\(',
       caseSensitive: false);
 
   static String? _extractMerchant(String text, bool isIncome) {

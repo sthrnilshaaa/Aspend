@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:aspends_tracker/core/utils/blur_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter/services.dart';
@@ -10,8 +11,8 @@ import '../core/view_models/transaction_view_model.dart';
 import '../core/const/app_colors.dart';
 import '../core/const/app_dimensions.dart';
 import '../core/const/app_typography.dart';
-import '../core/const/app_strings.dart';
 import '../core/const/app_assets.dart';
+import '../l10n/generated/app_localizations.dart';
 
 class BalanceCard extends StatefulWidget {
   final double balance;
@@ -61,6 +62,7 @@ class _BalanceCardState extends State<BalanceCard>
   @override
   Widget build(BuildContext context) {
     Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     // Optimized rebuilds with select
     final isDark = context.select<ThemeViewModel, bool>((vm) => vm.isDarkMode);
     final totalIncome =
@@ -98,40 +100,38 @@ class _BalanceCardState extends State<BalanceCard>
           child: Stack(children: [
             Padding(
               padding: const EdgeInsets.symmetric(
-                vertical: AppDimensions.paddingTiny,
-              ),
+                  // vertical: AppDimensions.paddingTiny,
+                  ),
               child: Container(
                 margin: const EdgeInsets.symmetric(
                     vertical: AppDimensions.paddingSmall),
                 decoration: BoxDecoration(
                   borderRadius:
-                      BorderRadius.circular(AppDimensions.borderRadiusXLarge),
+                      BorderRadius.circular(AppDimensions.borderRadiusTiny),
                   boxShadow: [
-                    BoxShadow(
-                      color:
-                          Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
-                      blurRadius: 30,
-                      spreadRadius: 0,
-                      offset: const Offset(0, 15),
-                    ),
-                    BoxShadow(
-                      color:
-                          backgroundColor.withValues(alpha: isDark ? 0.1 : 0.2),
-                      blurRadius: 30,
-                      spreadRadius: -5,
-                      offset: const Offset(0, 15),
-                    ),
+                    // BoxShadow(
+                    //   color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
+                    //   blurRadius: 30,
+                    //   spreadRadius: 0,
+                    //   offset: const Offset(0, 15),
+                    // ),
+                    // BoxShadow(
+                    //   color: backgroundColor.withValues(alpha: isDark ? 0.1 : 0.2),
+                    //   blurRadius: 30,
+                    //   spreadRadius: -5,
+                    //   offset: const Offset(0, 15),
+                    // ),
                   ],
                 ),
                 child: ClipRRect(
                   borderRadius:
-                      BorderRadius.circular(AppDimensions.borderRadiusXLarge),
-                  child: BackdropFilter(
+                      BorderRadius.circular(AppDimensions.borderRadiusTiny),
+                  child: ConditionalBackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                            AppDimensions.borderRadiusXLarge),
+                            AppDimensions.borderRadiusLarge),
                         // Liquid Glass base color
                         color: backgroundColor.withValues(
                             alpha: isDark ? 0.05 : 0.15),
@@ -188,139 +188,226 @@ class _BalanceCardState extends State<BalanceCard>
                         //   ),
                         // ],
                       ),
-
-                      // decoration: BoxDecoration(
-                      //   border: Border.all(
-                      //     color: borderColor,
-                      //     width: 1.4,
-                      //     style: BorderStyle.solid,
-                      //   ),
-                      //   borderRadius:
-                      //       BorderRadius.circular(AppDimensions.borderRadiusXLarge),
-                      //   color: backgroundColor,
-                      // ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppDimensions.paddingLarge,
-                          vertical: AppDimensions.paddingXStandard,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      child: ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(
+                            AppDimensions.borderRadiusLarge),
+                        child: Stack(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  AppStrings.totalBalanceLabel,
-                                  style: GoogleFonts.dmSans(
-                                    fontSize: AppTypography.fontSizeLarge,
-                                    fontWeight: AppTypography.fontWeightNormal,
-                                    color: isDark
-                                        ? Colors.white.withValues(alpha: 0.9)
-                                        : Colors.black.withValues(alpha: 0.9),
-                                    letterSpacing: -0.2,
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    HapticFeedback.lightImpact();
-                                    _showEditBalanceDialog(context, isDark);
-                                  },
-                                  child: Container(
-                                    width: AppDimensions.avatarSizeStandard,
-                                    height: AppDimensions.avatarSizeStandard,
-                                    padding: const EdgeInsets.all(
-                                        AppDimensions.paddingSmall),
-                                    decoration: BoxDecoration(
+                            // Top-left glowing circle
+                            Positioned(
+                              left: -60,
+                              top: -60,
+                              child: Container(
+                                width: 160,
+                                height: 160,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: (isNegative
+                                          ? AppColors.accentRed
+                                          : AppColors.accentGreen)
+                                      .withOpacity(0.006),
+                                  boxShadow: [
+                                    BoxShadow(
                                       color: (isNegative
                                               ? AppColors.accentRed
                                               : AppColors.accentGreen)
-                                          .withValues(alpha: 0.1),
-                                      borderRadius: BorderRadius.circular(
-                                          AppDimensions.borderRadiusFull),
-                                      border: Border.all(
-                                        color: (isNegative
-                                                ? AppColors.accentRed
-                                                : AppColors.accentGreen)
-                                            .withValues(alpha: 0.3),
-                                        width: 1,
-                                      ),
+                                          .withOpacity(0.35),
+                                      blurRadius: 60,
+                                      spreadRadius: 20,
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: SvgPicture.asset(
-                                        SvgAppIcons.editIcon,
-                                        colorFilter: ColorFilter.mode(
-                                          isNegative
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Bottom-right glowing circle
+                            Positioned(
+                              right: -60,
+                              bottom: -60,
+                              child: Container(
+                                width: 160,
+                                height: 160,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: (isNegative
+                                          ? AppColors.accentRed
+                                          : AppColors.accentGreen)
+                                      .withOpacity(0.006),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: (isNegative
                                               ? AppColors.accentRed
-                                              : AppColors.accentGreen,
-                                          BlendMode.srcIn,
+                                              : AppColors.accentGreen)
+                                          .withOpacity(0.35),
+                                      blurRadius: 60,
+                                      spreadRadius: 20,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: AppDimensions.paddingLarge,
+                                vertical: AppDimensions.paddingStandard,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 50,
+                                    width: double.infinity,
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Text(
+                                          l10n.totalBalance,
+                                          style: GoogleFonts.dmSans(
+                                            fontSize:
+                                                AppTypography.fontSizeMedium,
+                                            fontWeight:
+                                                AppTypography.fontWeightBold,
+                                            color: isDark
+                                                ? Colors.white
+                                                    .withValues(alpha: 0.9)
+                                                : Colors.black
+                                                    .withValues(alpha: 0.9),
+                                            letterSpacing: 0,
+                                          ),
+                                        ),
+                                        Positioned(
+                                          right: 0,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              HapticFeedback.lightImpact();
+                                              _showEditBalanceDialog(
+                                                  context, isDark);
+                                            },
+                                            child: Container(
+                                              width: AppDimensions
+                                                  .avatar3SizeStandard,
+                                              height: AppDimensions
+                                                  .avatar3SizeStandard,
+                                              padding: const EdgeInsets.all(
+                                                  AppDimensions.paddingSmall),
+                                              decoration: BoxDecoration(
+                                                color: (isNegative
+                                                        ? AppColors.accentRed
+                                                        : AppColors.accentGreen)
+                                                    .withValues(alpha: 0.1),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        AppDimensions
+                                                            .borderRadiusFull),
+                                                border: Border.all(
+                                                  color: (isNegative
+                                                          ? AppColors.accentRed
+                                                          : AppColors
+                                                              .accentGreen)
+                                                      .withValues(alpha: 0.3),
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(3.0),
+                                                child: SvgPicture.asset(
+                                                  SvgAppIcons.editIcon,
+                                                  colorFilter: ColorFilter.mode(
+                                                    isNegative
+                                                        ? AppColors.accentRed
+                                                        : AppColors.accentGreen,
+                                                    BlendMode.srcIn,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  // const SizedBox(height: AppDimensions.paddingSmall),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      // Flexible + FittedBox: a wide balance
+                                      // scales down to fit the card's width
+                                      // instead of overflowing past it —
+                                      // CurrencyText's own step-based
+                                      // shrinking isn't always enough on its
+                                      // own for very large balances.
+                                      Flexible(
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: CurrencyText(
+                                            amount: widget.balance,
+                                            isNegative: isNegative,
+                                            isDark: isDark,
+                                            integerSize: 40,
+                                            symbolSize: 40,
+                                            fontName: GoogleFonts.bayon(),
+                                            extraColor: isDark
+                                                ? isNegative
+                                                    ? AppColors
+                                                        .balanceCardLineDarkModeNegative
+                                                    : AppColors
+                                                        .balanceCardLineDarkModePositive
+                                                : isNegative
+                                                    ? AppColors
+                                                        .balanceCardLineLightModeNegative
+                                                    : AppColors
+                                                        .balanceCardLineLightModePositive,
+                                          ),
                                         ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: AppDimensions.paddingSmall),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                CurrencyText(
-                                  amount: widget.balance,
-                                  isNegative: isNegative,
-                                  isDark: isDark,
-                                  integerSize: 55,
-                                  symbolSize: 40,
-                                  fontName: GoogleFonts.bayon(),
-                                  extraColor: isDark
-                                      ? isNegative
-                                          ? AppColors
-                                              .balanceCardLineDarkModeNegative
-                                          : AppColors
-                                              .balanceCardLineDarkModePositive
-                                      : isNegative
-                                          ? AppColors
-                                              .balanceCardLineLightModeNegative
-                                          : AppColors
-                                              .balanceCardLineLightModePositive,
-                                ),
-                              
-                              ],
-                            ),
-                            const SizedBox(height: AppDimensions.paddingSmall),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: StatItem(
-                                    label: AppStrings.incomeLabel,
-                                    amount: totalIncome,
-                                    icon: SvgAppIcons.incomeIcon,
-                                    color: AppColors.accentGreen,
-                                    isDark: isDark,
+                                  const SizedBox(
+                                      height: AppDimensions.paddingSmall),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: StatItem(
+                                          label: l10n.income,
+                                          amount: totalIncome,
+                                          icon: SvgAppIcons.incomeIcon,
+                                          color: AppColors.accentGreen,
+                                          isDark: isDark,
+                                        ),
+                                      ),
+                                      Container(
+                                        height:
+                                            AppDimensions.avatar2SizeStandard,
+                                        width: 1,
+                                        color: isDark
+                                            ? Colors.white
+                                                .withValues(alpha: 0.2)
+                                            : Colors.black
+                                                .withValues(alpha: 0.1),
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal:
+                                                AppDimensions.paddingStandard),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 12.0),
+                                          child: StatItem(
+                                            label: l10n.expense,
+                                            amount: totalExpenses,
+                                            icon: SvgAppIcons.expenseIcon,
+                                            color: AppColors.accentRed,
+                                            isDark: isDark,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                Container(
-                                  height: AppDimensions.avatar2SizeStandard,
-                                  width: 1,
-                                  color: isDark
-                                      ? Colors.white.withValues(alpha: 0.2)
-                                      : Colors.black.withValues(alpha: 0.1),
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal:
-                                          AppDimensions.paddingStandard),
-                                ),
-                                Expanded(
-                                  child: StatItem(
-                                    label: AppStrings.expenseLabel,
-                                    amount: totalExpenses,
-                                    icon: SvgAppIcons.expenseIcon,
-                                    color: AppColors.accentRed,
-                                    isDark: isDark,
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -337,10 +424,12 @@ class _BalanceCardState extends State<BalanceCard>
               left: 50,
               right: 50,
               child: DecorativeLine(
-                  color: isDark ? Colors.grey.shade900 : Colors.grey.shade200,
+                  color: isNegative
+                      ? AppColors.accentRed.withOpacity(0.22)
+                      : AppColors.accentGreen.withOpacity(0.22),
+                  //color: isDark ? Colors.grey.shade900 : Colors.grey.shade200,
                   position: LinePosition.bottom),
             ),
-      
           ]),
         ),
       ),
@@ -349,15 +438,19 @@ class _BalanceCardState extends State<BalanceCard>
 
   void _showBalanceDetails(BuildContext context, bool isDark) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+    final enableBlurEffects = context.read<ThemeViewModel>().enableBlurEffects;
 
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (context) => BackdropFilter(
+      builder: (context) => ConditionalBackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        isRouteBarrier: true,
         child: Container(
           decoration: BoxDecoration(
-            color: theme.colorScheme.surface.withValues(alpha: 0.8),
+            color: theme.colorScheme.surface
+                .withValues(alpha: enableBlurEffects ? 0.8 : 1.0),
             borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
           ),
           padding: const EdgeInsets.all(24),
@@ -375,7 +468,7 @@ class _BalanceCardState extends State<BalanceCard>
               ),
               const SizedBox(height: 24),
               Text(
-                AppStrings.balanceDetailsTitle,
+                l10n.balanceDetailsTitle,
                 style: GoogleFonts.dmSans(
                   fontSize: AppTypography.fontSizeLarge,
                   fontWeight: AppTypography.fontWeightBold,
@@ -398,13 +491,12 @@ class _BalanceCardState extends State<BalanceCard>
                     height: AppDimensions.iconSizeMedium,
                   ),
                 ),
-                title: const Text('Tap and hold to edit balance'),
-                subtitle: const Text(
-                    'Long press the balance card on the home screen'),
+                title: Text(l10n.tapHoldToEditBalance),
+                subtitle: Text(l10n.longPressBalanceCardHint),
               ),
               const SizedBox(
-                  height: AppDimensions.paddingSmall +
-                      AppDimensions.paddingXSmall),
+                  height:
+                      AppDimensions.paddingSmall + AppDimensions.paddingXSmall),
             ],
           ),
         ),
@@ -416,25 +508,29 @@ class _BalanceCardState extends State<BalanceCard>
     final controller =
         TextEditingController(text: widget.balance.toStringAsFixed(2));
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+    final enableBlurEffects = context.read<ThemeViewModel>().enableBlurEffects;
 
     showDialog(
       context: context,
-      builder: (_) => BackdropFilter(
+      builder: (_) => ConditionalBackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        isRouteBarrier: true,
         child: AlertDialog(
-          backgroundColor: theme.colorScheme.surface.withValues(alpha: 0.8),
+          backgroundColor: theme.colorScheme.surface
+              .withValues(alpha: enableBlurEffects ? 0.8 : 1.0),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-          title: const Text(
-            AppStrings.editBalanceTitle,
-            style: TextStyle(fontWeight: AppTypography.fontWeightBold),
+          title: Text(
+            l10n.editBalanceTitle,
+            style: const TextStyle(fontWeight: AppTypography.fontWeightBold),
           ),
           content: TextField(
             controller: controller,
             keyboardType: TextInputType.number,
             autofocus: true,
             decoration: InputDecoration(
-              hintText: AppStrings.searchHint,
+              hintText: l10n.newBalanceLabel,
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(AppDimensions.paddingSmall + 4),
                 child: SvgPicture.asset(
@@ -452,7 +548,7 @@ class _BalanceCardState extends State<BalanceCard>
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: Text(l10n.cancel),
             ),
             ElevatedButton(
               onPressed: () {
@@ -471,7 +567,7 @@ class _BalanceCardState extends State<BalanceCard>
                     borderRadius:
                         BorderRadius.circular(AppDimensions.borderRadiusSmall)),
               ),
-              child: const Text('Save'),
+              child: Text(l10n.save),
             ),
           ],
         ),
@@ -488,6 +584,7 @@ class CurrencyText extends StatelessWidget {
   final double symbolSize;
   final TextStyle fontName;
   final Color extraColor;
+  final bool useSmallDecimal;
 
   const CurrencyText({
     super.key,
@@ -498,10 +595,13 @@ class CurrencyText extends StatelessWidget {
     required this.symbolSize,
     required this.fontName,
     this.extraColor = Colors.transparent,
+    this.useSmallDecimal = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final currencySymbol =
+        context.select<ThemeViewModel, String>((vm) => vm.currencySymbol);
     final formatted = NumberFormat.currency(
       symbol: '',
       decimalDigits: 2,
@@ -528,19 +628,23 @@ class CurrencyText extends StatelessWidget {
       text: TextSpan(
         children: [
           TextSpan(
-            text: '₹',
+            text: currencySymbol,
             style: GoogleFonts.dmSans(
-              fontSize: computedSymbolSize,
-              fontWeight: AppTypography.fontWeightSemiBold,
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.9)
-                  : Colors.black.withValues(alpha: 0.9),
-            ),
+                fontSize: computedSymbolSize,
+                fontWeight: AppTypography.fontWeightSemiBold,
+                // color: ,
+                color: useSmallDecimal
+                    ? isDark
+                        ? Colors.white.withValues(alpha: 0.9)
+                        : Colors.black.withValues(alpha: 0.9)
+                    : isNegative
+                        ? AppColors.accentRed
+                        : AppColors.accentGreen),
           ),
           const TextSpan(text: ' '),
           TextSpan(
             text: integerPart,
-            style: fontName.copyWith(
+            style: GoogleFonts.dmSans(
               fontSize: computedIntegerSize,
               height: 1,
               fontWeight: AppTypography.fontWeightMedium,
@@ -551,8 +655,10 @@ class CurrencyText extends StatelessWidget {
           ),
           TextSpan(
             text: '.$decimalPart',
-            style: fontName.copyWith(
-              fontSize: computedIntegerSize * 0.63,
+            style: GoogleFonts.dmSans(
+              fontSize: useSmallDecimal
+                  ? computedIntegerSize * 0.63
+                  : computedIntegerSize,
               fontWeight: AppTypography.fontWeightMedium,
               color: extraColor,
               // color: isNegative ? AppColors.accentRed : AppColors.accentGreen,
@@ -592,15 +698,15 @@ class StatItem extends StatelessWidget {
             SvgPicture.asset(
               icon,
               colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-              width: AppDimensions.iconSizeXSmall,
-              height: AppDimensions.iconSizeXSmall,
+              width: AppDimensions.iconSizeXXSmall,
+              height: AppDimensions.iconSizeXXSmall,
             ),
             const SizedBox(width: AppDimensions.paddingSmall),
             Text(
               label,
               style: GoogleFonts.dmSans(
                 fontSize: AppTypography.fontSizeMedium,
-                fontWeight: AppTypography.fontWeightNormal,
+                fontWeight: AppTypography.fontWeightSemiBold,
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.9)
                     : Colors.black.withValues(alpha: 0.9),
@@ -610,7 +716,7 @@ class StatItem extends StatelessWidget {
         ),
         CurrencyText(
           amount: amount,
-
+          useSmallDecimal: true,
           isNegative: false,
           // Stats are always shown in their respective colors
           isDark: isDark,

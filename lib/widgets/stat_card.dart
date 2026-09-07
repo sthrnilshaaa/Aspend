@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../core/const/app_dimensions.dart';
+import '../core/view_models/theme_view_model.dart';
 
 class StatCard extends StatelessWidget {
   final String title;
@@ -25,6 +27,8 @@ class StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currencySymbol =
+        context.select<ThemeViewModel, String>((vm) => vm.currencySymbol);
     return ZoomTapAnimation(
       onTap: onTap,
       child: Container(
@@ -89,7 +93,8 @@ class StatCard extends StatelessWidget {
             const SizedBox(height: 4),
             FittedBox(
               child: Text(
-                '₹${NumberFormat.currency(symbol: '', decimalDigits: 0).format(amount)}',
+                NumberFormat.currency(symbol: currencySymbol, decimalDigits: 0)
+                    .format(amount),
                 style: GoogleFonts.dmSans(
                   fontSize: 24,
                   fontWeight: FontWeight.w900,

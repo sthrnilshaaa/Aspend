@@ -6,7 +6,7 @@ import '../core/const/app_colors.dart';
 import '../core/const/app_dimensions.dart';
 import '../core/const/app_typography.dart';
 import '../core/const/app_assets.dart';
-import '../core/const/app_strings.dart';
+import '../l10n/generated/app_localizations.dart';
 
 class HistorySearchBar extends StatelessWidget {
   final String? searchQuery;
@@ -180,7 +180,7 @@ class _SearchTextFieldState extends State<_SearchTextField> {
       controller: _controller,
       onChanged: widget.onChanged,
       decoration: InputDecoration(
-        hintText: AppStrings.searchHint,
+        hintText: AppLocalizations.of(context)!.searchHint,
         hintStyle: GoogleFonts.dmSans(
           fontSize: AppTypography.fontSizeSmall,
           color: widget.theme.colorScheme.onSurface.withValues(alpha: 0.4),

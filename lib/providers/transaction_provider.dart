@@ -114,7 +114,7 @@ class TransactionProvider with ChangeNotifier {
       _markDirty();
       notifyListeners();
     } catch (e) {
-      print('Error loading transactions: $e');
+      debugPrint('Error loading transactions: $e');
       // Fallback to direct Hive access
       try {
         final txBox = Hive.box<Transaction>('transactions');
@@ -125,7 +125,7 @@ class TransactionProvider with ChangeNotifier {
         _markDirty();
         notifyListeners();
       } catch (fallbackError) {
-        print('Fallback error loading transactions: $fallbackError');
+        debugPrint('Fallback error loading transactions: $fallbackError');
         // Initialize with empty state
         _transactions = [];
         _currentBalance = 0.0;
@@ -153,7 +153,7 @@ class TransactionProvider with ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print('Error adding transaction: $e');
+      debugPrint('Error adding transaction: $e');
       // Fallback to direct Hive access
       try {
         final txBox = Hive.box<Transaction>('transactions');
@@ -164,7 +164,7 @@ class TransactionProvider with ChangeNotifier {
         _updateHomeWidget();
         notifyListeners();
       } catch (fallbackError) {
-        print('Fallback error adding transaction: $fallbackError');
+        debugPrint('Fallback error adding transaction: $fallbackError');
       }
     }
   }
@@ -188,7 +188,7 @@ class TransactionProvider with ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print('Error deleting transaction: $e');
+      debugPrint('Error deleting transaction: $e');
       // Fallback to direct Hive access
       try {
         final txBox = Hive.box<Transaction>('transactions');
@@ -199,7 +199,7 @@ class TransactionProvider with ChangeNotifier {
         _updateHomeWidget();
         notifyListeners();
       } catch (fallbackError) {
-        print('Fallback error deleting transaction: $fallbackError');
+        debugPrint('Fallback error deleting transaction: $fallbackError');
       }
     }
   }
@@ -213,7 +213,7 @@ class TransactionProvider with ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print('Error updating balance: $e');
+      debugPrint('Error updating balance: $e');
       // Fallback to direct Hive access
       try {
         _currentBalance = newBalance;
@@ -221,7 +221,7 @@ class TransactionProvider with ChangeNotifier {
         balanceBox.put('currentBalance', newBalance);
         notifyListeners();
       } catch (fallbackError) {
-        print('Fallback error updating balance: $fallbackError');
+        debugPrint('Fallback error updating balance: $fallbackError');
       }
     }
   }
@@ -235,7 +235,7 @@ class TransactionProvider with ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print('Error updating balance: $e');
+      debugPrint('Error updating balance: $e');
       // Fallback to direct Hive access
       try {
         _currentBalance += isIncome ? amount : -amount;
@@ -243,7 +243,7 @@ class TransactionProvider with ChangeNotifier {
         balanceBox.put('currentBalance', _currentBalance);
         notifyListeners();
       } catch (fallbackError) {
-        print('Fallback error updating balance: $fallbackError');
+        debugPrint('Fallback error updating balance: $fallbackError');
       }
     }
   }
@@ -264,7 +264,7 @@ class TransactionProvider with ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print('Error deleting all data: $e');
+      debugPrint('Error deleting all data: $e');
       // Fallback to direct Hive access
       try {
         final txBox = Hive.box<Transaction>('transactions');
@@ -279,7 +279,7 @@ class TransactionProvider with ChangeNotifier {
         _updateHomeWidget();
         notifyListeners();
       } catch (fallbackError) {
-        print('Fallback error deleting all data: $fallbackError');
+        debugPrint('Fallback error deleting all data: $fallbackError');
       }
     }
   }
@@ -310,7 +310,7 @@ class TransactionProvider with ChangeNotifier {
         iOSName: 'HomeWidget',
       );
     } catch (e) {
-      print('Error updating home widget: $e');
+      debugPrint('Error updating home widget: $e');
     }
   }
 
@@ -328,9 +328,9 @@ class TransactionProvider with ChangeNotifier {
       String formattedDate;
 
       if (txDate == today) {
-        formattedDate = "Today";
+        formattedDate = 'Today';
       } else if (txDate == yesterday) {
-        formattedDate = "Yesterday";
+        formattedDate = 'Yesterday';
       } else {
         formattedDate = _formatDate(tx.date);
       }
@@ -371,7 +371,7 @@ class TransactionProvider with ChangeNotifier {
         notifyListeners();
       }
     } catch (e) {
-      print('Error updating transaction: $e');
+      debugPrint('Error updating transaction: $e');
     }
   }
 }

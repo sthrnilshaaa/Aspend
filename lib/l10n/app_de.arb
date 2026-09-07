@@ -37,6 +37,9 @@
   "voiceInput": "Spracheingabe",
   "speechUnavailable": "Spracherkennung nicht verfügbar",
   "microPermissionDenied": "Mikrofonberechtigung verweigert",
+  "microPermissionTitle": "Mikrofonzugriff erforderlich",
+  "microPermissionDesc": "Aspends benötigt Mikrofonzugriff, damit Sie Transaktionsdetails per Sprachbefehl eingeben können. Ihre Spracheingaben werden vollständig offline auf Ihrem Gerät verarbeitet und niemals hochgeladen oder geteilt.",
+  "microPermissionGrant": "Sprache aktivieren",
   "appearance": "Aussehen",
   "security": "Sicherheit",
   "autoDetection": "Automatische Transaktionserkennung",
@@ -59,7 +62,7 @@
   "sortBy": "Sortieren nach",
   "holdToRecord": "Halten Sie gedrückt, um die Transaktion aufzuzeichnen",
   "couldNotFindAmount": "Betrag konnte nicht gefunden werden. Versuchen Sie: „500 für Essen ausgegeben“",
-  "savedAmount": "₹{amount} für {category} gespart",
+  "savedAmount": "{amount} für {category} gespart",
   "@savedAmount": {
     "placeholders": {
       "amount": {
@@ -98,8 +101,20 @@
   "projectInfo": "Projektinformationen",
   "openSource": "Open Source",
   "openSourceDesc": "Stolz Open Source auf GitHub",
+  "licenses": "Open-Source-Lizenzen",
+  "licensesDesc": "Lizenzen von Drittanbietern in dieser App anzeigen",
   "rateApp": "Bewerten Sie Aspends",
   "rateAppDesc": "Unterstützen Sie uns mit einer 5-Sterne-Bewertung",
+  "couldNotLaunchUrl": "Link konnte nicht geöffnet werden",
+  "errorWithDetails": "Fehler: {error}",
+  "@errorWithDetails": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "madeWithLove": "Mit ❤️ für bessere Finanzen gemacht",
   "howAspendWorks": "WIE ASPEND FUNKTIONIERT",
   "howItWorksTitle1": "1. Intelligentes Abfangen",
   "howItWorksDesc1": "Ein sicherer, batterieoptimierter Hintergrunddienst wartet auf eingehende SMS- und Bankbenachrichtigungen.",
@@ -120,8 +135,18 @@
   "appNameShort": "Aspends",
   "splashTagline": "Intelligentes Geldmanagement",
   "budget": "Budget",
+  "overBudgetBy": "⚠️ Um {amount} überschritten",
+  "@overBudgetBy": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "balanceDetailsTitle": "Kontostanddetails",
   "editBalanceTitle": "Kontostand bearbeiten",
+  "tapHoldToEditBalance": "Zum Bearbeiten des Kontostands halten",
+  "longPressBalanceCardHint": "Halten Sie die Kontostandkarte auf dem Startbildschirm gedrückt",
   "newBalanceLabel": "Neue Balance",
   "viewAll": "Alle anzeigen",
   "searchHint": "Kategorien oder Notizen durchsuchen...",
@@ -174,6 +199,7 @@
   "next": "Nächste",
   "getStarted": "Legen Sie los",
   "requestMoney": "Geld anfordern",
+  "requestMoneyTooltip": "Geld über UPI anfordern",
   "generateQr": "Zahlungs-QR generieren",
   "sortByNameAZ": "Name (A-Z)",
   "sortByNameZA": "Name (Z-A)",
@@ -184,7 +210,7 @@
   "noTransactionsYet": "Noch keine Transaktionen",
   "addFirstTransaction": "Fügen Sie Ihre erste Transaktion mit der Person hinzu",
   "settleBalance": "Saldo ausgleichen",
-  "settleBalanceDesc": "Dadurch wird eine Transaktion von ₹{amount} hinzugefügt, um den Saldo auf Null zu bringen. Weitermachen?",
+  "settleBalanceDesc": "Dadurch wird eine Transaktion von {amount} hinzugefügt, um den Saldo auf Null zu bringen. Weitermachen?",
   "@settleBalanceDesc": {
     "placeholders": {
       "amount": {
@@ -319,5 +345,330 @@
   "exportPeopleTitle": "Personendaten exportieren",
   "exportPeopleDesc": "Sichern Sie Personentransaktionen",
   "exportPdfTitle": "Als PDF exportieren",
-  "exportPdfDesc": "PDF-Berichte erstellen"
+  "exportPdfDesc": "PDF-Berichte erstellen",
+  "biometricNotSupported": "Biometrische Authentifizierung wird auf diesem Gerät nicht unterstützt",
+  "noBiometricMethods": "Keine biometrischen Authentifizierungsmethoden verfügbar",
+  "authenticateReason": "Authentifizieren Sie sich, um die App-Sperre zu aktivieren",
+  "authFailedAppLockNotEnabled": "Authentifizierung fehlgeschlagen. App-Sperre nicht aktiviert.",
+  "appLockEnabledSuccess": "App-Sperre erfolgreich aktiviert",
+  "appLockDisabledSuccess": "App-Sperre erfolgreich deaktiviert",
+  "failedToEnableAppLock": "App-Sperre konnte nicht aktiviert werden",
+  "failedToDisableAppLock": "App-Sperre konnte nicht deaktiviert werden",
+  "pickAppColor": "App-Farbe auswählen",
+  "reset": "Zurücksetzen",
+  "selectAction": "Auswählen",
+  "appColorResetDefault": "App-Farbe auf Standard zurückgesetzt!",
+  "deviceNotSupportBiometricsOrAuth": "Gerät unterstützt keine Biometrie oder Geräteauthentifizierung.",
+  "appLockEnabledDot": "App-Sperre aktiviert.",
+  "appLockDisabledDot": "App-Sperre deaktiviert.",
+  "cautionToUse": "Vorsicht bei der Nutzung",
+  "autoDetectCautionDesc": "Diese Funktion ist nicht zu 100 % perfekt, könnte aber funktionieren. Alle SMS- und Benachrichtigungsdaten werden zu 100 % lokal auf Ihrem Gerät verarbeitet, für absolute Privatsphäre.",
+  "autoDetectSettingSubtitle": "Transaktionen automatisch aus Benachrichtigungen erkennen",
+  "permissionsRequiredNoAccess": "Berechtigungen erforderlich: Kein Zugriff auf Benachrichtigungen oder SMS gewährt. Automatische Erkennung kann nicht aktiviert werden.",
+  "noteNotificationAccessMissing": "Hinweis: Benachrichtigungszugriff fehlt. Nur die SMS-Erkennung funktioniert.",
+  "noteSmsPermissionMissing": "Hinweis: SMS-Berechtigung fehlt. Nur die Benachrichtigungserkennung funktioniert.",
+  "autoDetectionEnabledExclaim": "Automatische Erkennung aktiviert!",
+  "autoDetectionDisabledExclaim": "Automatische Erkennung deaktiviert!",
+  "processRecentDataTitle": "Aktuelle Daten verarbeiten",
+  "processRecentDataSubtitle": "Aktuelle Benachrichtigungen nach Transaktionen durchsuchen",
+  "recentDataProcessed": "Aktuelle Daten erfolgreich verarbeitet!",
+  "errorProcessingData": "Fehler bei der Datenverarbeitung",
+  "testDetectionLogicTitle": "Erkennungslogik testen",
+  "testDetectionLogicSubtitle": "Eine Benachrichtigung simulieren, um das Parsing zu überprüfen",
+  "showDetectionHistoryTitle": "Erkennungsverlauf anzeigen",
+  "showDetectionHistorySubtitle": "Detaillierte Protokolle erkannter Transaktionen anzeigen",
+  "autoDeleteUndetectedTitle": "Nicht erkannten Verlauf automatisch löschen",
+  "autoDeleteUndetectedSubtitle": "Nicht erkannte Einträge nach 12 Stunden löschen",
+  "testParserDiagnosticTitle": "Parser-Diagnosetest",
+  "testParserDiagnosticDesc": "Geben Sie eine Beispielbenachrichtigung ein, um zu sehen, wie unser Parser sie verarbeitet.",
+  "pasteNotificationHint": "Benachrichtigungstext hier einfügen...",
+  "statusBalanceSync": "Kontostandabgleich",
+  "statusNoActionDetected": "Keine Aktion erkannt",
+  "transactionType": "Typ",
+  "resultLabelMerchant": "Händler",
+  "resultLabelBank": "Bank",
+  "balanceLabel": "Kontostand",
+  "resultLabelConfidence": "Konfidenz",
+  "unknown": "Unbekannt",
+  "general": "Allgemein",
+  "notAvailable": "N/V",
+  "close": "Schließen",
+  "parseText": "Text analysieren",
+  "deleteAllDataTitle": "Alle Daten löschen",
+  "deleteAllDataWarningSubtitle": "⚠️ Diese Aktion kann nicht rückgängig gemacht werden",
+  "resetIntroTitle": "Einführung zurücksetzen",
+  "resetIntroSubtitle": "Einführungsbildschirme erneut anzeigen",
+  "incomeCategories": "Einnahmekategorien",
+  "incomeCategoriesDesc": "Kategorien für Einnahmen verwalten",
+  "expenseCategories": "Ausgabenkategorien",
+  "expenseCategoriesDesc": "Kategorien für Ausgaben verwalten",
+  "accountsTitle": "Konten",
+  "accountsDesc": "Verwalten Sie Ihre Konten",
+  "enterNamePlaceholder": "Namen eingeben...",
+  "aboutAppSubtitle": "Entwickler, Datenschutz, Support & mehr",
+  "setMonthlySpendingLimit": "Ein monatliches Ausgabenlimit festlegen",
+  "joinPreviousMonthBalanceTitle": "Saldo des Vormonats einbeziehen",
+  "joinPreviousMonthBalanceDesc": "Saldo des Vormonats in die aktuelle Summe einbeziehen",
+  "setMonthlyBudgetTitle": "Monatsbudget festlegen",
+  "budgetAmountLabel": "Budgetbetrag",
+  "budgetUpdated": "Budget aktualisiert!",
+  "confirmDeleteTitle": "Löschen bestätigen",
+  "confirmDeleteAllDesc": "Sind Sie sicher, dass Sie alle Transaktionen löschen und Ihren Kontostand zurücksetzen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+  "deleteAllButton": "Alles löschen",
+  "failedDeleteAllData": "Alle Daten konnten nicht gelöscht werden. Bitte versuchen Sie es erneut.",
+  "resetIntroConfirmDesc": "Dadurch werden die Einführungsbildschirme beim nächsten Öffnen der App erneut angezeigt. Ihre Daten bleiben unverändert.",
+  "editFieldTitle": "{field} bearbeiten",
+  "@editFieldTitle": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "enterFieldHint": "{field} eingeben",
+  "@enterFieldHint": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "statusLabel": "Status: {status}",
+  "@statusLabel": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "manageItemsTitle": "{type} verwalten",
+  "@manageItemsTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "noItemsFound": "Keine {type} gefunden.",
+  "@noItemsFound": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "addItemButton": "{type} hinzufügen",
+  "@addItemButton": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "editItemTitle": "{type} bearbeiten",
+  "@editItemTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "itemNameLabel": "{type}-Name",
+  "@itemNameLabel": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "monthlyLimitSubtitle": "Monatslimit: {budget}",
+  "@monthlyLimitSubtitle": {
+    "placeholders": {
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "failedResetIntro": "Einführung konnte nicht zurückgesetzt werden. Bitte versuchen Sie es erneut.\\n{error}",
+  "@failedResetIntro": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedUpdateAutoDetection": "Automatische Erkennung konnte nicht aktualisiert werden",
+  "actionCannotBeUndone": "Diese Aktion kann nicht rückgängig gemacht werden.",
+  "deleteTransactionsCountTitle": "{count} Transaktionen löschen?",
+  "@deleteTransactionsCountTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deletedTransactionsCount": "{count} Transaktionen gelöscht",
+  "@deletedTransactionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "transactionHistoryTitle": "Transaktionsverlauf",
+  "upiIdMissingTitle": "UPI-ID fehlt",
+  "upiIdMissingDesc": "Bitte legen Sie Ihre UPI-ID in den Einstellungen fest, um Geld per QR-Code anzufordern.",
+  "openSettings": "Einstellungen öffnen",
+  "recipientFallback": "Empfänger",
+  "paymentLinkCopied": "Zahlungslink kopiert!",
+  "linkButton": "Link",
+  "shareQr": "QR-Code teilen",
+  "upiPaymentLinkSubject": "UPI-Zahlungslink",
+  "requestingFrom": "Anfrage an {name}",
+  "@requestingFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "upiIdColonValue": "UPI-ID: {id}",
+  "@upiIdColonValue": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "failedShareQr": "QR-Bild konnte nicht geteilt werden: {error}",
+  "@failedShareQr": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "payViaUpiQrFor": "Über UPI-QR-Code bezahlen für {name}",
+  "@payViaUpiQrFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectPerson": "Bitte wählen Sie eine Person aus",
+  "amountInInr": "Betrag in INR",
+  "currency": "Währung",
+  "selectCurrency": "Währung auswählen",
+  "searchCurrency": "Währung suchen",
+  "autoDetectCurrency": "Währung automatisch erkennen",
+  "autoDetectCurrencyDesc": "Automatisch an die Region deines Geräts anpassen",
+  "popularCurrencies": "Beliebt",
+  "allCurrencies": "Alle Währungen",
+  "noCurrencyFound": "Keine Währung gefunden",
+  "requiredField": "Erforderlich",
+  "quickCategories": "Schnellkategorien",
+  "saveToPerson": "Bei Person speichern",
+  "noPeopleCreateHint": "Es wurden noch keine Personen hinzugefügt. Erstellen Sie Personen im Bereich „Personen“.",
+  "selectPersonLabel": "Person auswählen",
+  "selectCategoryTitle": "Kategorie auswählen",
+  "updateTransactionButton": "Transaktion aktualisieren",
+  "saveTransactionButton": "Transaktion speichern",
+  "linkedToRecord": "Mit dem Eintrag von {name} verknüpft",
+  "@linkedToRecord": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "selectItemTitle": "{type} auswählen",
+  "@selectItemTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "personSingular": "Person",
+  "error": "Fehler",
+  "retry": "Erneut versuchen",
+  "setupFailedRetry": "Einrichtung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.",
+  "backButton": "Zurück",
+  "voiceInputExampleHint": "Sagen Sie zum Beispiel „500 für Abendessen ausgegeben“",
+  "autoDetectionEnabledSuccess": "Automatische Erkennung erfolgreich aktiviert!",
+  "openingRequestQrFor": "Öffne Anfrage-QR für {name}",
+  "@openingRequestQrFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "add": "Hinzufügen",
+  "uncategorized": "Nicht kategorisiert",
+  "timeLabel": "Uhrzeit",
+  "statusColumnLabel": "Status",
+  "completedLabel": "Abgeschlossen",
+  "notes": "Notizen",
+  "serviceLabel": "Dienst",
+  "refIdLabel": "Referenz-ID",
+  "detectedViaLabel": "Erkannt über",
+  "attachmentsLabel": "Anhänge",
+  "originalLogLabel": "Originalprotokoll",
+  "noNoteProvided": "Keine Notiz angegeben",
+  "tapToUnlock": "Zum Entsperren tippen",
+  "addPeopleEmptyDesc": "Fügen Sie Personen hinzu, um Transaktionen mit ihnen zu verfolgen",
+  "noPeopleMatchSearch": "Keine Personen entsprechen Ihrer Suche",
+  "okay": "Okay",
+  "confirm": "Bestätigen",
+  "ok": "OK",
+  "unexpectedErrorOccurred": "Ein unerwarteter Fehler ist aufgetreten",
+  "autoDetectionActive": "Automatische Erkennung aktiv",
+  "unknownSource": "Unbekannte Quelle",
+  "noMessageContentAvailable": "Kein Nachrichteninhalt verfügbar",
+  "addManually": "Manuell hinzufügen",
+  "detectedAsIncome": "Als Einnahme erkannt",
+  "detectedAsExpense": "Als Ausgabe erkannt",
+  "sourceColonValue": "Quelle: {source}",
+  "@sourceColonValue": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "sourceNotification": "Benachrichtigung",
+  "sourceSms": "SMS",
+  "sourceRecheckHistory": "Verlauf erneut geprüft",
+  "sourceManualAddHistory": "Manuell hinzugefügt (Verlauf)",
+  "recentLabel": "Neueste",
+  "oldestLabel": "Älteste",
+  "highestLabel": "Höchste",
+  "lowestLabel": "Niedrigste",
+  "glassBlurEffectsTitle": "Glas-Weichzeichner-Effekte",
+  "glassBlurEffectsSubtitle": "Sanfter Weichzeichner auf Glaspanelen und Dialogen – verbraucht mehr Rechenleistung. Auf älteren Geräten für flüssigere Leistung deaktivieren.",
+  "tourBalanceCardTitle": "Your Balance",
+  "tourBalanceCardDesc": "Tap for income & expense details. Long-press to edit your starting balance.",
+  "tourAddIncomeTitle": "Add Income",
+  "tourAddIncomeDesc": "Log money you've received.",
+  "tourMicTitle": "Record by Voice",
+  "tourMicDesc": "Press and hold, say the amount and what it was for, then release — it's saved automatically.",
+  "tourAddExpenseTitle": "Add Expense",
+  "tourAddExpenseDesc": "Log money you've spent.",
+  "tourAddPersonTitle": "Add a Person",
+  "tourAddPersonDesc": "Track what you owe each other over time.",
+  "tourPersonCardTitle": "Open Their Ledger",
+  "tourPersonCardDesc": "Tap a card to see the full history with this person and settle up.",
+  "tourPayNowTitle": "Settle Up",
+  "tourPayNowDesc": "Pay what you owe them directly via UPI.",
+  "tourEditPersonTitle": "Edit Person",
+  "tourEditPersonDesc": "Change their name or photo.",
+  "tourDeletePersonTitle": "Careful — Long-Press Deletes",
+  "tourDeletePersonDesc": "Long-pressing this header permanently deletes this person and their history. You'll be asked to confirm first.",
+  "tourDeleteTxTitle": "Long-Press to Delete",
+  "tourDeleteTxDesc": "Tap a transaction to edit it, or long-press to delete it.",
+  "replayTipsTitle": "Show Tips Again",
+  "replayTipsSubtitle": "Replay the pointer-hint tours on Home, People, and Person Details.",
+  "replayTipsDone": "Tips will show again next time you open those screens."
 }

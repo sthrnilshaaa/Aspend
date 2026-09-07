@@ -191,7 +191,7 @@ class PersonViewModel with ChangeNotifier {
     } else {
       // We don't have access to DateFormat here unless we import intl
       // But we can return a consistently formatted string
-      return "${date.day} ${_getMonthName(date.month)}, ${date.year}";
+      return '${date.day} ${_getMonthName(date.month)}, ${date.year}';
     }
   }
 

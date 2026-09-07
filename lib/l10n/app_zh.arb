@@ -1,5 +1,5 @@
 {
-  "appName": "阿斯彭德斯",
+  "appName": "Aspends",
   "appTagline": "智能支出，简化。",
   "totalBalance": "总余额",
   "income": "收入",
@@ -37,6 +37,9 @@
   "voiceInput": "语音输入",
   "speechUnavailable": "语音识别不可用",
   "microPermissionDenied": "麦克风权限被拒绝",
+  "microPermissionTitle": "需要麦克风权限",
+  "microPermissionDesc": "Aspends 需要麦克风权限，以便您通过语音命令输入交易详情。您的语音输入完全在设备上离线解析，绝不会上传或共享。",
+  "microPermissionGrant": "启用语音",
   "appearance": "外貌",
   "security": "安全",
   "autoDetection": "自动交易检测",
@@ -59,7 +62,7 @@
   "sortBy": "排序方式",
   "holdToRecord": "按住记录交易",
   "couldNotFindAmount": "找不到金额。尝试：“在食物上花了 500 美元”",
-  "savedAmount": "为 {category} 节省了 卢比{amount}",
+  "savedAmount": "为 {category} 节省了 {amount}",
   "@savedAmount": {
     "placeholders": {
       "amount": {
@@ -98,8 +101,20 @@
   "projectInfo": "项目信息",
   "openSource": "开源",
   "openSourceDesc": "自豪地在 GitHub 上开源",
+  "licenses": "开源许可证",
+  "licensesDesc": "查看此应用中使用的第三方许可证",
   "rateApp": "费率上升",
   "rateAppDesc": "支持我们并给予 5 星评级",
+  "couldNotLaunchUrl": "无法打开链接",
+  "errorWithDetails": "错误：{error}",
+  "@errorWithDetails": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "madeWithLove": "用 ❤️ 打造，只为更好的理财",
   "howAspendWorks": "ASPEND 如何运作",
   "howItWorksTitle1": "1. 智能拦截",
   "howItWorksDesc1": "安全、电池优化的后台服务监听传入的短信和银行通知。",
@@ -117,11 +132,21 @@
   "smsPermissionDesc": "启用从银行读取交易短信。",
   "finishSetup": "完成设置",
   "grant": "授予",
-  "appNameShort": "阿斯彭德斯",
+  "appNameShort": "Aspends",
   "splashTagline": "智能资金管理",
   "budget": "预算",
+  "overBudgetBy": "⚠️ 超支 {amount}",
+  "@overBudgetBy": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "balanceDetailsTitle": "余额详情",
   "editBalanceTitle": "编辑余额",
+  "tapHoldToEditBalance": "按住可编辑余额",
+  "longPressBalanceCardHint": "长按主屏幕上的余额卡片",
   "newBalanceLabel": "新百伦",
   "viewAll": "查看全部",
   "searchHint": "搜索类别或注释...",
@@ -174,6 +199,7 @@
   "next": "下一个",
   "getStarted": "开始使用",
   "requestMoney": "索要钱",
+  "requestMoneyTooltip": "通过 UPI 请求付款",
   "generateQr": "生成支付二维码",
   "sortByNameAZ": "姓名（A-Z）",
   "sortByNameZA": "姓名（Z-A）",
@@ -184,7 +210,7 @@
   "noTransactionsYet": "还没有交易",
   "addFirstTransaction": "添加您与此人的第一笔交易",
   "settleBalance": "结算余额",
-  "settleBalanceDesc": "这将添加 卢比{amount} 的交易，使余额为零。继续？",
+  "settleBalanceDesc": "这将添加 {amount} 的交易，使余额为零。继续？",
   "@settleBalanceDesc": {
     "placeholders": {
       "amount": {
@@ -319,5 +345,330 @@
   "exportPeopleTitle": "导出人员数据",
   "exportPeopleDesc": "备份人员交易",
   "exportPdfTitle": "导出为 PDF",
-  "exportPdfDesc": "生成 PDF 报告"
+  "exportPdfDesc": "生成 PDF 报告",
+  "biometricNotSupported": "此设备不支持生物识别身份验证",
+  "noBiometricMethods": "没有可用的生物识别身份验证方式",
+  "authenticateReason": "进行身份验证以启用应用锁",
+  "authFailedAppLockNotEnabled": "身份验证失败。应用锁未启用。",
+  "appLockEnabledSuccess": "应用锁已成功启用",
+  "appLockDisabledSuccess": "应用锁已成功禁用",
+  "failedToEnableAppLock": "启用应用锁失败",
+  "failedToDisableAppLock": "禁用应用锁失败",
+  "pickAppColor": "选择应用颜色",
+  "reset": "重置",
+  "selectAction": "选择",
+  "appColorResetDefault": "应用颜色已重置为默认值！",
+  "deviceNotSupportBiometricsOrAuth": "该设备不支持生物识别或设备身份验证。",
+  "appLockEnabledDot": "应用锁已启用。",
+  "appLockDisabledDot": "应用锁已禁用。",
+  "cautionToUse": "使用须知",
+  "autoDetectCautionDesc": "此功能并非100%完美，但可能有效。所有短信和通知数据均100%在您的设备本地处理，以确保绝对隐私。",
+  "autoDetectSettingSubtitle": "自动从通知中检测交易",
+  "permissionsRequiredNoAccess": "需要权限：未授予通知或短信访问权限。无法启用自动检测。",
+  "noteNotificationAccessMissing": "注意：缺少通知访问权限。仅短信检测可用。",
+  "noteSmsPermissionMissing": "注意：缺少短信权限。仅通知检测可用。",
+  "autoDetectionEnabledExclaim": "自动检测已启用！",
+  "autoDetectionDisabledExclaim": "自动检测已禁用！",
+  "processRecentDataTitle": "处理近期数据",
+  "processRecentDataSubtitle": "扫描近期通知以查找交易",
+  "recentDataProcessed": "近期数据处理成功！",
+  "errorProcessingData": "处理数据时出错",
+  "testDetectionLogicTitle": "测试检测逻辑",
+  "testDetectionLogicSubtitle": "模拟一条通知以验证解析效果",
+  "showDetectionHistoryTitle": "显示检测历史记录",
+  "showDetectionHistorySubtitle": "查看已检测交易的详细日志",
+  "autoDeleteUndetectedTitle": "自动删除未检测到的记录",
+  "autoDeleteUndetectedSubtitle": "12小时后删除未检测到的项目",
+  "testParserDiagnosticTitle": "解析器诊断测试",
+  "testParserDiagnosticDesc": "输入示例通知文本，查看解析器的处理效果。",
+  "pasteNotificationHint": "在此粘贴通知文本...",
+  "statusBalanceSync": "余额同步",
+  "statusNoActionDetected": "未检测到任何操作",
+  "transactionType": "类型",
+  "resultLabelMerchant": "商户",
+  "resultLabelBank": "银行",
+  "balanceLabel": "余额",
+  "resultLabelConfidence": "置信度",
+  "unknown": "未知",
+  "general": "常规",
+  "notAvailable": "不适用",
+  "close": "关闭",
+  "parseText": "解析文本",
+  "deleteAllDataTitle": "删除所有数据",
+  "deleteAllDataWarningSubtitle": "⚠️ 此操作无法撤销",
+  "resetIntroTitle": "重置引导页",
+  "resetIntroSubtitle": "再次显示引导页",
+  "incomeCategories": "收入类别",
+  "incomeCategoriesDesc": "管理收入类别",
+  "expenseCategories": "支出类别",
+  "expenseCategoriesDesc": "管理支出类别",
+  "accountsTitle": "账户",
+  "accountsDesc": "管理您的账户",
+  "enterNamePlaceholder": "输入名称...",
+  "aboutAppSubtitle": "开发者、隐私、支持等信息",
+  "setMonthlySpendingLimit": "设置每月支出限额",
+  "joinPreviousMonthBalanceTitle": "合并上月余额",
+  "joinPreviousMonthBalanceDesc": "在当前总额中包含上月余额",
+  "setMonthlyBudgetTitle": "设置每月预算",
+  "budgetAmountLabel": "预算金额",
+  "budgetUpdated": "预算已更新！",
+  "confirmDeleteTitle": "确认删除",
+  "confirmDeleteAllDesc": "确定要删除所有交易并重置余额吗？此操作无法撤销。",
+  "deleteAllButton": "全部删除",
+  "failedDeleteAllData": "删除所有数据失败，请重试。",
+  "resetIntroConfirmDesc": "下次打开应用时将再次显示引导页。您的数据不会受到影响。",
+  "editFieldTitle": "编辑{field}",
+  "@editFieldTitle": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "enterFieldHint": "输入{field}",
+  "@enterFieldHint": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "statusLabel": "状态：{status}",
+  "@statusLabel": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "manageItemsTitle": "管理{type}",
+  "@manageItemsTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "noItemsFound": "未找到{type}。",
+  "@noItemsFound": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "addItemButton": "添加{type}",
+  "@addItemButton": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "editItemTitle": "编辑{type}",
+  "@editItemTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "itemNameLabel": "{type}名称",
+  "@itemNameLabel": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "monthlyLimitSubtitle": "每月限额：{budget}",
+  "@monthlyLimitSubtitle": {
+    "placeholders": {
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "failedResetIntro": "重置引导页失败，请重试。\\n{error}",
+  "@failedResetIntro": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedUpdateAutoDetection": "更新自动检测失败",
+  "actionCannotBeUndone": "此操作无法撤销。",
+  "deleteTransactionsCountTitle": "删除{count}笔交易？",
+  "@deleteTransactionsCountTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deletedTransactionsCount": "已删除{count}笔交易",
+  "@deletedTransactionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "transactionHistoryTitle": "交易历史",
+  "upiIdMissingTitle": "缺少 UPI ID",
+  "upiIdMissingDesc": "请在设置中设置您的 UPI ID，以便通过二维码请求付款。",
+  "openSettings": "打开设置",
+  "recipientFallback": "收款人",
+  "paymentLinkCopied": "支付链接已复制！",
+  "linkButton": "链接",
+  "shareQr": "分享二维码",
+  "upiPaymentLinkSubject": "UPI 支付链接",
+  "requestingFrom": "正在向{name}请求",
+  "@requestingFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "upiIdColonValue": "UPI ID：{id}",
+  "@upiIdColonValue": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "failedShareQr": "分享二维码图片失败：{error}",
+  "@failedShareQr": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "payViaUpiQrFor": "通过 UPI 二维码向{name}付款",
+  "@payViaUpiQrFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectPerson": "请选择一个人",
+  "amountInInr": "金额（印度卢比）",
+  "currency": "货币",
+  "selectCurrency": "选择货币",
+  "searchCurrency": "搜索货币",
+  "autoDetectCurrency": "自动检测货币",
+  "autoDetectCurrencyDesc": "根据您设备的地区自动设置",
+  "popularCurrencies": "常用",
+  "allCurrencies": "所有货币",
+  "noCurrencyFound": "未找到货币",
+  "requiredField": "必填",
+  "quickCategories": "快速类别",
+  "saveToPerson": "保存到某人",
+  "noPeopleCreateHint": "尚未添加任何人。请在“人员”部分创建人员。",
+  "selectPersonLabel": "选择人员",
+  "selectCategoryTitle": "选择类别",
+  "updateTransactionButton": "更新交易",
+  "saveTransactionButton": "保存交易",
+  "linkedToRecord": "已关联到{name}的记录",
+  "@linkedToRecord": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "selectItemTitle": "选择{type}",
+  "@selectItemTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "personSingular": "人员",
+  "error": "错误",
+  "retry": "重试",
+  "setupFailedRetry": "设置未能完成，请重试。",
+  "backButton": "返回",
+  "voiceInputExampleHint": "试着说\"晚餐花了500元\"",
+  "autoDetectionEnabledSuccess": "自动检测已成功启用！",
+  "openingRequestQrFor": "正在打开{name}的请求二维码",
+  "@openingRequestQrFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "add": "添加",
+  "uncategorized": "未分类",
+  "timeLabel": "时间",
+  "statusColumnLabel": "状态",
+  "completedLabel": "已完成",
+  "notes": "备注",
+  "serviceLabel": "服务",
+  "refIdLabel": "参考编号",
+  "detectedViaLabel": "检测来源",
+  "attachmentsLabel": "附件",
+  "originalLogLabel": "原始日志",
+  "noNoteProvided": "未提供备注",
+  "tapToUnlock": "点击解锁",
+  "addPeopleEmptyDesc": "添加联系人以跟踪与他们的交易",
+  "noPeopleMatchSearch": "没有与您的搜索匹配的联系人",
+  "okay": "好的",
+  "confirm": "确认",
+  "ok": "确定",
+  "unexpectedErrorOccurred": "发生意外错误",
+  "autoDetectionActive": "自动检测已启用",
+  "unknownSource": "未知来源",
+  "noMessageContentAvailable": "无可用消息内容",
+  "addManually": "手动添加",
+  "detectedAsIncome": "已检测为收入",
+  "detectedAsExpense": "已检测为支出",
+  "sourceColonValue": "来源：{source}",
+  "@sourceColonValue": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "sourceNotification": "通知",
+  "sourceSms": "短信",
+  "sourceRecheckHistory": "历史记录复检",
+  "sourceManualAddHistory": "手动添加（来自历史记录）",
+  "recentLabel": "最近",
+  "oldestLabel": "最早",
+  "highestLabel": "最高",
+  "lowestLabel": "最低",
+  "glassBlurEffectsTitle": "玻璃模糊效果",
+  "glassBlurEffectsSubtitle": "为玻璃面板和对话框添加柔和的模糊效果——会占用更多处理性能，在旧设备上关闭可获得更流畅的体验。",
+  "tourBalanceCardTitle": "Your Balance",
+  "tourBalanceCardDesc": "Tap for income & expense details. Long-press to edit your starting balance.",
+  "tourAddIncomeTitle": "Add Income",
+  "tourAddIncomeDesc": "Log money you've received.",
+  "tourMicTitle": "Record by Voice",
+  "tourMicDesc": "Press and hold, say the amount and what it was for, then release — it's saved automatically.",
+  "tourAddExpenseTitle": "Add Expense",
+  "tourAddExpenseDesc": "Log money you've spent.",
+  "tourAddPersonTitle": "Add a Person",
+  "tourAddPersonDesc": "Track what you owe each other over time.",
+  "tourPersonCardTitle": "Open Their Ledger",
+  "tourPersonCardDesc": "Tap a card to see the full history with this person and settle up.",
+  "tourPayNowTitle": "Settle Up",
+  "tourPayNowDesc": "Pay what you owe them directly via UPI.",
+  "tourEditPersonTitle": "Edit Person",
+  "tourEditPersonDesc": "Change their name or photo.",
+  "tourDeletePersonTitle": "Careful — Long-Press Deletes",
+  "tourDeletePersonDesc": "Long-pressing this header permanently deletes this person and their history. You'll be asked to confirm first.",
+  "tourDeleteTxTitle": "Long-Press to Delete",
+  "tourDeleteTxDesc": "Tap a transaction to edit it, or long-press to delete it.",
+  "replayTipsTitle": "Show Tips Again",
+  "replayTipsSubtitle": "Replay the pointer-hint tours on Home, People, and Person Details.",
+  "replayTipsDone": "Tips will show again next time you open those screens."
 }

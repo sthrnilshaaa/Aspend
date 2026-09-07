@@ -300,7 +300,7 @@ class _AppListTile extends StatelessWidget {
         color: isDark
             ? Colors.white.withValues(alpha: 0.03)
             : Colors.black.withValues(alpha: 0.02),
-        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusLarge),
+        borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMinLarge),
         border: Border.all(
           color: isSelected
               ? theme.colorScheme.primary.withValues(alpha: 0.2)

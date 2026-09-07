@@ -17,6 +17,7 @@ import '../core/const/app_colors.dart';
 import '../core/const/app_dimensions.dart';
 import '../core/const/app_typography.dart';
 import '../core/utils/blur_utils.dart';
+import '../l10n/generated/app_localizations.dart';
 
 class TransactionTile extends StatefulWidget {
   final Transaction transaction;
@@ -50,7 +51,10 @@ class _TransactionTileState extends State<TransactionTile> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final isDark = context.select<ThemeViewModel, bool>((vm) => vm.isDarkMode);
+    final currencySymbol =
+        context.select<ThemeViewModel, String>((vm) => vm.currencySymbol);
     final color =
         TransactionUtils.getCategoryColor(widget.transaction.category);
     final iconSvg =
@@ -73,203 +77,209 @@ class _TransactionTileState extends State<TransactionTile> {
                 : () => _showDetailsSheet(context, isDark),
             child: ClipRRect(
               borderRadius:
-                  BorderRadius.circular(AppDimensions.borderRadiusLarge),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  padding: ResponsiveUtils.getResponsiveEdgeInsets(context,
-                      horizontal: AppDimensions.paddingStandard,
-                      vertical: AppDimensions.paddingSmall +
-                          AppDimensions.paddingXSmall),
-                  decoration: BoxDecoration(
+                  BorderRadius.circular(AppDimensions.borderRadiusMinLarge),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: ResponsiveUtils.getResponsiveEdgeInsets(context,
+                    horizontal: AppDimensions.paddingStandard,
+                    vertical: AppDimensions.paddingSmall +
+                        AppDimensions.paddingXSmall),
+                decoration: BoxDecoration(
+                  color: widget.isSelected
+                      ? theme.colorScheme.primary.withValues(alpha: 0.1)
+                      : isDark
+                          ? Colors.white.withValues(alpha: 0.02)
+                          : Colors.black.withValues(alpha: 0.01),
+                  borderRadius:
+                      BorderRadius.circular(AppDimensions.borderRadiusMinLarge),
+                  border: Border.all(
                     color: widget.isSelected
-                        ? theme.colorScheme.primary.withValues(alpha: 0.1)
-                        : isDark
-                            ? Colors.white.withValues(alpha: 0.02)
-                            : Colors.black.withValues(alpha: 0.01),
-                    borderRadius:
-                        BorderRadius.circular(AppDimensions.borderRadiusLarge),
-                    border: Border.all(
-                      color: widget.isSelected
-                          ? theme.colorScheme.primary.withValues(alpha: 0.3)
-                          : widget.transaction.source != null
-                              ? Colors.blue.withValues(alpha: 0.1)
-                              : isDark
-                                  ? Colors.white.withValues(alpha: 0.05)
-                                  : Colors.black.withValues(alpha: 0.05),
-                      width: widget.transaction.source != null ? 1.2 : 1,
-                    ),
+                        ? theme.colorScheme.primary.withValues(alpha: 0.3)
+                        : widget.transaction.source != null
+                            ? Colors.blue.withValues(alpha: 0.1)
+                            : isDark
+                                ? Colors.white.withValues(alpha: 0.05)
+                                : Colors.black.withValues(alpha: 0.05),
+                    width: widget.transaction.source != null ? 1.2 : 1,
                   ),
-                  child: Row(
-                    children: [
-                      if (widget.isSelectionMode) ...[
-                        Padding(
-                          padding: const EdgeInsets.only(right: 12),
-                          child: Container(
-                            width: 24,
-                            height: 24,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
+                ),
+                child: Row(
+                  children: [
+                    if (widget.isSelectionMode) ...[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Container(
+                          width: 24,
+                          height: 24,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: widget.isSelected
+                                ? theme.colorScheme.primary
+                                : Colors.transparent,
+                            border: Border.all(
                               color: widget.isSelected
                                   ? theme.colorScheme.primary
-                                  : Colors.transparent,
-                              border: Border.all(
-                                color: widget.isSelected
-                                    ? theme.colorScheme.primary
-                                    : theme.dividerColor.withValues(alpha: 0.3),
-                                width: 2,
-                              ),
+                                  : theme.dividerColor.withValues(alpha: 0.3),
+                              width: 2,
                             ),
-                            child: widget.isSelected
-                                ? const Icon(Icons.check,
-                                    color: Colors.white, size: 16)
-                                : null,
                           ),
-                        ),
-                      ],
-                      Container(
-                        height: ResponsiveUtils.getResponsiveIconSize(context,
-                            mobile: AppDimensions.categoryIconSizeMobile,
-                            tablet: AppDimensions.categoryIconSizeTablet,
-                            desktop: AppDimensions.categoryIconSizeDesktop),
-                        width: ResponsiveUtils.getResponsiveIconSize(context,
-                            mobile: AppDimensions.categoryIconSizeMobile,
-                            tablet: AppDimensions.categoryIconSizeTablet,
-                            desktop: AppDimensions.categoryIconSizeDesktop),
-                        decoration: BoxDecoration(
-                          color: color.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(
-                              AppDimensions.borderRadiusRegular),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: SvgPicture.asset(iconSvg,
-                              colorFilter:
-                                  ColorFilter.mode(color, BlendMode.srcIn),
-                              width: ResponsiveUtils.getResponsiveIconSize(
-                                  context,
-                                  mobile:
-                                      AppDimensions.categoryIconInsideMobile,
-                                  tablet:
-                                      AppDimensions.categoryIconInsideTablet,
-                                  desktop:
-                                      AppDimensions.categoryIconInsideDesktop)),
+                          child: widget.isSelected
+                              ? const Icon(Icons.check,
+                                  color: Colors.white, size: 16)
+                              : null,
                         ),
                       ),
-                      const SizedBox(width: AppDimensions.paddingStandard),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.transaction.note.isNotEmpty
-                                  ? widget.transaction.note
-                                  : widget.transaction.category,
-                              style: GoogleFonts.dmSans(
-                                fontSize: AppTypography
-                                    .fontSizeMedium, // Stronger title presence
-                                fontWeight: AppTypography
-                                    .fontWeightBold, // Maximize contrast
-                                color: theme.colorScheme.onSurface,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                    ],
+                    Container(
+                      height: ResponsiveUtils.getResponsiveIconSize(context,
+                          mobile: AppDimensions.categoryIconSizeMobile,
+                          tablet: AppDimensions.categoryIconSizeTablet,
+                          desktop: AppDimensions.categoryIconSizeDesktop),
+                      width: ResponsiveUtils.getResponsiveIconSize(context,
+                          mobile: AppDimensions.categoryIconSizeMobile,
+                          tablet: AppDimensions.categoryIconSizeTablet,
+                          desktop: AppDimensions.categoryIconSizeDesktop),
+                      decoration: BoxDecoration(
+                        color: color.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(
+                            AppDimensions.borderRadiusRegular),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: SvgPicture.asset(iconSvg,
+                            colorFilter:
+                                ColorFilter.mode(color, BlendMode.srcIn),
+                            width: ResponsiveUtils.getResponsiveIconSize(
+                                context,
+                                mobile: AppDimensions.categoryIconInsideMobile,
+                                tablet: AppDimensions.categoryIconInsideTablet,
+                                desktop:
+                                    AppDimensions.categoryIconInsideDesktop)),
+                      ),
+                    ),
+                    const SizedBox(width: AppDimensions.paddingStandard),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.transaction.note.isNotEmpty
+                                ? widget.transaction.note
+                                : widget.transaction.category,
+                            style: GoogleFonts.dmSans(
+                              fontSize: AppTypography
+                                  .fontSizeMedium, // Stronger title presence
+                              fontWeight: AppTypography
+                                  .fontWeightBold, // Maximize contrast
+                              color: theme.colorScheme.onSurface,
                             ),
-                            const SizedBox(height: 4),
-                            Row(
-                              children: [
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          // const SizedBox(height: 2),
+                          Row(
+                            children: [
+                              Text(
+                                widget.transaction.category.isNotEmpty
+                                    ? widget.transaction.category
+                                    : l10n.uncategorized,
+                                style: GoogleFonts.dmSans(
+                                  fontSize: AppTypography.fontSizeSmall,
+                                  fontWeight: AppTypography.fontWeightMedium,
+                                  color: theme.colorScheme.onSurface.withValues(
+                                      alpha: 0.5), // Elegant subtle subtitle
+                                ),
+                              ),
+                              if (widget.transaction.bankName != null &&
+                                  widget.transaction.bankName!.isNotEmpty) ...[
                                 Text(
-                                  widget.transaction.category.isNotEmpty
-                                      ? widget.transaction.category
-                                      : 'Uncategorized',
-                                  style: GoogleFonts.dmSans(
-                                    fontSize: AppTypography.fontSizeSmall,
-                                    fontWeight: AppTypography.fontWeightMedium,
+                                  ' • ',
+                                  style: TextStyle(
                                     color: theme.colorScheme.onSurface
-                                        .withValues(
-                                            alpha:
-                                                0.5), // Elegant subtle subtitle
+                                        .withValues(alpha: 0.3),
                                   ),
                                 ),
-                                if (widget.transaction.bankName != null &&
-                                    widget.transaction.bankName!
-                                        .isNotEmpty) ...[
-                                  Text(
-                                    ' • ',
-                                    style: TextStyle(
+                                Expanded(
+                                  child: Text(
+                                    widget.transaction.bankName!,
+                                    style: GoogleFonts.dmSans(
+                                      fontSize: AppTypography.fontSizeXSmall,
+                                      fontWeight:
+                                          AppTypography.fontWeightMedium,
                                       color: theme.colorScheme.onSurface
-                                          .withValues(alpha: 0.3),
+                                          .withValues(alpha: 0.4),
                                     ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                  Expanded(
-                                    child: Text(
-                                      widget.transaction.bankName!,
-                                      style: GoogleFonts.dmSans(
-                                        fontSize: AppTypography.fontSizeXSmall,
-                                        fontWeight:
-                                            AppTypography.fontWeightMedium,
-                                        color: theme.colorScheme.onSurface
-                                            .withValues(alpha: 0.4),
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ],
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: AppDimensions.paddingSmall),
-                      // Amount
-                      Column(
+                    ),
+                    const SizedBox(width: AppDimensions.paddingSmall),
+                    // Amount — capped + auto-shrunk so a very long number
+                    // scales its font down instead of overflowing the row.
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.sizeOf(context).width * 0.34,
+                      ),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                // Integer part (e.g. 55)
-                                TextSpan(
-                                  text:
-                                      '${widget.transaction.isIncome ? '+' : '-'}₹$integerPart',
-                                  style: GoogleFonts.dmSans(
-                                    fontWeight: AppTypography.fontWeightBlack,
-                                    fontSize:
-                                        ResponsiveUtils.getResponsiveFontSize(
-                                            context,
-                                            mobile: AppTypography.fontSizeLarge,
-                                            tablet:
-                                                AppTypography.fontSizeXLarge,
-                                            desktop: AppTypography
-                                                .fontSizeXXLarge),
-                                    color: widget.transaction.isIncome
-                                        ? AppColors.accentGreen
-                                        : AppColors.accentRed,
-                                    letterSpacing: -0.5,
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.centerRight,
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  // Integer part (e.g. 55)
+                                  TextSpan(
+                                    text:
+                                        '${widget.transaction.isIncome ? '+' : '-'}$currencySymbol$integerPart',
+                                    style: GoogleFonts.dmSans(
+                                      fontWeight: AppTypography.fontWeightBlack,
+                                      fontSize:
+                                          ResponsiveUtils.getResponsiveFontSize(
+                                              context,
+                                              mobile:
+                                                  AppTypography.fontSizeLarge,
+                                              tablet:
+                                                  AppTypography.fontSizeXLarge,
+                                              desktop: AppTypography
+                                                  .fontSizeXXLarge),
+                                      color: widget.transaction.isIncome
+                                          ? AppColors.accentGreen
+                                          : AppColors.accentRed,
+                                      letterSpacing: -0.5,
+                                    ),
                                   ),
-                                ),
-                                // Decimal part (e.g. .00)
-                                TextSpan(
-                                  text: '.$decimalPart',
-                                  style: GoogleFonts.dmSans(
-                                    fontWeight: AppTypography.fontWeightBold,
-                                    fontSize:
-                                        ResponsiveUtils.getResponsiveFontSize(
-                                            context,
-                                            mobile: AppTypography.fontSizeSmall,
-                                            tablet:
-                                                AppTypography.fontSizeMedium,
-                                            desktop:
-                                                AppTypography.fontSizeLarge),
-                                    color: widget.transaction.isIncome
-                                        ? AppColors.accentGreen
-                                            .withValues(alpha: 0.8)
-                                        : AppColors.accentRed
-                                            .withValues(alpha: 0.8),
+                                  // Decimal part (e.g. .00)
+                                  TextSpan(
+                                    text: '.$decimalPart',
+                                    style: GoogleFonts.dmSans(
+                                      fontWeight: AppTypography.fontWeightBold,
+                                      fontSize:
+                                          ResponsiveUtils.getResponsiveFontSize(
+                                              context,
+                                              mobile:
+                                                  AppTypography.fontSizeSmall,
+                                              tablet:
+                                                  AppTypography.fontSizeMedium,
+                                              desktop:
+                                                  AppTypography.fontSizeLarge),
+                                      color: widget.transaction.isIncome
+                                          ? AppColors.accentGreen
+                                              .withValues(alpha: 0.8)
+                                          : AppColors.accentRed
+                                              .withValues(alpha: 0.8),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           const SizedBox(height: 2),
@@ -288,18 +298,21 @@ class _TransactionTileState extends State<TransactionTile> {
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
         ),
+      ),
     );
   }
 
   void _showDetailsSheet(BuildContext context, bool isDark) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+    final currencySymbol = context.read<ThemeViewModel>().currencySymbol;
     final color =
         TransactionUtils.getCategoryColor(widget.transaction.category);
     final iconSvg =
@@ -308,388 +321,389 @@ class _TransactionTileState extends State<TransactionTile> {
     BlurUtils.showBlurredBottomSheet(
       context: context,
       child: DraggableScrollableSheet(
-          initialChildSize: 0.7,
-          minChildSize: 0.5,
-          maxChildSize: 0.95,
-          builder: (_, scrollController) => Container(
-            decoration: BoxDecoration(
-              color: theme.scaffoldBackgroundColor,
-              borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(AppDimensions.borderRadiusXLarge)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.2),
-                  blurRadius: 20,
-                  offset: const Offset(0, -5),
+        initialChildSize: 0.7,
+        minChildSize: 0.5,
+        maxChildSize: 0.95,
+        builder: (_, scrollController) => Container(
+          decoration: BoxDecoration(
+            color: theme.scaffoldBackgroundColor,
+            borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(AppDimensions.borderRadiusLarge)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.2),
+                blurRadius: 20,
+                offset: const Offset(0, -5),
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: AppDimensions.spacingMedium),
+              Container(
+                width: AppDimensions.avatarSizeStandard,
+                height: AppDimensions.spacingXSmall,
+                decoration: BoxDecoration(
+                  color: Colors.grey.withValues(alpha: 0.3),
+                  borderRadius:
+                      BorderRadius.circular(AppDimensions.spacingTiny),
                 ),
-              ],
-            ),
-            child: Column(
-              children: [
-                const SizedBox(height: AppDimensions.spacingMedium),
-                Container(
-                  width: AppDimensions.avatarSizeStandard,
-                  height: AppDimensions.spacingXSmall,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withValues(alpha: 0.3),
-                    borderRadius:
-                        BorderRadius.circular(AppDimensions.spacingTiny),
-                  ),
-                ),
-                const SizedBox(height: AppDimensions.paddingLarge),
-                Expanded(
-                  child: ListView(
-                    controller: scrollController,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: AppDimensions.paddingStandard),
-                    children: [
-                      // Handle height correction
-                      const SizedBox(height: AppDimensions.paddingStandard),
+              ),
+              const SizedBox(height: AppDimensions.paddingLarge),
+              Expanded(
+                child: ListView(
+                  controller: scrollController,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: AppDimensions.paddingStandard),
+                  children: [
+                    // Handle height correction
+                    const SizedBox(height: AppDimensions.paddingStandard),
 
-                      // Header Amount Card (Dark Modern Design)
-                      Container(
-                        padding: const EdgeInsets.all(AppDimensions
-                            .paddingXXLarge), // More spacious padding
-                        decoration: BoxDecoration(
-                          color: color.withValues(alpha: isDark ? 0.1 : 0.05),
-                          borderRadius: BorderRadius.circular(
-                              AppDimensions.borderRadiusXLarge + 8),
-                          border: Border.all(
-                            color: color.withValues(alpha: 0.1),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(
-                                  AppDimensions.paddingStandard),
-                              decoration: BoxDecoration(
-                                color: color.withValues(alpha: 0.15),
-                                shape: BoxShape.circle,
-                              ),
-                              child: SvgPicture.asset(iconSvg,
-                                  colorFilter:
-                                      ColorFilter.mode(color, BlendMode.srcIn),
-                                  width: AppDimensions.iconSizeHuge,
-                                  height: AppDimensions.iconSizeHuge),
-                            ),
-                            const Spacer(),
-                            Text(
-                              "${widget.transaction.isIncome ? '+' : '-'}${NumberFormat.currency(symbol: '').format(widget.transaction.amount).trim()}",
-                              style: GoogleFonts.dmSans(
-                                fontSize: AppTypography
-                                    .fontSizeGigantic, // Maximized hero size
-                                fontWeight: AppTypography
-                                    .fontWeightBlack, // Max weight for premium feel
-                                color: widget.transaction.isIncome
-                                    ? AppColors.accentGreen
-                                    : AppColors.accentRed,
-                                letterSpacing:
-                                    -1.5, // tighter tracking for huge numbers
-                              ),
-                            ),
-                          ],
+                    // Header Amount Card (Dark Modern Design)
+                    Container(
+                      padding: const EdgeInsets.all(AppDimensions
+                          .paddingXXLarge), // More spacious padding
+                      decoration: BoxDecoration(
+                        color: color.withValues(alpha: isDark ? 0.1 : 0.05),
+                        borderRadius: BorderRadius.circular(
+                            AppDimensions.borderRadiusLarge + 8),
+                        border: Border.all(
+                          color: color.withValues(alpha: 0.1),
                         ),
                       ),
-                      const SizedBox(height: AppDimensions.paddingXLarge),
-
-                      // Transaction Info Grid (2x2)
-                      Row(
+                      child: Row(
                         children: [
-                          Expanded(
-                            child: _buildInfoColumn(
-                              'Account',
-                              widget.transaction.account,
-                              SvgAppIcons.walletIcon,
-                              isDark,
+                          Container(
+                            padding: const EdgeInsets.all(
+                                AppDimensions.paddingStandard),
+                            decoration: BoxDecoration(
+                              color: color.withValues(alpha: 0.15),
+                              shape: BoxShape.circle,
+                            ),
+                            child: SvgPicture.asset(iconSvg,
+                                colorFilter:
+                                    ColorFilter.mode(color, BlendMode.srcIn),
+                                width: AppDimensions.iconSizeHuge,
+                                height: AppDimensions.iconSizeHuge),
+                          ),
+                          const Spacer(),
+                          // Flexible + FittedBox so a long amount scales
+                          // down to fit next to the icon instead of
+                          // overflowing this hero row.
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                "${widget.transaction.isIncome ? '+' : '-'}${NumberFormat.currency(symbol: currencySymbol).format(widget.transaction.amount).trim()}",
+                                style: GoogleFonts.dmSans(
+                                  fontSize: AppTypography
+                                      .fontSizeGigantic, // Maximized hero size
+                                  fontWeight: AppTypography
+                                      .fontWeightBlack, // Max weight for premium feel
+                                  color: widget.transaction.isIncome
+                                      ? AppColors.accentGreen
+                                      : AppColors.accentRed,
+                                  letterSpacing:
+                                      -1.5, // tighter tracking for huge numbers
+                                ),
+                              ),
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: AppDimensions.paddingXLarge),
+
+                    // Transaction Info Grid (2x2)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildInfoColumn(
+                            l10n.account,
+                            widget.transaction.account,
+                            SvgAppIcons.walletIcon,
+                            isDark,
+                          ),
+                        ),
+                        Expanded(
+                          child: _buildInfoColumn(
+                            l10n.date,
+                            DateFormat('dd MMM, yyyy')
+                                .format(widget.transaction.date),
+                            Icons.calendar_today_outlined,
+                            isDark,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppDimensions.paddingLarge),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildInfoColumn(
+                            l10n.timeLabel,
+                            DateFormat('hh:mm a')
+                                .format(widget.transaction.date),
+                            Icons.access_time_outlined,
+                            isDark,
+                          ),
+                        ),
+                        Expanded(
+                          child: _buildInfoColumn(
+                            l10n.statusColumnLabel,
+                            l10n.completedLabel,
+                            Icons.check_circle_outline_rounded,
+                            isDark,
+                            valueColor: AppColors.accentGreen,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: AppDimensions.paddingStandard),
+                    const Divider(
+                        height: AppDimensions.paddingXXLarge,
+                        color: Colors.transparent),
+
+                    // Notes Section
+                    if (widget.transaction.note.isNotEmpty) ...[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(
+                                AppDimensions.paddingSmall + 2),
+                            decoration: BoxDecoration(
+                              color: theme.colorScheme.primary
+                                  .withValues(alpha: 0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: SvgPicture.asset(
+                              SvgAppIcons.noteIcon,
+                              colorFilter: ColorFilter.mode(
+                                  theme.colorScheme.primary, BlendMode.srcIn),
+                              width: 20,
+                              height: 20,
+                            ),
+                          ),
+                          const SizedBox(width: AppDimensions.paddingStandard),
+                          Text(
+                            l10n.notes,
+                            style: GoogleFonts.dmSans(
+                              fontSize: AppTypography.fontSizeMedium,
+                              fontWeight: AppTypography.fontWeightBold,
+                              color: theme.textTheme.bodyLarge?.color,
+                            ),
+                          ),
+                          const SizedBox(width: AppDimensions.paddingStandard),
+                          Container(
+                            height: 60,
+                            width: 1,
+                            color: Colors.grey.withValues(alpha: 0.2),
+                          ),
+                          const SizedBox(width: AppDimensions.paddingStandard),
                           Expanded(
-                            child: _buildInfoColumn(
-                              'Date',
-                              DateFormat('dd MMM, yyyy')
-                                  .format(widget.transaction.date),
-                              Icons.calendar_today_outlined,
-                              isDark,
+                            child: Text(
+                              widget.transaction.note,
+                              style: GoogleFonts.dmSans(
+                                fontSize: AppTypography.fontSizeSmall + 1,
+                                color: theme.textTheme.bodyMedium?.color
+                                    ?.withValues(alpha: 0.7),
+                                height: 1.4,
+                              ),
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(height: AppDimensions.paddingLarge),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildInfoColumn(
-                              'Time',
-                              DateFormat('hh:mm a')
-                                  .format(widget.transaction.date),
-                              Icons.access_time_outlined,
-                              isDark,
-                            ),
-                          ),
-                          Expanded(
-                            child: _buildInfoColumn(
-                              'Status',
-                              'Completed',
-                              Icons.check_circle_outline_rounded,
-                              isDark,
-                              valueColor: AppColors.accentGreen,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: AppDimensions.paddingStandard),
-                      const Divider(
-                          height: AppDimensions.paddingXXLarge,
-                          color: Colors.transparent),
-
-                      // Notes Section
-                      if (widget.transaction.note.isNotEmpty) ...[
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(
-                                  AppDimensions.paddingSmall + 2),
-                              decoration: BoxDecoration(
-                                color: theme.colorScheme.primary
-                                    .withValues(alpha: 0.1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: SvgPicture.asset(
-                                SvgAppIcons.noteIcon,
-                                colorFilter: ColorFilter.mode(
-                                    theme.colorScheme.primary, BlendMode.srcIn),
-                                width: 20,
-                                height: 20,
-                              ),
-                            ),
-                            const SizedBox(
-                                width: AppDimensions.paddingStandard),
-                            Text(
-                              'Notes',
-                              style: GoogleFonts.dmSans(
-                                fontSize: AppTypography.fontSizeMedium,
-                                fontWeight: AppTypography.fontWeightBold,
-                                color: theme.textTheme.bodyLarge?.color,
-                              ),
-                            ),
-                            const SizedBox(
-                                width: AppDimensions.paddingStandard),
-                            Container(
-                              height: 60,
-                              width: 1,
-                              color: Colors.grey.withValues(alpha: 0.2),
-                            ),
-                            const SizedBox(
-                                width: AppDimensions.paddingStandard),
-                            Expanded(
-                              child: Text(
-                                widget.transaction.note,
-                                style: GoogleFonts.dmSans(
-                                  fontSize: AppTypography.fontSizeSmall + 1,
-                                  color: theme.textTheme.bodyMedium?.color
-                                      ?.withValues(alpha: 0.7),
-                                  height: 1.4,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: AppDimensions.paddingLarge),
-                      ],
-
-                      if (widget.transaction.bankName != null)
-                        _buildModernDetailRow(
-                            'Service', widget.transaction.bankName!),
-
-                      if (widget.transaction.reference != null)
-                        _buildModernDetailRow(
-                            'Ref ID', widget.transaction.reference!),
-
-                      if (widget.transaction.balanceAfter != null)
-                        _buildModernDetailRow(
-                          'Total Balance',
-                          NumberFormat.currency(symbol: '₹')
-                              .format(widget.transaction.balanceAfter),
-                        ),
-
-                      if (widget.transaction.source != null)
-                        _buildModernDetailRow(
-                            'Detected via', widget.transaction.source!,
-                            isAuto: true),
-
-                      if (widget.transaction.imagePaths != null &&
-                          widget.transaction.imagePaths!.isNotEmpty) ...[
-                        const SizedBox(height: AppDimensions.paddingLarge),
-                        Text(
-                          'Attachments',
-                          style: GoogleFonts.dmSans(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.primary,
-                          ),
-                        ),
-                        const SizedBox(height: AppDimensions.spacingMedium),
-                        SizedBox(
-                          height: 120,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: widget.transaction.imagePaths!.length,
-                            itemBuilder: (context, index) {
-                              final path =
-                                  widget.transaction.imagePaths![index];
-                              return Container(
-                                margin: const EdgeInsets.only(right: 12),
-                                width: 120,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      AppDimensions.borderRadiusMedium),
-                                  image: DecorationImage(
-                                    image: FileImage(File(path)),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  border: Border.all(
-                                    color: theme.dividerColor
-                                        .withValues(alpha: 0.1),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-
-                      if (widget.transaction.originalText != null) ...[
-                        const SizedBox(height: AppDimensions.paddingLarge),
-                        Text(
-                          'Original Log',
-                          style: GoogleFonts.dmSans(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.primary,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: theme.colorScheme.surface,
-                            borderRadius: BorderRadius.circular(
-                                AppDimensions.borderRadiusMedium),
-                            border: Border.all(
-                                color:
-                                    theme.dividerColor.withValues(alpha: 0.1)),
-                          ),
-                          child: Text(
-                            widget.transaction.originalText!,
-                            style: GoogleFonts.dmSans(
-                              fontSize: 13,
-                              height: 1.5,
-                              color: theme.textTheme.bodyMedium?.color
-                                  ?.withValues(alpha: 0.7),
-                            ),
-                          ),
-                        ),
-                      ],
-
-                      const SizedBox(height: AppDimensions.paddingXLarge),
                     ],
-                  ),
-                ),
 
-                // Bottom Buttons
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-                  child: Row(
-                    children: [
-                      ZoomTapAnimation(
-                        onTap: () {
-                          Navigator.pop(context);
-                          _showDeleteConfirmation(context);
-                        },
-                        child: Container(
-                            padding: const EdgeInsets.all(
-                                AppDimensions.paddingStandard),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.accentRed.withValues(alpha: 0.1),
-                              border: Border.all(
-                                color:
-                                    AppColors.accentRed.withValues(alpha: 0.2),
-                              ),
-                            ),
-                            child: SvgPicture.asset(
-                              SvgAppIcons.deleteIcon,
-                              colorFilter: const ColorFilter.mode(
-                                  AppColors.accentRed, BlendMode.srcIn),
-                            )),
+                    if (widget.transaction.bankName != null)
+                      _buildModernDetailRow(
+                          l10n.serviceLabel, widget.transaction.bankName!),
+
+                    if (widget.transaction.reference != null)
+                      _buildModernDetailRow(
+                          l10n.refIdLabel, widget.transaction.reference!),
+
+                    if (widget.transaction.balanceAfter != null)
+                      _buildModernDetailRow(
+                        l10n.totalBalance,
+                        NumberFormat.currency(symbol: currencySymbol)
+                            .format(widget.transaction.balanceAfter),
                       ),
-                      const SizedBox(width: AppDimensions.paddingStandard),
-                      Expanded(
-                        child: ZoomTapAnimation(
-                          onTap: () {
-                            Navigator.pop(context);
-                            BlurUtils.showBlurredBottomSheet(
-                              context: context,
-                              child: AddTransactionDialog(
-                                isIncome: widget.transaction.isIncome,
-                                existingTransaction: widget.transaction,
+
+                    if (widget.transaction.source != null)
+                      _buildModernDetailRow(l10n.detectedViaLabel,
+                          _localizedSource(l10n, widget.transaction.source!),
+                          isAuto: true),
+
+                    if (widget.transaction.imagePaths != null &&
+                        widget.transaction.imagePaths!.isNotEmpty) ...[
+                      const SizedBox(height: AppDimensions.paddingLarge),
+                      Text(
+                        l10n.attachmentsLabel,
+                        style: GoogleFonts.dmSans(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.primary,
+                        ),
+                      ),
+                      const SizedBox(height: AppDimensions.spacingMedium),
+                      SizedBox(
+                        height: 120,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: widget.transaction.imagePaths!.length,
+                          itemBuilder: (context, index) {
+                            final path = widget.transaction.imagePaths![index];
+                            return Container(
+                              margin: const EdgeInsets.only(right: 12),
+                              width: 120,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    AppDimensions.borderRadiusMedium),
+                                image: DecorationImage(
+                                  image: FileImage(File(path)),
+                                  fit: BoxFit.cover,
+                                ),
+                                border: Border.all(
+                                  color:
+                                      theme.dividerColor.withValues(alpha: 0.1),
+                                ),
                               ),
                             );
                           },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 18),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  AppDimensions.borderRadiusFull),
-                              border: Border.all(
-                                color: theme.colorScheme.primary
-                                    .withValues(alpha: 0.5),
-                              ),
-                              gradient: LinearGradient(
-                                colors: [
-                                  theme.colorScheme.primary
-                                      .withValues(alpha: 0.2),
-                                  theme.colorScheme.primary
-                                      .withValues(alpha: 0.05),
-                                ],
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  SvgAppIcons.editIcon,
-                                  colorFilter: ColorFilter.mode(
-                                      theme.colorScheme.primary,
-                                      BlendMode.srcIn),
-                                  width: 24,
-                                  height: 24,
-                                ),
-                                const SizedBox(
-                                    width: AppDimensions.paddingSmall),
-                                Text(
-                                  'Edit Transaction',
-                                  style: GoogleFonts.dmSans(
-                                    fontWeight: AppTypography.fontWeightBold,
-                                    color: theme.colorScheme.primary,
-                                    fontSize: AppTypography.fontSizeMedium,
-                                  ),
-                                ),
-                              ],
-                            ),
+                        ),
+                      ),
+                    ],
+
+                    if (widget.transaction.originalText != null) ...[
+                      const SizedBox(height: AppDimensions.paddingLarge),
+                      Text(
+                        l10n.originalLogLabel,
+                        style: GoogleFonts.dmSans(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.primary,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.surface,
+                          borderRadius: BorderRadius.circular(
+                              AppDimensions.borderRadiusMedium),
+                          border: Border.all(
+                              color: theme.dividerColor.withValues(alpha: 0.1)),
+                        ),
+                        child: Text(
+                          widget.transaction.originalText!,
+                          style: GoogleFonts.dmSans(
+                            fontSize: 13,
+                            height: 1.5,
+                            color: theme.textTheme.bodyMedium?.color
+                                ?.withValues(alpha: 0.7),
                           ),
                         ),
                       ),
                     ],
-                  ),
+
+                    const SizedBox(height: AppDimensions.paddingXLarge),
+                  ],
                 ),
-              ],
-            ),
+              ),
+
+              // Bottom Buttons
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+                child: Row(
+                  children: [
+                    ZoomTapAnimation(
+                      onTap: () {
+                        Navigator.pop(context);
+                        _showDeleteConfirmation(context);
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.all(
+                              AppDimensions.paddingStandard),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.accentRed.withValues(alpha: 0.1),
+                            border: Border.all(
+                              color: AppColors.accentRed.withValues(alpha: 0.2),
+                            ),
+                          ),
+                          child: SvgPicture.asset(
+                            SvgAppIcons.deleteIcon,
+                            colorFilter: const ColorFilter.mode(
+                                AppColors.accentRed, BlendMode.srcIn),
+                          )),
+                    ),
+                    const SizedBox(width: AppDimensions.paddingStandard),
+                    Expanded(
+                      child: ZoomTapAnimation(
+                        onTap: () {
+                          Navigator.pop(context);
+                          BlurUtils.showBlurredBottomSheet(
+                            context: context,
+                            child: AddTransactionDialog(
+                              isIncome: widget.transaction.isIncome,
+                              existingTransaction: widget.transaction,
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 18),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                AppDimensions.borderRadiusFull),
+                            border: Border.all(
+                              color: theme.colorScheme.primary
+                                  .withValues(alpha: 0.5),
+                            ),
+                            gradient: LinearGradient(
+                              colors: [
+                                theme.colorScheme.primary
+                                    .withValues(alpha: 0.2),
+                                theme.colorScheme.primary
+                                    .withValues(alpha: 0.05),
+                              ],
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                SvgAppIcons.editIcon,
+                                colorFilter: ColorFilter.mode(
+                                    theme.colorScheme.primary, BlendMode.srcIn),
+                                width: 24,
+                                height: 24,
+                              ),
+                              const SizedBox(width: AppDimensions.paddingSmall),
+                              Text(
+                                l10n.editTransaction,
+                                style: GoogleFonts.dmSans(
+                                  fontWeight: AppTypography.fontWeightBold,
+                                  color: theme.colorScheme.primary,
+                                  fontSize: AppTypography.fontSizeMedium,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 
@@ -752,6 +766,24 @@ class _TransactionTileState extends State<TransactionTile> {
     );
   }
 
+  /// Maps the internal `Transaction.source` tag (set in English by
+  /// [TransactionDetectionService] / [AddTransactionDialog]) to its
+  /// localized display text; falls back to the raw value for anything else.
+  String _localizedSource(AppLocalizations l10n, String source) {
+    switch (source) {
+      case 'Notification':
+        return l10n.sourceNotification;
+      case 'SMS':
+        return l10n.sourceSms;
+      case 'Recheck History':
+        return l10n.sourceRecheckHistory;
+      case 'Manual Add (History)':
+        return l10n.sourceManualAddHistory;
+      default:
+        return source;
+    }
+  }
+
   Widget _buildModernDetailRow(String label, String value,
       {bool isAuto = false}) {
     final theme = Theme.of(context);
@@ -796,15 +828,16 @@ class _TransactionTileState extends State<TransactionTile> {
   }
 
   void _showDeleteConfirmation(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete Transaction?'),
-        content: const Text('This action cannot be undone.'),
+        title: Text(l10n.deleteTransaction),
+        content: Text(l10n.deleteTransactionDesc),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -813,7 +846,7 @@ class _TransactionTileState extends State<TransactionTile> {
                   .deleteTransaction(widget.transaction);
               Navigator.pop(context);
             },
-            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+            child: Text(l10n.delete, style: const TextStyle(color: Colors.red)),
           ),
         ],
       ),

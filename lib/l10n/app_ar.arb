@@ -1,5 +1,5 @@
 {
-  "appName": "يصعد",
+  "appName": "Aspends",
   "appTagline": "الإنفاق الذكي، مبسط.",
   "totalBalance": "الرصيد الإجمالي",
   "income": "دخل",
@@ -37,6 +37,9 @@
   "voiceInput": "الإدخال الصوتي",
   "speechUnavailable": "التعرف على الكلام غير متوفر",
   "microPermissionDenied": "تم رفض إذن الميكروفون",
+  "microPermissionTitle": "يتطلب الوصول إلى الميكروفون",
+  "microPermissionDesc": "يحتاج Aspends إلى الوصول إلى الميكروفون للسماح لك بإدخال تفاصيل المعاملات عبر الأوامر الصوتية. تتم معالجة مدخلاتك الصوتية بالكامل دون اتصال بالإنترنت على جهازك ولا يتم رفعها أو مشاركتها أبدًا.",
+  "microPermissionGrant": "تفعيل الصوت",
   "appearance": "مظهر",
   "security": "حماية",
   "autoDetection": "الكشف التلقائي عن المعاملات",
@@ -98,8 +101,20 @@
   "projectInfo": "معلومات المشروع",
   "openSource": "مفتوح المصدر",
   "openSourceDesc": "مصدر مفتوح بفخر على جيثب",
+  "licenses": "تراخيص المصادر المفتوحة",
+  "licensesDesc": "عرض تراخيص الجهات الخارجية المستخدمة في هذا التطبيق",
   "rateApp": "معدل تصاعدي",
   "rateAppDesc": "ادعمنا بتقييم 5 نجوم",
+  "couldNotLaunchUrl": "تعذر فتح الرابط",
+  "errorWithDetails": "خطأ: {error}",
+  "@errorWithDetails": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "madeWithLove": "صُنع بـ ❤️ من أجل مالية أفضل",
   "howAspendWorks": "كيف يعمل أسبيند",
   "howItWorksTitle1": "1. الاعتراض الذكي",
   "howItWorksDesc1": "تستمع خدمة الخلفية الآمنة والمُحسّنة للبطارية إلى الرسائل النصية القصيرة والإشعارات المصرفية الواردة.",
@@ -117,11 +132,21 @@
   "smsPermissionDesc": "تمكن من قراءة الرسائل القصيرة الخاصة بالمعاملات من البنك الذي تتعامل معه.",
   "finishSetup": "إنهاء الإعداد",
   "grant": "منحة",
-  "appNameShort": "يصعد",
+  "appNameShort": "Aspends",
   "splashTagline": "إدارة الأموال الذكية",
   "budget": "ميزانية",
+  "overBudgetBy": "⚠️ تجاوزت الميزانية بمقدار {amount}",
+  "@overBudgetBy": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "balanceDetailsTitle": "تفاصيل الرصيد",
   "editBalanceTitle": "تحرير الرصيد",
+  "tapHoldToEditBalance": "انقر مع الاستمرار لتعديل الرصيد",
+  "longPressBalanceCardHint": "اضغط مطولاً على بطاقة الرصيد في الشاشة الرئيسية",
   "newBalanceLabel": "توازن جديد",
   "viewAll": "عرض الكل",
   "searchHint": "البحث في الفئات أو الملاحظات...",
@@ -174,6 +199,7 @@
   "next": "التالي",
   "getStarted": "ابدأ",
   "requestMoney": "طلب المال",
+  "requestMoneyTooltip": "طلب أموال عبر UPI",
   "generateQr": "إنشاء QR للدفع",
   "sortByNameAZ": "الاسم (أ-ي)",
   "sortByNameZA": "الاسم (ي-أ)",
@@ -184,7 +210,7 @@
   "noTransactionsYet": "لا توجد معاملات حتى الآن",
   "addFirstTransaction": "أضف معاملتك الأولى مع الشخص",
   "settleBalance": "تسوية الرصيد",
-  "settleBalanceDesc": "سيؤدي هذا إلى إضافة معاملة بقيمة ₹{amount} ليصل الرصيد إلى الصفر. يكمل؟",
+  "settleBalanceDesc": "سيؤدي هذا إلى إضافة معاملة بقيمة {amount} ليصل الرصيد إلى الصفر. يكمل؟",
   "@settleBalanceDesc": {
     "placeholders": {
       "amount": {
@@ -319,5 +345,330 @@
   "exportPeopleTitle": "تصدير بيانات الأشخاص",
   "exportPeopleDesc": "النسخ الاحتياطي للمعاملات الناس",
   "exportPdfTitle": "تصدير بصيغة PDF",
-  "exportPdfDesc": "إنشاء تقارير PDF"
+  "exportPdfDesc": "إنشاء تقارير PDF",
+  "biometricNotSupported": "المصادقة البيومترية غير مدعومة على هذا الجهاز",
+  "noBiometricMethods": "لا توجد طرق مصادقة بيومترية متاحة",
+  "authenticateReason": "تحقق من هويتك لتفعيل قفل التطبيق",
+  "authFailedAppLockNotEnabled": "فشلت المصادقة. لم يتم تفعيل قفل التطبيق.",
+  "appLockEnabledSuccess": "تم تفعيل قفل التطبيق بنجاح",
+  "appLockDisabledSuccess": "تم إلغاء تفعيل قفل التطبيق بنجاح",
+  "failedToEnableAppLock": "فشل تفعيل قفل التطبيق",
+  "failedToDisableAppLock": "فشل إلغاء تفعيل قفل التطبيق",
+  "pickAppColor": "اختر لون التطبيق",
+  "reset": "إعادة تعيين",
+  "selectAction": "اختيار",
+  "appColorResetDefault": "تمت إعادة تعيين لون التطبيق إلى الافتراضي!",
+  "deviceNotSupportBiometricsOrAuth": "لا يدعم الجهاز البصمة الحيوية أو مصادقة الجهاز.",
+  "appLockEnabledDot": "تم تفعيل قفل التطبيق.",
+  "appLockDisabledDot": "تم إلغاء تفعيل قفل التطبيق.",
+  "cautionToUse": "احذر عند الاستخدام",
+  "autoDetectCautionDesc": "هذه الميزة ليست دقيقة بنسبة 100% ولكنها قد تعمل. تتم معالجة جميع بيانات الرسائل النصية والإشعارات محليًا بالكامل على جهازك لضمان خصوصية تامة.",
+  "autoDetectSettingSubtitle": "اكتشاف المعاملات تلقائيًا من الإشعارات",
+  "permissionsRequiredNoAccess": "الأذونات مطلوبة: لم يتم منح إذن الوصول إلى الإشعارات أو الرسائل النصية. لا يمكن تفعيل الاكتشاف التلقائي.",
+  "noteNotificationAccessMissing": "ملاحظة: إذن الوصول إلى الإشعارات مفقود. سيعمل اكتشاف الرسائل النصية فقط.",
+  "noteSmsPermissionMissing": "ملاحظة: إذن الرسائل النصية مفقود. سيعمل اكتشاف الإشعارات فقط.",
+  "autoDetectionEnabledExclaim": "تم تفعيل الاكتشاف التلقائي!",
+  "autoDetectionDisabledExclaim": "تم إلغاء تفعيل الاكتشاف التلقائي!",
+  "processRecentDataTitle": "معالجة البيانات الأخيرة",
+  "processRecentDataSubtitle": "فحص الإشعارات الأخيرة بحثًا عن معاملات",
+  "recentDataProcessed": "تمت معالجة البيانات الأخيرة بنجاح!",
+  "errorProcessingData": "خطأ في معالجة البيانات",
+  "testDetectionLogicTitle": "اختبار منطق الاكتشاف",
+  "testDetectionLogicSubtitle": "محاكاة إشعار للتحقق من دقة التحليل",
+  "showDetectionHistoryTitle": "عرض سجل الاكتشاف",
+  "showDetectionHistorySubtitle": "عرض سجلات تفصيلية للمعاملات المكتشفة",
+  "autoDeleteUndetectedTitle": "الحذف التلقائي للسجل غير المكتشف",
+  "autoDeleteUndetectedSubtitle": "حذف العناصر غير المكتشفة بعد 12 ساعة",
+  "testParserDiagnosticTitle": "تشخيص اختبار المحلل",
+  "testParserDiagnosticDesc": "أدخل نص إشعار كعينة لترى كيف يتعامل المحلل معه.",
+  "pasteNotificationHint": "الصق نص الإشعار هنا...",
+  "statusBalanceSync": "مزامنة الرصيد",
+  "statusNoActionDetected": "لم يتم اكتشاف أي إجراء",
+  "transactionType": "النوع",
+  "resultLabelMerchant": "التاجر",
+  "resultLabelBank": "البنك",
+  "balanceLabel": "الرصيد",
+  "resultLabelConfidence": "مستوى الثقة",
+  "unknown": "غير معروف",
+  "general": "عام",
+  "notAvailable": "غير متاح",
+  "close": "إغلاق",
+  "parseText": "تحليل النص",
+  "deleteAllDataTitle": "حذف جميع البيانات",
+  "deleteAllDataWarningSubtitle": "⚠️ لا يمكن التراجع عن هذا الإجراء",
+  "resetIntroTitle": "إعادة تعيين المقدمة",
+  "resetIntroSubtitle": "إظهار شاشات المقدمة مرة أخرى",
+  "incomeCategories": "فئات الدخل",
+  "incomeCategoriesDesc": "إدارة فئات الدخل",
+  "expenseCategories": "فئات المصروفات",
+  "expenseCategoriesDesc": "إدارة فئات المصروفات",
+  "accountsTitle": "الحسابات",
+  "accountsDesc": "إدارة حساباتك",
+  "enterNamePlaceholder": "أدخل الاسم...",
+  "aboutAppSubtitle": "المطور، الخصوصية، الدعم والمزيد",
+  "setMonthlySpendingLimit": "حدد حدًا أقصى للإنفاق الشهري",
+  "joinPreviousMonthBalanceTitle": "ضم رصيد الشهر السابق",
+  "joinPreviousMonthBalanceDesc": "تضمين رصيد الشهر السابق في الإجمالي الحالي",
+  "setMonthlyBudgetTitle": "تحديد الميزانية الشهرية",
+  "budgetAmountLabel": "مبلغ الميزانية",
+  "budgetUpdated": "تم تحديث الميزانية!",
+  "confirmDeleteTitle": "تأكيد الحذف",
+  "confirmDeleteAllDesc": "هل أنت متأكد أنك تريد حذف جميع المعاملات وإعادة تعيين رصيدك؟ لا يمكن التراجع عن هذا الإجراء.",
+  "deleteAllButton": "حذف الكل",
+  "failedDeleteAllData": "فشل حذف جميع البيانات. يرجى المحاولة مرة أخرى.",
+  "resetIntroConfirmDesc": "سيؤدي هذا إلى إظهار شاشات المقدمة مرة أخرى في المرة القادمة التي تفتح فيها التطبيق. ستظل بياناتك دون تغيير.",
+  "editFieldTitle": "تعديل {field}",
+  "@editFieldTitle": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "enterFieldHint": "أدخل {field}",
+  "@enterFieldHint": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "statusLabel": "الحالة: {status}",
+  "@statusLabel": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "manageItemsTitle": "إدارة {type}",
+  "@manageItemsTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "noItemsFound": "لم يتم العثور على {type}.",
+  "@noItemsFound": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "addItemButton": "إضافة {type}",
+  "@addItemButton": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "editItemTitle": "تعديل {type}",
+  "@editItemTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "itemNameLabel": "اسم {type}",
+  "@itemNameLabel": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "monthlyLimitSubtitle": "الحد الشهري: {budget}",
+  "@monthlyLimitSubtitle": {
+    "placeholders": {
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "failedResetIntro": "فشلت إعادة تعيين المقدمة. يرجى المحاولة مرة أخرى.\\n{error}",
+  "@failedResetIntro": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "failedUpdateAutoDetection": "فشل تحديث الاكتشاف التلقائي",
+  "actionCannotBeUndone": "لا يمكن التراجع عن هذا الإجراء.",
+  "deleteTransactionsCountTitle": "حذف {count} معاملة؟",
+  "@deleteTransactionsCountTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deletedTransactionsCount": "تم حذف {count} معاملة",
+  "@deletedTransactionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "transactionHistoryTitle": "سجل المعاملات",
+  "upiIdMissingTitle": "معرف UPI مفقود",
+  "upiIdMissingDesc": "يرجى تعيين معرف UPI الخاص بك في الإعدادات لطلب الأموال عبر رمز الاستجابة السريعة.",
+  "openSettings": "فتح الإعدادات",
+  "recipientFallback": "المستلم",
+  "paymentLinkCopied": "تم نسخ رابط الدفع!",
+  "linkButton": "الرابط",
+  "shareQr": "مشاركة رمز الاستجابة السريعة",
+  "upiPaymentLinkSubject": "رابط دفع UPI",
+  "requestingFrom": "طلب من {name}",
+  "@requestingFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "upiIdColonValue": "معرف UPI: {id}",
+  "@upiIdColonValue": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "failedShareQr": "فشلت مشاركة صورة رمز الاستجابة السريعة: {error}",
+  "@failedShareQr": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "payViaUpiQrFor": "الدفع عبر رمز UPI QR لـ {name}",
+  "@payViaUpiQrFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectPerson": "يرجى اختيار شخص",
+  "amountInInr": "المبلغ بالروبية الهندية (INR)",
+  "currency": "العملة",
+  "selectCurrency": "اختر العملة",
+  "searchCurrency": "ابحث عن عملة",
+  "autoDetectCurrency": "الكشف التلقائي عن العملة",
+  "autoDetectCurrencyDesc": "المطابقة التلقائية مع منطقة جهازك",
+  "popularCurrencies": "شائعة",
+  "allCurrencies": "جميع العملات",
+  "noCurrencyFound": "لم يتم العثور على عملة",
+  "requiredField": "مطلوب",
+  "quickCategories": "فئات سريعة",
+  "saveToPerson": "الحفظ لدى شخص",
+  "noPeopleCreateHint": "لم تتم إضافة أي أشخاص بعد. أنشئ أشخاصًا ضمن قسم الأشخاص.",
+  "selectPersonLabel": "اختر شخصًا",
+  "selectCategoryTitle": "اختر الفئة",
+  "updateTransactionButton": "تحديث المعاملة",
+  "saveTransactionButton": "حفظ المعاملة",
+  "linkedToRecord": "تم الربط بسجل {name}",
+  "@linkedToRecord": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "selectItemTitle": "اختر {type}",
+  "@selectItemTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "personSingular": "شخص",
+  "error": "خطأ",
+  "retry": "إعادة المحاولة",
+  "setupFailedRetry": "فشل إكمال الإعداد. يرجى المحاولة مرة أخرى.",
+  "backButton": "رجوع",
+  "voiceInputExampleHint": "قل شيئًا مثل \"أنفقت 500 على العشاء\"",
+  "autoDetectionEnabledSuccess": "تم تفعيل الاكتشاف التلقائي بنجاح!",
+  "openingRequestQrFor": "فتح رمز طلب الأموال لـ {name}",
+  "@openingRequestQrFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "add": "إضافة",
+  "uncategorized": "غير مصنف",
+  "timeLabel": "الوقت",
+  "statusColumnLabel": "الحالة",
+  "completedLabel": "مكتمل",
+  "notes": "ملاحظات",
+  "serviceLabel": "الخدمة",
+  "refIdLabel": "معرف المرجع",
+  "detectedViaLabel": "تم الاكتشاف عبر",
+  "attachmentsLabel": "المرفقات",
+  "originalLogLabel": "السجل الأصلي",
+  "noNoteProvided": "لم يتم تقديم أي ملاحظة",
+  "tapToUnlock": "اضغط لفتح القفل",
+  "addPeopleEmptyDesc": "أضف أشخاصًا لتتبع المعاملات معهم",
+  "noPeopleMatchSearch": "لا يوجد أشخاص يطابقون بحثك",
+  "okay": "حسنًا",
+  "confirm": "تأكيد",
+  "ok": "موافق",
+  "unexpectedErrorOccurred": "حدث خطأ غير متوقع",
+  "autoDetectionActive": "الاكتشاف التلقائي نشط",
+  "unknownSource": "مصدر غير معروف",
+  "noMessageContentAvailable": "لا يوجد محتوى رسالة متاح",
+  "addManually": "إضافة يدويًا",
+  "detectedAsIncome": "تم اكتشافه كدخل",
+  "detectedAsExpense": "تم اكتشافه كمصروف",
+  "sourceColonValue": "المصدر: {source}",
+  "@sourceColonValue": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "sourceNotification": "إشعار",
+  "sourceSms": "رسالة نصية",
+  "sourceRecheckHistory": "إعادة فحص السجل",
+  "sourceManualAddHistory": "إضافة يدوية (من السجل)",
+  "recentLabel": "الأحدث",
+  "oldestLabel": "الأقدم",
+  "highestLabel": "الأعلى",
+  "lowestLabel": "الأدنى",
+  "glassBlurEffectsTitle": "تأثيرات الضبابية الزجاجية",
+  "glassBlurEffectsSubtitle": "تأثير ضبابي ناعم على اللوحات الزجاجية ومربعات الحوار — يستهلك المزيد من قدرة المعالجة، لذا أوقفه على الأجهزة القديمة لأداء أكثر سلاسة.",
+  "tourBalanceCardTitle": "Your Balance",
+  "tourBalanceCardDesc": "Tap for income & expense details. Long-press to edit your starting balance.",
+  "tourAddIncomeTitle": "Add Income",
+  "tourAddIncomeDesc": "Log money you've received.",
+  "tourMicTitle": "Record by Voice",
+  "tourMicDesc": "Press and hold, say the amount and what it was for, then release — it's saved automatically.",
+  "tourAddExpenseTitle": "Add Expense",
+  "tourAddExpenseDesc": "Log money you've spent.",
+  "tourAddPersonTitle": "Add a Person",
+  "tourAddPersonDesc": "Track what you owe each other over time.",
+  "tourPersonCardTitle": "Open Their Ledger",
+  "tourPersonCardDesc": "Tap a card to see the full history with this person and settle up.",
+  "tourPayNowTitle": "Settle Up",
+  "tourPayNowDesc": "Pay what you owe them directly via UPI.",
+  "tourEditPersonTitle": "Edit Person",
+  "tourEditPersonDesc": "Change their name or photo.",
+  "tourDeletePersonTitle": "Careful — Long-Press Deletes",
+  "tourDeletePersonDesc": "Long-pressing this header permanently deletes this person and their history. You'll be asked to confirm first.",
+  "tourDeleteTxTitle": "Long-Press to Delete",
+  "tourDeleteTxDesc": "Tap a transaction to edit it, or long-press to delete it.",
+  "replayTipsTitle": "Show Tips Again",
+  "replayTipsSubtitle": "Replay the pointer-hint tours on Home, People, and Person Details.",
+  "replayTipsDone": "Tips will show again next time you open those screens."
 }

@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'dart:ui';
 import '../core/const/app_colors.dart';
 import '../core/const/app_dimensions.dart';
-import '../core/const/app_strings.dart';
 import '../core/const/app_assets.dart';
+import '../l10n/generated/app_localizations.dart';
+
 import '../core/models/person.dart';
 import '../core/view_models/person_view_model.dart';
+import '../core/view_models/theme_view_model.dart';
 import '../core/utils/blur_utils.dart';
 import 'request_money_dialog.dart';
 
@@ -36,6 +39,9 @@ class PersonDetailHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+    final currencySymbol =
+        context.select<ThemeViewModel, String>((vm) => vm.currencySymbol);
     final isPositive = total >= 0;
     final formatted = NumberFormat.currency(
       symbol: '',
@@ -46,7 +52,7 @@ class PersonDetailHeader extends StatelessWidget {
     final decimalPart = parts.length > 1 ? parts[1] : '00';
 
     return ClipRRect(
-      child: BackdropFilter(
+      child: ConditionalBackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: FadeTransition(
           opacity: fadeAnimation,
@@ -71,7 +77,7 @@ class PersonDetailHeader extends StatelessWidget {
                             width: 1.4,
                           ),
                           borderRadius: BorderRadius.circular(
-                              AppDimensions.borderRadiusXLarge),
+                              AppDimensions.borderRadiusLarge),
                           color: isPositive
                               ? AppColors.accentGreen.withValues(alpha: 0.1)
                               : AppColors.accentRed.withValues(alpha: 0.1),
@@ -92,8 +98,8 @@ class PersonDetailHeader extends StatelessWidget {
                                   children: [
                                     Text(
                                       isPositive
-                                          ? AppStrings.youGet
-                                          : AppStrings.youGive,
+                                          ? l10n.youGet
+                                          : l10n.youGive,
                                       style: GoogleFonts.dmSans(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
@@ -104,6 +110,7 @@ class PersonDetailHeader extends StatelessWidget {
                                       isPositive: isPositive,
                                       integerPart: integerPart,
                                       decimalPart: decimalPart,
+                                      currencySymbol: currencySymbol,
                                     ),
                                   ],
                                 ),
@@ -152,7 +159,7 @@ class _PersonaAvatar extends StatelessWidget {
           height: 65,
           decoration: BoxDecoration(
             borderRadius:
-                BorderRadius.circular(AppDimensions.borderRadiusLarge),
+                BorderRadius.circular(AppDimensions.borderRadiusMinLarge),
             color: theme.colorScheme.primary.withValues(alpha: 0.1),
             border: Border.all(
               color: theme.colorScheme.primary.withValues(alpha: 0.1),
@@ -164,7 +171,7 @@ class _PersonaAvatar extends StatelessWidget {
             child: person.photoPath != null
                 ? ClipRRect(
                     borderRadius:
-                        BorderRadius.circular(AppDimensions.borderRadiusLarge),
+                        BorderRadius.circular(AppDimensions.borderRadiusMinLarge),
                     child: person.photoPath!.startsWith('assets/')
                         ? Image.asset(person.photoPath!, fit: BoxFit.cover)
                         : Image.file(File(person.photoPath!),
@@ -203,11 +210,13 @@ class _BalanceAmount extends StatelessWidget {
   final bool isPositive;
   final String integerPart;
   final String decimalPart;
+  final String currencySymbol;
 
   const _BalanceAmount({
     required this.isPositive,
     required this.integerPart,
     required this.decimalPart,
+    required this.currencySymbol,
   });
 
   @override
@@ -217,7 +226,7 @@ class _BalanceAmount extends StatelessWidget {
       text: TextSpan(
         children: [
           TextSpan(
-            text: '₹ ',
+            text: '$currencySymbol ',
             style: GoogleFonts.bebasNeue(
               fontSize: 25,
               fontWeight: FontWeight.w900,
@@ -225,7 +234,7 @@ class _BalanceAmount extends StatelessWidget {
               letterSpacing: -1,
             ),
           ),
-          const TextSpan(text: " "),
+          const TextSpan(text: ' '),
           TextSpan(
             text: integerPart,
             style: GoogleFonts.bayon(
@@ -290,6 +299,7 @@ class _TransactionsSectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Row(
@@ -298,7 +308,7 @@ class _TransactionsSectionHeader extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Transactions',
+                l10n.transactions,
                 style: GoogleFonts.dmSans(
                   fontSize: 23,
                   fontWeight: FontWeight.bold,
@@ -360,6 +370,7 @@ class _SortToggleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -378,7 +389,7 @@ class _SortToggleButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              _getSortLabel(currentSortOption),
+              _getSortLabel(l10n, currentSortOption),
               style: GoogleFonts.dmSans(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -396,16 +407,17 @@ class _SortToggleButton extends StatelessWidget {
     );
   }
 
-  String _getSortLabel(PersonTransactionSortOption option) {
+  String _getSortLabel(
+      AppLocalizations l10n, PersonTransactionSortOption option) {
     switch (option) {
       case PersonTransactionSortOption.dateNewest:
-        return 'Recent';
+        return l10n.recentLabel;
       case PersonTransactionSortOption.dateOldest:
-        return 'Oldest';
+        return l10n.oldestLabel;
       case PersonTransactionSortOption.amountHighest:
-        return 'Highest';
+        return l10n.highestLabel;
       case PersonTransactionSortOption.amountLowest:
-        return 'Lowest';
+        return l10n.lowestLabel;
     }
   }
 
@@ -459,7 +471,7 @@ class _RequestMoneyButton extends StatelessWidget {
             ),
           );
         },
-        tooltip: 'Request Money via UPI',
+        tooltip: AppLocalizations.of(context)!.requestMoneyTooltip,
       ),
     );
   }

@@ -18,6 +18,7 @@ import '../core/const/app_dimensions.dart';
 import '../core/const/app_typography.dart';
 import '../core/const/app_assets.dart';
 import '../core/utils/transaction_utils.dart';
+import '../l10n/generated/app_localizations.dart';
 
 class AddTransactionDialog extends StatefulWidget {
   final bool isIncome;
@@ -74,14 +75,15 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     } else {
       _note.text = widget.initialNote ?? '';
       _amount.text = widget.initialAmount?.abs().toStringAsFixed(2) ?? '';
-      
+
       // Auto-detect if note refers to a person
       final initialNoteStr = widget.initialNote;
       if (initialNoteStr != null && initialNoteStr.isNotEmpty) {
         final pvm = context.read<PersonViewModel>();
         final matchingPerson = pvm.people.firstWhere(
-          (p) => p.name.toLowerCase() == initialNoteStr.toLowerCase() ||
-                 initialNoteStr.toLowerCase().contains(p.name.toLowerCase()),
+          (p) =>
+              p.name.toLowerCase() == initialNoteStr.toLowerCase() ||
+              initialNoteStr.toLowerCase().contains(p.name.toLowerCase()),
           orElse: () => Person(name: ''),
         );
         if (matchingPerson.name.isNotEmpty) {
@@ -100,19 +102,6 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     super.dispose();
   }
 
-  double _getDynamicFontSize(String text) {
-    final len = text.isEmpty ? 1 : text.length;
-    if (len <= 4) {
-      return AppTypography.fontSizeGigantic + 10;
-    } else if (len <= 7) {
-      return AppTypography.fontSizeGigantic - 5;
-    } else if (len <= 10) {
-      return AppTypography.fontSizeXXLarge;
-    } else {
-      return AppTypography.fontSizeLarge;
-    }
-  }
-
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
     final amount = double.parse(_amount.text);
@@ -121,8 +110,8 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
 
     if (_saveToPerson) {
       if (_selectedPersonName == null || _selectedPersonName!.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("Please select a person"),
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!.pleaseSelectPerson),
           behavior: SnackBarBehavior.floating,
         ));
         return;
@@ -187,7 +176,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
           account: _account,
           imagePaths: _images,
           originalText: widget.initialNote,
-          source: widget.initialNote != null ? 'Manual Add (History)' : null,
+          source: widget.initialNote != null
+              ? AppLocalizations.of(context)!.sourceManualAddHistory
+              : null,
         );
         vm.addTransaction(tx);
         _syncPerson(tx, pvm);
@@ -210,7 +201,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             ),
             p.name);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Linked to ${p.name}'s record"),
+          content: Text(AppLocalizations.of(context)!.linkedToRecord(p.name)),
           behavior: SnackBarBehavior.floating,
         ));
       }
@@ -220,6 +211,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final tvm = context.watch<ThemeViewModel>();
     final isDark = tvm.isDarkMode;
     final cats = widget.isIncome ? tvm.incomeCategories : tvm.expenseCategories;
@@ -244,439 +236,466 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             decoration: BoxDecoration(
               color: theme.scaffoldBackgroundColor,
               borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(AppDimensions.borderRadiusXLarge)),
+                  top: Radius.circular(AppDimensions.borderRadiusLarge)),
             ),
             child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Stylized Amount Header
-                 GestureDetector(
-                  // tap to enable show input for amount
-                  onTap: () {
-                    _amountFocusNode.requestFocus();
-                    if (_amount.text == '0.00' || _amount.text == '0') {
-                      _amount.text = '';
-                    }
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: AppDimensions.paddingLarge + 8,
-                        horizontal: AppDimensions.paddingXLarge),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          (widget.isIncome
-                                  ? AppColors.accentGreen
-                                  : AppColors.accentRed)
-                              .withValues(alpha: isDark ? 0.15 : 0.08),
-                          (widget.isIncome
-                                  ? AppColors.accentGreen
-                                  : AppColors.accentRed)
-                              .withValues(alpha: isDark ? 0.10 : 0.02),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius:
-                          BorderRadius.circular(AppDimensions.borderRadiusXLarge),
-                      border: Border.all(
-                        color: (widget.isIncome
-                                ? AppColors.accentGreen
-                                : AppColors.accentRed)
-                            .withValues(alpha: isDark ? 0.2 : 0.1),
-                        width: 1.5,
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Drag handle
+                    Center(
+                      child: Container(
+                        width: 40,
+                        height: 4,
+                        margin: const EdgeInsets.only(bottom: 16),
+                        decoration: BoxDecoration(
+                          color: theme.dividerColor.withValues(alpha: 0.2),
+                          borderRadius: BorderRadius.circular(2),
+                        ),
                       ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Amount in INR',
-                          style: GoogleFonts.dmSans(
-                            fontSize: AppTypography.fontSizeXSmall,
-                            fontWeight: FontWeight.bold,
+                    // Stylized Amount Header
+                    GestureDetector(
+                      // tap to enable show input for amount
+                      onTap: () {
+                        _amountFocusNode.requestFocus();
+                        if (_amount.text == '0.00' || _amount.text == '0') {
+                          _amount.text = '';
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: AppDimensions.paddingLarge,
+                            horizontal: AppDimensions.paddingXLarge),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              (widget.isIncome
+                                      ? AppColors.accentGreen
+                                      : AppColors.accentRed)
+                                  .withValues(alpha: isDark ? 0.15 : 0.08),
+                              (widget.isIncome
+                                      ? AppColors.accentGreen
+                                      : AppColors.accentRed)
+                                  .withValues(alpha: isDark ? 0.10 : 0.02),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(
+                              AppDimensions.borderRadiusLarge),
+                          border: Border.all(
                             color: (widget.isIncome
                                     ? AppColors.accentGreen
                                     : AppColors.accentRed)
-                                .withValues(alpha: 0.6),
-                            letterSpacing: 2,
+                                .withValues(alpha: isDark ? 0.2 : 0.1),
+                            width: 1.5,
                           ),
                         ),
-                        const SizedBox(height: 12),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '₹',
+                              l10n.amount,
                               style: GoogleFonts.dmSans(
-                                fontSize: AppTypography.fontSizeXXLarge,
-                                fontWeight: AppTypography.fontWeightBlack,
-                                color: widget.isIncome
-                                    ? AppColors.accentGreen
-                                    : AppColors.accentRed,
+                                fontSize: AppTypography.fontSizeXSmall,
+                                fontWeight: FontWeight.bold,
+                                color: (widget.isIncome
+                                        ? AppColors.accentGreen
+                                        : AppColors.accentRed)
+                                    .withValues(alpha: 0.6),
+                                letterSpacing: 2,
                               ),
                             ),
-                            const SizedBox(width: 8),
-                            IntrinsicWidth(
-                              child: TextFormField(
-                                controller: _amount,
-                                focusNode: _amountFocusNode,
-                                keyboardType: TextInputType.number,
-                                onChanged: (val) {
-                                  setState(() {});
-                                },
-                                style: GoogleFonts.bayon(
-                                  fontSize: _getDynamicFontSize(_amount.text),
-                                  color: widget.isIncome
-                                      ? AppColors.accentGreen
-                                      : AppColors.accentRed,
-                                  letterSpacing: 0,
-                                  height: 1,
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: '0',
-                                  hintStyle: GoogleFonts.bayon(
-                                    color: (widget.isIncome
-                                            ? AppColors.accentGreen
-                                            : AppColors.accentRed)
-                                        .withValues(alpha: 0.2),
+                            const SizedBox(height: 12),
+                            // Auto-shrinks as a matter of course: FittedBox
+                            // scales the whole symbol+digits group down to
+                            // whatever width the card actually has, instead
+                            // of guessing a font size from character count.
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.baseline,
+                                textBaseline: TextBaseline.alphabetic,
+                                children: [
+                                  Text(
+                                    tvm.currencySymbol,
+                                    style: GoogleFonts.dmSans(
+                                      fontSize: AppTypography.fontSizeXXLarge,
+                                      fontWeight: AppTypography.fontWeightBlack,
+                                      color: widget.isIncome
+                                          ? AppColors.accentGreen
+                                          : AppColors.accentRed,
+                                    ),
                                   ),
-                                  border: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  filled: false,
-                                  contentPadding: EdgeInsets.zero,
-                                ),
-                                textAlign: TextAlign.start,
-                                validator: (v) =>
-                                    (v?.isEmpty ?? true) ? 'Required' : null,
+                                  const SizedBox(width: 8),
+                                  IntrinsicWidth(
+                                    child: TextFormField(
+                                      controller: _amount,
+                                      focusNode: _amountFocusNode,
+                                      keyboardType: TextInputType.number,
+                                      onChanged: (val) {
+                                        setState(() {});
+                                      },
+                                      style: GoogleFonts.bayon(
+                                        fontSize:
+                                            AppTypography.fontSizeGigantic + 10,
+                                        color: widget.isIncome
+                                            ? AppColors.accentGreen
+                                            : AppColors.accentRed,
+                                        letterSpacing: 0,
+                                        height: 1,
+                                      ),
+                                      decoration: InputDecoration(
+                                        hintText: '0',
+                                        hintStyle: GoogleFonts.bayon(
+                                          color: (widget.isIncome
+                                                  ? AppColors.accentGreen
+                                                  : AppColors.accentRed)
+                                              .withValues(alpha: 0.2),
+                                        ),
+                                        border: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        filled: false,
+                                        contentPadding: EdgeInsets.zero,
+                                      ),
+                                      textAlign: TextAlign.start,
+                                      validator: (v) => (v?.isEmpty ?? true)
+                                          ? l10n.requiredField
+                                          : null,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                const SizedBox(height: 16),
-                // Quick Category Scroll
-                Text(
-                  'Quick Categories',
-                  style: GoogleFonts.dmSans(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: cats.map((cat) {
-                      final isSelected = _category == cat;
-                      final color = TransactionUtils.getCategoryColor(cat);
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: ZoomTapAnimation(
-                          onTap: () {
-                            HapticFeedback.selectionClick();
-                            setState(() => _category = cat);
-                          },
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 14, vertical: 10),
-                            decoration: BoxDecoration(
-                              color: isSelected
-                                  ? color.withValues(alpha: 0.15)
-                                  : isDark
-                                      ? Colors.white.withValues(alpha: 0.05)
-                                      : Colors.black.withValues(alpha: 0.03),
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(
-                                color: isSelected
-                                    ? color.withValues(alpha: 0.4)
-                                    : Colors.transparent,
-                                width: 1.5,
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                  TransactionUtils.getCategorySvg(cat),
-                                  colorFilter: ColorFilter.mode(
-                                      isSelected ? color : Colors.grey,
-                                      BlendMode.srcIn),
-                                  width: 16,
-                                  height: 16,
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  cat,
-                                  style: GoogleFonts.dmSans(
-                                    fontSize: 13,
-                                    fontWeight: isSelected
-                                        ? FontWeight.bold
-                                        : FontWeight.w500,
+                    const SizedBox(height: 20),
+                    // Quick category chips — the fastest way to pick a common
+                    // one; the "Category" field below opens the full picker for
+                    // everything else, so no separate heading is needed here.
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: cats.map((cat) {
+                          final isSelected = _category == cat;
+                          final color = TransactionUtils.getCategoryColor(cat);
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: ZoomTapAnimation(
+                              onTap: () {
+                                HapticFeedback.selectionClick();
+                                setState(() => _category = cat);
+                              },
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 200),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 14, vertical: 10),
+                                decoration: BoxDecoration(
+                                  color: isSelected
+                                      ? color.withValues(alpha: 0.15)
+                                      : isDark
+                                          ? Colors.white.withValues(alpha: 0.05)
+                                          : Colors.black
+                                              .withValues(alpha: 0.03),
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
                                     color: isSelected
-                                        ? color
-                                        : theme.colorScheme.onSurface
-                                            .withValues(alpha: 0.6),
+                                        ? color.withValues(alpha: 0.4)
+                                        : Colors.transparent,
+                                    width: 1.5,
                                   ),
                                 ),
-                              ],
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      TransactionUtils.getCategorySvg(cat),
+                                      colorFilter: ColorFilter.mode(
+                                          isSelected ? color : Colors.grey,
+                                          BlendMode.srcIn),
+                                      width: 16,
+                                      height: 16,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      cat,
+                                      style: GoogleFonts.dmSans(
+                                        fontSize: 13,
+                                        fontWeight: isSelected
+                                            ? FontWeight.bold
+                                            : FontWeight.w500,
+                                        color: isSelected
+                                            ? color
+                                            : theme.colorScheme.onSurface
+                                                .withValues(alpha: 0.6),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Date & Category Pickers Row
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _picker(
+                              l10n.category,
+                              _category,
+                              cats,
+                              (v) => setState(() => _category = v),
+                              widget.isIncome ? 'Income' : 'Expense'),
                         ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-                const SizedBox(height: 32),
-
-                // Date & Category Pickers Row
-                Row(
-                  children: [
-                    Expanded(
-                      child: _picker(
-                          'Category',
-                          _category,
-                          cats,
-                          (v) => setState(() => _category = v),
-                          widget.isIncome ? 'Income' : 'Expense'),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _picker(l10n.account, _account, accs,
+                              (v) => setState(() => _account = v), 'Account'),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _picker('Account', _account, accs,
-                          (v) => setState(() => _account = v), 'Account'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
-                // Date Picker
-                _picker(
-                    'Date',
-                    DateFormat('dd MMM, yyyy').format(_selectedDate),
-                    [],
-                    (v) {},
-                    'Date'),
+                    // Date Picker
+                    _picker(
+                        l10n.date,
+                        DateFormat('dd MMM, yyyy').format(_selectedDate),
+                        [],
+                        (v) {},
+                        'Date'),
 
-                const SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
-                // Save to Person Toggle Section
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.surface,
-                    borderRadius: BorderRadius.circular(AppDimensions.borderRadiusLarge),
-                    border: Border.all(
-                      color: theme.dividerColor.withValues(alpha: 0.1),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // Save to Person Toggle Section
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.surface,
+                        borderRadius: BorderRadius.circular(
+                            AppDimensions.borderRadiusMinLarge),
+                        border: Border.all(
+                          color: theme.dividerColor.withValues(alpha: 0.1),
+                        ),
+                      ),
+                      child: Column(
                         children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(
-                                Icons.person_outline_rounded,
-                                color: theme.colorScheme.primary,
-                                size: 22,
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.person_outline_rounded,
+                                    color: theme.colorScheme.primary,
+                                    size: 22,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Text(
+                                    l10n.saveToPerson,
+                                    style: GoogleFonts.dmSans(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: AppTypography.fontSizeSmall + 1,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(width: 12),
-                              Text(
-                                'Save to Person',
-                                style: GoogleFonts.dmSans(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: AppTypography.fontSizeSmall + 1,
-                                ),
+                              Switch(
+                                value: _saveToPerson,
+                                onChanged: (val) {
+                                  HapticFeedback.lightImpact();
+                                  setState(() {
+                                    _saveToPerson = val;
+                                    if (val && _selectedPersonName == null) {
+                                      final pvm =
+                                          context.read<PersonViewModel>();
+                                      if (pvm.people.isNotEmpty) {
+                                        _selectedPersonName =
+                                            pvm.people.first.name;
+                                      }
+                                    }
+                                  });
+                                },
                               ),
                             ],
                           ),
-                          Switch(
-                            value: _saveToPerson,
-                            onChanged: (val) {
-                              HapticFeedback.lightImpact();
-                              setState(() {
-                                _saveToPerson = val;
-                                if (val && _selectedPersonName == null) {
-                                  final pvm = context.read<PersonViewModel>();
-                                  if (pvm.people.isNotEmpty) {
-                                    _selectedPersonName = pvm.people.first.name;
-                                  }
+                          if (_saveToPerson) ...[
+                            const Divider(height: 16),
+                            const SizedBox(height: 4),
+                            Consumer<PersonViewModel>(
+                              builder: (context, pvm, child) {
+                                if (pvm.people.isEmpty) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
+                                    child: Text(
+                                      l10n.noPeopleCreateHint,
+                                      style: GoogleFonts.dmSans(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  );
                                 }
-                              });
-                            },
-                          ),
+
+                                final peopleNames =
+                                    pvm.people.map((p) => p.name).toList();
+                                if (_selectedPersonName == null ||
+                                    !peopleNames
+                                        .contains(_selectedPersonName)) {
+                                  _selectedPersonName = peopleNames.first;
+                                }
+
+                                return _picker(
+                                  l10n.selectPersonLabel,
+                                  _selectedPersonName!,
+                                  peopleNames,
+                                  (v) =>
+                                      setState(() => _selectedPersonName = v),
+                                  'Person',
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 8),
+                          ],
                         ],
                       ),
-                      if (_saveToPerson) ...[
-                        const Divider(height: 16),
-                        const SizedBox(height: 4),
-                        Consumer<PersonViewModel>(
-                          builder: (context, pvm, child) {
-                            if (pvm.people.isEmpty) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Text(
-                                  'No people added yet. Create people under the People section.',
-                                  style: GoogleFonts.dmSans(
-                                    fontSize: 12,
-                                    color: Colors.grey,
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              );
-                            }
-                            
-                            final peopleNames = pvm.people.map((p) => p.name).toList();
-                            if (_selectedPersonName == null || !peopleNames.contains(_selectedPersonName)) {
-                              _selectedPersonName = peopleNames.first;
-                            }
-                            
-                            return _picker(
-                              'Select Person',
-                              _selectedPersonName!,
-                              peopleNames,
-                              (v) => setState(() => _selectedPersonName = v),
-                              'Person',
-                            );
-                          },
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    // Note Input
+                    TextFormField(
+                      controller: _note,
+                      maxLines: 2,
+                      style: GoogleFonts.dmSans(
+                        fontWeight: FontWeight.w600,
+                        fontSize: AppTypography.fontSizeSmall + 1,
+                      ),
+                      decoration: InputDecoration(
+                        labelText: l10n.note,
+                        labelStyle: GoogleFonts.dmSans(
+                          color: theme.textTheme.bodySmall?.color
+                              ?.withValues(alpha: 0.5),
                         ),
-                        const SizedBox(height: 8),
-                      ],
+                        floatingLabelStyle: GoogleFonts.dmSans(
+                          color: theme.colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SvgPicture.asset(
+                            SvgAppIcons.noteIcon,
+                            colorFilter: ColorFilter.mode(
+                                theme.colorScheme.primary
+                                    .withValues(alpha: 0.8),
+                                BlendMode.srcIn),
+                            width: 20,
+                            height: 20,
+                          ),
+                        ),
+                        filled: true,
+                        fillColor: theme.colorScheme.surface,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              AppDimensions.borderRadiusMinLarge),
+                          borderSide: BorderSide(
+                              color: theme.dividerColor.withValues(alpha: 0.1)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              AppDimensions.borderRadiusMinLarge),
+                          borderSide: BorderSide(
+                              color: theme.colorScheme.primary, width: 2),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    if (_images.isNotEmpty) ...[
+                      _imageGrid(),
+                      const SizedBox(height: 16),
                     ],
-                  ),
-                ),
 
-                const SizedBox(height: 16),
-
-                // Note Input
-                TextFormField(
-                  controller: _note,
-                  maxLines: 2,
-                  style: GoogleFonts.dmSans(
-                    fontWeight: FontWeight.w600,
-                    fontSize: AppTypography.fontSizeSmall + 1,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: 'Note',
-                    labelStyle: GoogleFonts.dmSans(
-                      color: theme.textTheme.bodySmall?.color
-                          ?.withValues(alpha: 0.5),
-                    ),
-                    floatingLabelStyle: GoogleFonts.dmSans(
-                      color: theme.colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SvgPicture.asset(
-                        SvgAppIcons.noteIcon,
-                        colorFilter: ColorFilter.mode(
-                            theme.colorScheme.primary.withValues(alpha: 0.8),
-                            BlendMode.srcIn),
-                        width: 20,
-                        height: 20,
-                      ),
-                    ),
-                    filled: true,
-                    fillColor: theme.colorScheme.surface,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                          AppDimensions.borderRadiusLarge),
-                      borderSide: BorderSide(
-                          color: theme.dividerColor.withValues(alpha: 0.1)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                          AppDimensions.borderRadiusLarge),
-                      borderSide: BorderSide(
-                          color: theme.colorScheme.primary, width: 2),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
-
-                if (_images.isNotEmpty) ...[
-                  _imageGrid(),
-                  const SizedBox(height: 16),
-                ],
-
-                // Action Buttons
-                Row(
-                  children: [
-                    ZoomTapAnimation(
-                      onTap: () async {
-                        final img = await ImagePicker()
-                            .pickImage(source: ImageSource.gallery);
-                        if (img != null) setState(() => _images.add(img.path));
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color:
-                              theme.colorScheme.primary.withValues(alpha: 0.1),
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: theme.colorScheme.primary
-                                .withValues(alpha: 0.2),
+                    // Action Buttons
+                    Row(
+                      children: [
+                        ZoomTapAnimation(
+                          onTap: () async {
+                            final img = await ImagePicker()
+                                .pickImage(source: ImageSource.gallery);
+                            if (img != null)
+                              setState(() => _images.add(img.path));
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: theme.colorScheme.primary
+                                  .withValues(alpha: 0.1),
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: theme.colorScheme.primary
+                                    .withValues(alpha: 0.2),
+                              ),
+                            ),
+                            child: Icon(Icons.add_a_photo_rounded,
+                                color: theme.colorScheme.primary),
                           ),
                         ),
-                        child: Icon(Icons.add_a_photo_rounded,
-                            color: theme.colorScheme.primary),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: _submit,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: widget.isIncome
-                              ? AppColors.accentGreen
-                              : AppColors.accentRed,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                AppDimensions.borderRadiusFull),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: _submit,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: widget.isIncome
+                                  ? AppColors.accentGreen
+                                  : AppColors.accentRed,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    AppDimensions.borderRadiusFull),
+                              ),
+                            ),
+                            child: Text(
+                              widget.existingTransaction != null
+                                  ? l10n.updateTransactionButton
+                                  : l10n.saveTransactionButton,
+                              style: GoogleFonts.dmSans(
+                                fontSize: AppTypography.fontSizeMedium,
+                                fontWeight: AppTypography.fontWeightBlack,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
                           ),
                         ),
-                        child: Text(
-                          widget.existingTransaction != null
-                              ? 'Update Transaction'
-                              : 'Save Transaction',
-                          style: GoogleFonts.dmSans(
-                            fontSize: AppTypography.fontSizeMedium,
-                            fontWeight: AppTypography.fontWeightBlack,
-                            letterSpacing: 0.5,
-                          ),
-                        ),
-                      ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
       ),
-        ),
-    ),
-  );
-}
+    );
+  }
 
   Widget _picker(String label, String val, List<String> items,
       ValueChanged<String> onDone, String type) {
@@ -742,6 +761,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
   void _showCategoryGrid(BuildContext context, List<String> items, String val,
       ValueChanged<String> onDone) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final isDark = theme.brightness == Brightness.dark;
 
     showModalBottomSheet(
@@ -767,7 +787,7 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               ),
             ),
             Text(
-              'Select Category',
+              l10n.selectCategoryTitle,
               style: GoogleFonts.dmSans(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -854,13 +874,23 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
     );
   }
 
+  /// Localized "Select {type}" title for the manage-items sheet. [type] is
+  /// the internal identifier ('Account' / 'Person') passed by [_picker].
+  String _selectItemsTitle(AppLocalizations l10n, String type) {
+    return l10n
+        .selectItemTitle(type == 'Person' ? l10n.personSingular : l10n.account);
+  }
+
   void _showManageItems(BuildContext context, String type, List<String> items,
       String selected, ValueChanged<String> onDone) {
+    final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (c) => StatefulBuilder(builder: (c, setStateSheet) {
+        final theme = Theme.of(c);
+        final isDark = theme.brightness == Brightness.dark;
         final tvm = c.watch<ThemeViewModel>();
         final currentItems = (type == 'Income')
             ? tvm.incomeCategories
@@ -872,56 +902,119 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
 
         return Container(
           decoration: BoxDecoration(
-              color: Theme.of(c).scaffoldBackgroundColor,
+              color: theme.scaffoldBackgroundColor,
               borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(AppDimensions.borderRadiusLarge))),
-          padding: const EdgeInsets.all(24),
-          height: MediaQuery.of(c).size.height * 0.5,
+                  top: Radius.circular(AppDimensions.borderRadiusXLarge))),
+          padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
+          height: MediaQuery.of(c).size.height * 0.55,
           child: Column(
             children: [
-              Text('Select $type',
+              Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.only(bottom: 20),
+                decoration: BoxDecoration(
+                  color: theme.dividerColor.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              Text(_selectItemsTitle(l10n, type),
                   style: GoogleFonts.dmSans(
                       fontSize: AppTypography.fontSizeLarge - 2,
                       fontWeight: AppTypography.fontWeightBold)),
-              const Divider(),
+              const SizedBox(height: 16),
               Expanded(
-                child: ListView.builder(
+                child: ListView.separated(
                   itemCount: currentItems.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 8),
                   itemBuilder: (c, i) {
                     final item = currentItems[i];
-                    return ListTile(
-                      leading: (type == 'Income' || type == 'Expense')
-                          ? Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: TransactionUtils.getCategoryColor(item)
-                                    .withValues(alpha: 0.1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: SvgPicture.asset(
-                                TransactionUtils.getCategorySvg(item),
-                                colorFilter: ColorFilter.mode(
-                                    TransactionUtils.getCategoryColor(item),
-                                    BlendMode.srcIn),
-                                width: 20,
-                                height: 20,
-                              ),
-                            )
-                          : (type == 'Person')
-                              ? const CircleAvatar(
-                                  radius: 14,
-                                  child: Icon(Icons.person, size: 16),
-                                )
-                              : null,
-                      title: Text(item,
-                          style: GoogleFonts.dmSans(
-                              fontWeight: item == selected
-                                  ? FontWeight.bold
-                                  : FontWeight.normal)),
+                    final isSelected = item == selected;
+                    final categoryColor =
+                        (type == 'Income' || type == 'Expense')
+                            ? TransactionUtils.getCategoryColor(item)
+                            : theme.colorScheme.primary;
+
+                    return ZoomTapAnimation(
                       onTap: () {
+                        HapticFeedback.selectionClick();
                         onDone(item);
                         Navigator.pop(c);
                       },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 10),
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? categoryColor.withValues(alpha: 0.1)
+                              : isDark
+                                  ? Colors.white.withValues(alpha: 0.04)
+                                  : Colors.black.withValues(alpha: 0.02),
+                          borderRadius: BorderRadius.circular(
+                              AppDimensions.borderRadiusMinLarge),
+                          border: Border.all(
+                            color: isSelected
+                                ? categoryColor.withValues(alpha: 0.35)
+                                : Colors.transparent,
+                            width: 1.5,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            if (type == 'Income' || type == 'Expense')
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: categoryColor.withValues(alpha: 0.12),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: SvgPicture.asset(
+                                  TransactionUtils.getCategorySvg(item),
+                                  colorFilter: ColorFilter.mode(
+                                      categoryColor, BlendMode.srcIn),
+                                  width: 18,
+                                  height: 18,
+                                ),
+                              )
+                            else if (type == 'Person')
+                              CircleAvatar(
+                                radius: 16,
+                                backgroundColor: theme.colorScheme.primary
+                                    .withValues(alpha: 0.12),
+                                child: Icon(Icons.person_rounded,
+                                    size: 18, color: theme.colorScheme.primary),
+                              )
+                            else
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: theme.colorScheme.primary
+                                      .withValues(alpha: 0.12),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                    Icons.account_balance_wallet_rounded,
+                                    size: 18,
+                                    color: theme.colorScheme.primary),
+                              ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(item,
+                                  style: GoogleFonts.dmSans(
+                                    fontWeight: isSelected
+                                        ? FontWeight.bold
+                                        : FontWeight.w500,
+                                    color: isSelected
+                                        ? categoryColor
+                                        : theme.colorScheme.onSurface,
+                                  )),
+                            ),
+                            if (isSelected)
+                              Icon(Icons.check_circle_rounded,
+                                  color: categoryColor, size: 20),
+                          ],
+                        ),
+                      ),
                     );
                   },
                 ),

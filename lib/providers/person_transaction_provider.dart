@@ -34,7 +34,7 @@ class PersonTransactionProvider extends ChangeNotifier {
       _markDirty();
       notifyListeners();
     } catch (e) {
-      print('Error loading person transactions: $e');
+      debugPrint('Error loading person transactions: $e');
       // Fallback to empty state
       _transactions = [];
       _markDirty();
@@ -52,7 +52,7 @@ class PersonTransactionProvider extends ChangeNotifier {
       _markDirty();
       notifyListeners();
     } catch (e) {
-      print('Error adding person transaction: $e');
+      debugPrint('Error adding person transaction: $e');
       // Fallback to direct Hive access
       try {
         _box.add(tx);
@@ -60,7 +60,7 @@ class PersonTransactionProvider extends ChangeNotifier {
         _markDirty();
         notifyListeners();
       } catch (fallbackError) {
-        print('Fallback error adding person transaction: $fallbackError');
+        debugPrint('Fallback error adding person transaction: $fallbackError');
       }
     }
   }
@@ -75,7 +75,7 @@ class PersonTransactionProvider extends ChangeNotifier {
       _markDirty();
       notifyListeners();
     } catch (e) {
-      print('Error deleting person transaction: $e');
+      debugPrint('Error deleting person transaction: $e');
       // Fallback to direct Hive access
       try {
         tx.delete();
@@ -83,7 +83,7 @@ class PersonTransactionProvider extends ChangeNotifier {
         _markDirty();
         notifyListeners();
       } catch (fallbackError) {
-        print('Fallback error deleting person transaction: $fallbackError');
+        debugPrint('Fallback error deleting person transaction: $fallbackError');
       }
     }
   }
@@ -130,7 +130,7 @@ class PersonTransactionProvider extends ChangeNotifier {
       _markDirty();
       notifyListeners();
     } catch (e) {
-      print('Error deleting all person transaction data: $e');
+      debugPrint('Error deleting all person transaction data: $e');
       // Fallback to direct Hive access
       try {
         final people = _box.values.toList();
@@ -142,7 +142,7 @@ class PersonTransactionProvider extends ChangeNotifier {
         _markDirty();
         notifyListeners();
       } catch (fallbackError) {
-        print(
+        debugPrint(
             'Fallback error deleting all person transaction data: $fallbackError');
       }
     }

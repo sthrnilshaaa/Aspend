@@ -9,7 +9,6 @@ import 'intro_page.dart';
 import 'root_navigation.dart';
 import '../core/utils/responsive_utils.dart';
 import '../core/const/app_assets.dart';
-import '../core/const/app_strings.dart';
 import '../core/const/app_constants.dart';
 import '../core/const/app_dimensions.dart';
 import '../core/const/app_typography.dart';

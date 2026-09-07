@@ -5,7 +5,7 @@ import 'package:aspends_tracker/core/models/person.dart';
 import 'package:aspends_tracker/core/models/person_transaction.dart';
 import 'package:aspends_tracker/core/models/transaction.dart';
 import 'package:csv/csv.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:file_picker/file_picker.dart' as fp;
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
@@ -17,7 +17,7 @@ class BackupService {
     final txs = box.values.toList();
 
     List<List<dynamic>> rows = [];
-    rows.add(["Date", "Note", "Amount", "Category", "Account", "Type"]);
+    rows.add(['Date', 'Note', 'Amount', 'Category', 'Account', 'Type']);
 
     for (var tx in txs) {
       List<dynamic> row = [];
@@ -26,7 +26,7 @@ class BackupService {
       row.add(tx.amount);
       row.add(tx.category);
       row.add(tx.account);
-      row.add(tx.isIncome ? "Income" : "Expense");
+      row.add(tx.isIncome ? 'Income' : 'Expense');
       rows.add(row);
     }
     String csvData = Csv().encode(rows);
@@ -120,14 +120,14 @@ class BackupService {
     }
 
     try {
-      FilePickerResult? result = await FilePicker.pickFiles(
-        type: FileType.custom,
+      final fp.PlatformFile? result = await fp.FilePicker.pickFile(
+        type: fp.FileType.custom,
         allowedExtensions: ['json'],
       );
 
-      if (result == null || result.files.single.path == null) return false;
+      if (result == null || result.path == null) return false;
 
-      final file = File(result.files.single.path!);
+      final file = File(result.path!);
       final content = await file.readAsString();
       final Map<String, dynamic> data = jsonDecode(content);
 
