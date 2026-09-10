@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/icons/Main_logo_transparent.png" width="100" />
+  <img src="assets/icons/dark_logo_splash.png" width="100" />
 </p>
 
 <h1 align="center">Aspend</h1>
